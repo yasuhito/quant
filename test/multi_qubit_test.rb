@@ -21,11 +21,11 @@ class MultiQubitTest < ActiveSupport::TestCase
   end
 
   test 'ブラベクトルに変換' do
-    bra = MultiQubit[0, 1].bra
+    bra = MultiQubit[Complex(1, 2), Complex(2, 1)].bra
 
     assert_equal 1, bra.row_size
     assert_equal 2, bra.column_size
-    assert_equal 0, bra[0, 0]
-    assert_equal 1, bra[0, 1]
+    assert_equal Complex(1, -2), bra[0, 0]
+    assert_equal Complex(2, -1), bra[0, 1]
   end
 end

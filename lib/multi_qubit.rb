@@ -10,7 +10,7 @@ class MultiQubit
   end
 
   def bra
-    Matrix[@qubit_state]
+    Matrix[@qubit_state.map(&:conj)]
   end
 
   def to_s
