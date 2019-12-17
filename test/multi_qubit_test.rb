@@ -28,4 +28,11 @@ class MultiQubitTest < ActiveSupport::TestCase
     assert_equal Complex(1, -2), bra[0, 0]
     assert_equal Complex(2, -1), bra[0, 1]
   end
+
+  test 'ケットベクトル同士の内積' do
+    ket1 = MultiQubit[Complex(1, 2), Complex(2, -1), 3]
+    ket2 = MultiQubit[Complex(1, 2), 4, Complex(2, 1)]
+
+    assert_equal Complex(19, 7), ket1 * ket2
+  end
 end

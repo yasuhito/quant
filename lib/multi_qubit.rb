@@ -1,5 +1,8 @@
+# frozen_string_literal: true
+
 require 'matrix'
 
+# 量子ビット列
 class MultiQubit
   def self.[](*qubit_state)
     new(*qubit_state)
@@ -9,8 +12,16 @@ class MultiQubit
     @qubit_state = qubit_state
   end
 
+  def *(other)
+    (bra * other.ket.t)[0, 0]
+  end
+
   def bra
     Matrix[@qubit_state.map(&:conj)]
+  end
+
+  def ket
+    Matrix[@qubit_state]
   end
 
   def to_s
