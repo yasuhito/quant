@@ -24,6 +24,10 @@ class MultiQubit
     Matrix[@qubit_state]
   end
 
+  def [](index)
+    @qubit_state[index]
+  end
+
   def to_s
     "|#{@qubit_state.join}>"
   end

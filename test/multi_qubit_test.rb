@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 require 'test_helper'
+
+require 'i'
 require 'multi_qubit'
 
 class MultiQubitTest < ActiveSupport::TestCase
@@ -34,5 +36,15 @@ class MultiQubitTest < ActiveSupport::TestCase
     ket2 = MultiQubit[Complex(1, 2), 4, Complex(2, 1)]
 
     assert_equal Complex(19, 7), ket1 * ket2
+  end
+
+  test '単位行列で時間発展' do
+    result = I * MultiQubit[1, 0, 1, 0]
+
+    assert_equal 4, result.length
+    assert_equal 1, result[0]
+    assert_equal 0, result[1]
+    assert_equal 1, result[2]
+    assert_equal 0, result[3]
   end
 end
