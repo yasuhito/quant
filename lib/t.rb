@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-# 単位行列
+# フェーズシフトゲート T
 module Kernel
   # rubocop:disable Naming/MethodName
-  def I(multi_qubit)
-    matrix = Matrix.I(2)
+  def T(multi_qubit)
+    matrix = Matrix[[1, 0], [0, Math::E**(1i * Math::PI / 4)]]
     MultiQubit[*(matrix * multi_qubit.ket.t).column_vectors[0].to_a]
   end
   # rubocop:enable Naming/MethodName

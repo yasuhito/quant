@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-# 単位行列
+# フェーズシフトゲート S
 module Kernel
   # rubocop:disable Naming/MethodName
-  def I(multi_qubit)
-    matrix = Matrix.I(2)
+  def S(multi_qubit)
+    matrix = Matrix[[1, 0], [0, Complex(0, 1)]]
     MultiQubit[*(matrix * multi_qubit.ket.t).column_vectors[0].to_a]
   end
   # rubocop:enable Naming/MethodName
