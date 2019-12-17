@@ -1,4 +1,8 @@
 class MultiQubit
+  def self.[](*qubit_state)
+    new(*qubit_state)
+  end
+
   def initialize(*qubit_state)
     @qubit_state = qubit_state
   end
