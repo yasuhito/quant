@@ -1,3 +1,5 @@
+require 'matrix'
+
 class MultiQubit
   def self.[](*qubit_state)
     new(*qubit_state)
@@ -5,6 +7,10 @@ class MultiQubit
 
   def initialize(*qubit_state)
     @qubit_state = qubit_state
+  end
+
+  def bra
+    Matrix[@qubit_state]
   end
 
   def to_s

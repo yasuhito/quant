@@ -19,4 +19,13 @@ class MultiQubitTest < ActiveSupport::TestCase
   test 'マルチキュービットの長さ' do
     assert_equal 2, MultiQubit[0, 1].length
   end
+
+  test 'ブラベクトルに変換' do
+    bra = MultiQubit[0, 1].bra
+
+    assert_equal 1, bra.row_size
+    assert_equal 2, bra.column_size
+    assert_equal 0, bra[0, 0]
+    assert_equal 1, bra[0, 1]
+  end
 end
