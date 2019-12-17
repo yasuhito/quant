@@ -32,6 +32,14 @@ class MultiQubit
     "|#{@qubit_state.join}>"
   end
 
+  def to_a
+    @qubit_state
+  end
+
+  def ==(other)
+    to_a == other.to_a
+  end
+
   def length
     @qubit_state.length
   end

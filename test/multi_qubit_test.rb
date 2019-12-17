@@ -4,6 +4,9 @@ require 'test_helper'
 
 require 'i'
 require 'multi_qubit'
+require 'x'
+require 'y'
+require 'z'
 
 class MultiQubitTest < ActiveSupport::TestCase
   test 'マルチキュービット (量子ビット1つ) の文字列表現' do
@@ -38,13 +41,27 @@ class MultiQubitTest < ActiveSupport::TestCase
     assert_equal Complex(19, 7), ket1 * ket2
   end
 
-  test '単位行列で時間発展' do
-    result = I * MultiQubit[1, 0, 1, 0]
+  test '単位行列 I' do
+    qubit = I * MultiQubit[1, 0]
 
-    assert_equal 4, result.length
-    assert_equal 1, result[0]
-    assert_equal 0, result[1]
-    assert_equal 1, result[2]
-    assert_equal 0, result[3]
+    assert_equal MultiQubit[1, 0], qubit
+  end
+
+  test 'パウリ X ゲート' do
+    qubit = X * MultiQubit[1, 0]
+
+    assert_equal MultiQubit[0, 1], qubit
+  end
+
+  test 'パウリ Y ゲート' do
+    qubit = Y * MultiQubit[1, 0]
+
+    assert_equal MultiQubit[0, Complex(0, 1)], qubit
+  end
+
+  test 'パウリ Z ゲート' do
+    qubit = Z * MultiQubit[1, 0]
+
+    assert_equal MultiQubit[1, 0], qubit
   end
 end

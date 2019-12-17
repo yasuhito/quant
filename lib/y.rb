@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-# 単位行列
-class I
+# パウリ Y ゲート
+class Y
   def self.*(multi_qubit)
-    matrix = Matrix.I(2)
+    matrix = Matrix[[0, Complex(0, -1)], [Complex(0, 1), 0]]
     MultiQubit[*(matrix * multi_qubit.ket.t).column_vectors[0].to_a]
   end
 end
