@@ -2,6 +2,7 @@
 
 require 'test_helper'
 
+require 'h'
 require 'i'
 require 'multi_qubit'
 require 'x'
@@ -63,5 +64,11 @@ class MultiQubitTest < ActiveSupport::TestCase
     qubit = Z * MultiQubit[1, 0]
 
     assert_equal MultiQubit[1, 0], qubit
+  end
+
+  test 'アダマールゲート' do
+    qubit = H * MultiQubit[1, 0]
+
+    assert_equal MultiQubit[1 / Math.sqrt(2), 1 / Math.sqrt(2)], qubit
   end
 end
