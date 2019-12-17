@@ -1,0 +1,3 @@
+# コメントは日本語で OK
+Style/AsciiComments:
+  Enabled: false
