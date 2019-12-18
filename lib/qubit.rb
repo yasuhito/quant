@@ -3,6 +3,7 @@
 require 'h'
 require 'i'
 require 'matrix'
+require 's'
 require 'x'
 require 'y'
 require 'z'
@@ -11,6 +12,7 @@ require 'z'
 class Qubit
   include H
   include I
+  include S
   include X
   include Y
   include Z

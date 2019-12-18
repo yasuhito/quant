@@ -6,7 +6,6 @@ require 'cnot'
 require 'qubit'
 require 'qubits'
 require 'r'
-require 's'
 require 't'
 
 class QubitTest < ActiveSupport::TestCase
@@ -63,9 +62,18 @@ class QubitTest < ActiveSupport::TestCase
     assert_equal [1 / sqrt(2), 1 / sqrt(2)], qubits[0].state
   end
 
-  test 'S phase shift gate' do
-    assert_equal Qubit[1, 0], S(Qubit[1, 0])
-    assert_equal Qubit[0, 1i], S(Qubit[0, 1])
+  test 'S phase shift gate |0>' do
+    qubits = Qubits[0]
+    qubits[0].S
+
+    assert_equal [1, 0], qubits[0].state
+  end
+
+  test 'S phase shift gate |1>' do
+    qubits = Qubits[1]
+    qubits[0].S
+
+    assert_equal [0, 1i], qubits[0].state
   end
 
   test 'T phase shift gate' do
