@@ -40,9 +40,10 @@ class QubitTest < ActiveSupport::TestCase
   end
 
   test 'Pauli X gate' do
-    qubit = X(Qubit[1, 0])
+    qubits = Qubits[0]
+    qubits[0].X
 
-    assert_equal Qubit[0, 1], qubit
+    assert_equal '|1>', qubits.to_s
   end
 
   test 'Pauli Y gate' do

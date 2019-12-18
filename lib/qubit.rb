@@ -2,10 +2,12 @@
 
 require 'matrix'
 require 'i'
+require 'x'
 
 # 量子ビット
 class Qubit
   include I
+  include X
 
   def self.[](*state)
     new(*state)
