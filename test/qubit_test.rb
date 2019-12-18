@@ -6,7 +6,6 @@ require 'cnot'
 require 'qubit'
 require 'qubits'
 require 'r'
-require 't'
 
 class QubitTest < ActiveSupport::TestCase
   include Math
@@ -76,9 +75,18 @@ class QubitTest < ActiveSupport::TestCase
     assert_equal [0, 1i], qubits[0].state
   end
 
+  test 'T phase shift gate |0>' do
+    qubits = Qubits[0]
+    qubits[0].T
+
+    assert_equal [1, 0], qubits[0].state
+  end
+
   test 'T phase shift gate' do
-    assert_equal Qubit[1, 0], T(Qubit[1, 0])
-    assert_equal Qubit[0, E**(1i * PI / 4)], T(Qubit[0, 1])
+    qubits = Qubits[1]
+    qubits[0].T
+
+    assert_equal [0, E**(1i * PI / 4)], qubits[0].state
   end
 
   test 'Rx rotation gate' do
