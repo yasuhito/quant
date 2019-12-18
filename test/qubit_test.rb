@@ -2,7 +2,6 @@
 
 require 'test_helper'
 
-require 'cnot'
 require 'qubit'
 require 'qubits'
 
@@ -119,34 +118,34 @@ class QubitTest < ActiveSupport::TestCase
 
   test 'CNOT gate |00>' do
     qubits = Qubits[0, 0]
-    result = CNOT(qubits[0], qubits[1])
+    qubits[1].CNOT(qubits[0])
 
-    assert_equal Qubit[1, 0], result[0]
-    assert_equal Qubit[1, 0], result[1]
+    assert_equal [1, 0], qubits[0].state
+    assert_equal [1, 0], qubits[1].state
   end
 
   test 'CNOT gate |01>' do
     qubits = Qubits[0, 1]
-    result = CNOT(qubits[0], qubits[1])
+    qubits[1].CNOT(qubits[0])
 
-    assert_equal Qubit[1, 0], result[0]
-    assert_equal Qubit[0, 1], result[1]
+    assert_equal [1, 0], qubits[0].state
+    assert_equal [0, 1], qubits[1].state
   end
 
   test 'CNOT gate |10>' do
     qubits = Qubits[1, 0]
-    result = CNOT(qubits[0], qubits[1])
+    qubits[1].CNOT(qubits[0])
 
-    assert_equal Qubit[0, 1], result[0]
-    assert_equal Qubit[0, 1], result[1]
+    assert_equal [0, 1], qubits[0].state
+    assert_equal [1, 0], qubits[1].state
   end
 
   test 'CNOT gate |11>' do
     qubits = Qubits[1, 1]
-    result = CNOT(qubits[0], qubits[1])
+    qubits[1].CNOT(qubits[0])
 
-    assert_equal Qubit[0, 1], result[0]
-    assert_equal Qubit[1, 0], result[1]
+    assert_equal [0, 1], qubits[0].state
+    assert_equal [1, 0], qubits[1].state
   end
 end
 # rubocop:enable Metrics/ClassLength
