@@ -15,23 +15,7 @@ require 'z'
 class QubitTest < ActiveSupport::TestCase
   include Math
 
-  test 'マルチキュービット (量子ビット1つ) の文字列表現' do
-    assert_equal '|0>', Qubit[0].to_s
-  end
-
-  test 'マルチキュービットの文字列表現' do
-    assert_equal '|01>', Qubit[0, 1].to_s
-  end
-
-  test 'マルチキュービット (量子ビット1つ) の長さ' do
-    assert_equal 1, Qubit[0].length
-  end
-
-  test 'マルチキュービットの長さ' do
-    assert_equal 2, Qubit[0, 1].length
-  end
-
-  test 'ブラベクトルに変換' do
+  test 'convert to bra vector' do
     bra = Qubit[1 + 2i, 2 + 1i].bra
 
     assert_equal 1, bra.row_size
@@ -40,14 +24,14 @@ class QubitTest < ActiveSupport::TestCase
     assert_equal 2 - 1i, bra[0, 1]
   end
 
-  test 'ケットベクトル同士の内積' do
+  test 'inner product' do
     ket1 = Qubit[1 + 2i, 2 - 1i, 3]
     ket2 = Qubit[1 + 2i, 4, 2 + 1i]
 
     assert_equal 19 + 7i, ket1 * ket2
   end
 
-  test '単位行列 I' do
+  test 'identity gate' do
     qubit = I(Qubit[1, 0])
 
     assert_equal Qubit[1, 0], qubit
