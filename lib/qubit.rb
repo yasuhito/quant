@@ -1,13 +1,15 @@
 # frozen_string_literal: true
 
-require 'matrix'
+require 'h'
 require 'i'
+require 'matrix'
 require 'x'
 require 'y'
 require 'z'
 
 # 量子ビット
 class Qubit
+  include H
   include I
   include X
   include Y

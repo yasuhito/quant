@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
 # アダマールゲート
-module Kernel
+module H
   # rubocop:disable Metrics/AbcSize
   # rubocop:disable Naming/MethodName
-  def H(qubit)
+  def H
     matrix = Matrix[[1 / Math.sqrt(2), 1 / Math.sqrt(2)],
                     [1 / Math.sqrt(2), -1 / Math.sqrt(2)]]
-    Qubit[*(matrix * qubit.ket.t).column_vectors[0].to_a]
+    @state = (matrix * ket.t).column_vectors[0].to_a
   end
   # rubocop:enable Metrics/AbcSize
   # rubocop:enable Naming/MethodName

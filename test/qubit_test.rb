@@ -3,7 +3,6 @@
 require 'test_helper'
 
 require 'cnot'
-require 'h'
 require 'qubit'
 require 'qubits'
 require 'r'
@@ -58,9 +57,10 @@ class QubitTest < ActiveSupport::TestCase
   end
 
   test 'Hadamard gate' do
-    qubit = H(Qubit[1, 0])
+    qubits = Qubits[0]
+    qubits[0].H
 
-    assert_equal Qubit[1 / sqrt(2), 1 / sqrt(2)], qubit
+    assert_equal [1 / sqrt(2), 1 / sqrt(2)], qubits[0].state
   end
 
   test 'S phase shift gate' do
