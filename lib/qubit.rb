@@ -1,9 +1,12 @@
 # frozen_string_literal: true
 
 require 'matrix'
+require 'i'
 
 # 量子ビット
 class Qubit
+  include I
+
   def self.[](*state)
     new(*state)
   end
@@ -44,5 +47,13 @@ class Qubit
 
   def ==(other)
     to_a == other.to_a
+  end
+
+  def to_s
+    if @state == [1, 0]
+      '0'
+    elsif @state == [0, 1]
+      '1'
+    end
   end
 end

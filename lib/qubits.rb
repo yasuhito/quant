@@ -19,4 +19,8 @@ class Qubits
   def [](index)
     @qubits[index]
   end
+
+  def to_s
+    "|#{@qubits.map(&:to_s).join}>"
+  end
 end

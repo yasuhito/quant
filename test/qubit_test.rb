@@ -4,7 +4,6 @@ require 'test_helper'
 
 require 'cnot'
 require 'h'
-require 'i'
 require 'qubit'
 require 'qubits'
 require 'r'
@@ -34,9 +33,10 @@ class QubitTest < ActiveSupport::TestCase
   end
 
   test 'identity gate' do
-    qubit = I(Qubit[1, 0])
+    qubits = Qubits[0]
+    qubits[0].I
 
-    assert_equal Qubit[1, 0], qubit
+    assert_equal '|0>', qubits.to_s
   end
 
   test 'Pauli X gate' do
