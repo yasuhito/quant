@@ -4,12 +4,14 @@ require 'matrix'
 require 'i'
 require 'x'
 require 'y'
+require 'z'
 
 # 量子ビット
 class Qubit
   include I
   include X
   include Y
+  include Z
 
   attr_reader :state
 
