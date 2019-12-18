@@ -3,11 +3,15 @@
 require 'matrix'
 require 'i'
 require 'x'
+require 'y'
 
 # 量子ビット
 class Qubit
   include I
   include X
+  include Y
+
+  attr_reader :state
 
   def self.[](*state)
     new(*state)

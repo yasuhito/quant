@@ -9,8 +9,6 @@ require 'qubits'
 require 'r'
 require 's'
 require 't'
-require 'x'
-require 'y'
 require 'z'
 
 class QubitTest < ActiveSupport::TestCase
@@ -47,9 +45,10 @@ class QubitTest < ActiveSupport::TestCase
   end
 
   test 'Pauli Y gate' do
-    qubit = Y(Qubit[1, 0])
+    qubits = Qubits[0]
+    qubits[0].Y
 
-    assert_equal Qubit[0, 1i], qubit
+    assert_equal [0, 1i], qubits[0].state
   end
 
   test 'Pauli Z gate' do
