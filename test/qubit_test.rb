@@ -5,8 +5,8 @@ require 'test_helper'
 require 'cnot'
 require 'qubit'
 require 'qubits'
-require 'r'
 
+# rubocop:disable Metrics/ClassLength
 class QubitTest < ActiveSupport::TestCase
   include Math
 
@@ -90,27 +90,31 @@ class QubitTest < ActiveSupport::TestCase
   end
 
   test 'Rx rotation gate' do
-    qubit = Rx(2 * PI, Qubit[1, 0])
+    qubits = Qubits[0]
+    qubits[0].Rx(2 * PI)
 
-    assert_equal Qubit[cos(PI), -1i * sin(PI)], qubit
+    assert_equal [cos(PI), -1i * sin(PI)], qubits[0].state
   end
 
   test 'Ry rotation gate' do
-    qubit = Ry(2 * PI, Qubit[1, 0])
+    qubits = Qubits[0]
+    qubits[0].Ry(2 * PI)
 
-    assert_equal Qubit[cos(PI), sin(PI)], qubit
+    assert_equal [cos(PI), sin(PI)], qubits[0].state
   end
 
   test 'Rz rotation gate' do
-    qubit = Rz(2 * PI, Qubit[1, 0])
+    qubits = Qubits[0]
+    qubits[0].Rz(2 * PI)
 
-    assert_equal Qubit[E**(-1i * PI), 0], qubit
+    assert_equal [E**(-1i * PI), 0], qubits[0].state
   end
 
   test 'R1 rotation gate' do
-    qubit = R1(2 * PI, Qubit[1, 0])
+    qubits = Qubits[0]
+    qubits[0].R1(2 * PI)
 
-    assert_equal Qubit[1, 0], qubit
+    assert_equal [1, 0], qubits[0].state
   end
 
   test 'CNOT gate |00>' do
@@ -145,3 +149,4 @@ class QubitTest < ActiveSupport::TestCase
     assert_equal Qubit[1, 0], result[1]
   end
 end
+# rubocop:enable Metrics/ClassLength
