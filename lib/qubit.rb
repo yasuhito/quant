@@ -2,7 +2,7 @@
 
 require 'matrix'
 
-# 量子ビット列
+# 量子ビット
 class Qubit
   def self.[](*state)
     new(*state)
@@ -22,6 +22,16 @@ class Qubit
 
   def ket
     Matrix[@state]
+  end
+
+  def tensor_product(other)
+    Matrix.build(4, 1) do |row, _col|
+      if row < 2
+        self[0] * other[row % 2]
+      else
+        self[1] * other[row % 2]
+      end
+    end
   end
 
   def [](index)

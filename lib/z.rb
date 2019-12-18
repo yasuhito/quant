@@ -3,9 +3,9 @@
 # パウリ Z ゲート
 module Kernel
   # rubocop:disable Naming/MethodName
-  def Z(multi_qubit)
+  def Z(qubit)
     matrix = Matrix[[1, 0], [0, -1]]
-    Qubit[*(matrix * multi_qubit.ket.t).column_vectors[0].to_a]
+    Qubit[*(matrix * qubit.ket.t).column_vectors[0].to_a]
   end
   # rubocop:enable Naming/MethodName
 end

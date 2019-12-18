@@ -2,9 +2,11 @@
 
 require 'test_helper'
 
+require 'cnot'
 require 'h'
 require 'i'
 require 'qubit'
+require 'qubits'
 require 'r'
 require 's'
 require 't'
@@ -93,5 +95,37 @@ class QubitTest < ActiveSupport::TestCase
     qubit = R1(2 * PI, Qubit[1, 0])
 
     assert_equal Qubit[1, 0], qubit
+  end
+
+  test 'CNOT gate |00>' do
+    qubits = Qubits[0, 0]
+    result = CNOT(qubits[0], qubits[1])
+
+    assert_equal Qubit[1, 0], result[0]
+    assert_equal Qubit[1, 0], result[1]
+  end
+
+  test 'CNOT gate |01>' do
+    qubits = Qubits[0, 1]
+    result = CNOT(qubits[0], qubits[1])
+
+    assert_equal Qubit[1, 0], result[0]
+    assert_equal Qubit[0, 1], result[1]
+  end
+
+  test 'CNOT gate |10>' do
+    qubits = Qubits[1, 0]
+    result = CNOT(qubits[0], qubits[1])
+
+    assert_equal Qubit[0, 1], result[0]
+    assert_equal Qubit[0, 1], result[1]
+  end
+
+  test 'CNOT gate |11>' do
+    qubits = Qubits[1, 1]
+    result = CNOT(qubits[0], qubits[1])
+
+    assert_equal Qubit[0, 1], result[0]
+    assert_equal Qubit[1, 0], result[1]
   end
 end

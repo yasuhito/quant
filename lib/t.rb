@@ -3,9 +3,9 @@
 # フェーズシフトゲート T
 module Kernel
   # rubocop:disable Naming/MethodName
-  def T(multi_qubit)
+  def T(qubit)
     matrix = Matrix[[1, 0], [0, Math::E**(1i * Math::PI / 4)]]
-    Qubit[*(matrix * multi_qubit.ket.t).column_vectors[0].to_a]
+    Qubit[*(matrix * qubit.ket.t).column_vectors[0].to_a]
   end
   # rubocop:enable Naming/MethodName
 end
