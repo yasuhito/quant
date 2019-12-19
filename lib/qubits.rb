@@ -40,6 +40,10 @@ class Qubits
     @qubits[index]
   end
 
+  def state
+    @qubits.map(&:state)
+  end
+
   def to_s
     "|#{@qubits.map(&:to_s).join}>"
   end
