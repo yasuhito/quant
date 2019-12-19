@@ -6,7 +6,6 @@ require 'matrix'
 require 'r'
 require 's'
 require 't'
-require 'z'
 
 # 量子ビット
 class Qubit
@@ -15,7 +14,6 @@ class Qubit
   include R
   include S
   include T
-  include Z
 
   attr_accessor :state
 

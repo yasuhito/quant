@@ -3,12 +3,14 @@
 require 'i'
 require 'x'
 require 'y'
+require 'z'
 
 # 量子ビット系
 class Qubits
   include I
   include X
   include Y
+  include Z
 
   def self.[](*qubits)
     new(*qubits)
