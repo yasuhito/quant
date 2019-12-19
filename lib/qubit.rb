@@ -6,7 +6,6 @@ require 'matrix'
 require 'r'
 require 's'
 require 't'
-require 'x'
 require 'y'
 require 'z'
 
@@ -17,11 +16,10 @@ class Qubit
   include R
   include S
   include T
-  include X
   include Y
   include Z
 
-  attr_reader :state
+  attr_accessor :state
 
   def self.[](*state)
     new(*state)

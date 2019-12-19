@@ -1,11 +1,9 @@
 # frozen_string_literal: true
 
-# パウリ X ゲート
+# Pauli-X gate
 module X
-  # rubocop:disable Naming/MethodName
-  def X
+  def x(target)
     matrix = Matrix[[0, 1], [1, 0]]
-    @state = (matrix * ket.t).column_vectors[0].to_a
+    @qubits[target].state = (matrix * @qubits[target].ket.t).column_vectors[0].to_a
   end
-  # rubocop:enable Naming/MethodName
 end

@@ -1,10 +1,12 @@
 # frozen_string_literal: true
 
 require 'i'
+require 'x'
 
 # 量子ビット系
 class Qubits
   include I
+  include X
 
   def self.[](*qubits)
     new(*qubits)
