@@ -2,68 +2,56 @@
 
 # 量子回路
 class Circuit
-  def initialize(nqubits)
-    @qubits = Qubits[*Array.new(nqubits, 0)] # rubocop:disable Lint/RedundantSplatExpansion
+  def initialize(nqubits = 0, qubits = nil)
+    @qubits = qubits || Qubits[*Array.new(nqubits, 0)]
   end
 
   def i(target)
-    @qubits = @qubits.i(target)
-    self
+    self.class.new nil, @qubits.i(target)
   end
 
   def x(target)
-    @qubits = @qubits.x(target)
-    self
+    self.class.new nil, @qubits.x(target)
   end
 
   def y(target)
-    @qubits = @qubits.y(target)
-    self
+    self.class.new nil, @qubits.y(target)
   end
 
   def z(target)
-    @qubits = @qubits.z(target)
-    self
+    self.class.new nil, @qubits.z(target)
   end
 
   def h(target)
-    @qubits = @qubits.h(target)
-    self
+    self.class.new nil, @qubits.h(target)
   end
 
   def s(target)
-    @qubits = @qubits.s(target)
-    self
+    self.class.new nil, @qubits.s(target)
   end
 
   def t(target)
-    @qubits = @qubits.t(target)
-    self
+    self.class.new nil, @qubits.t(target)
   end
 
   def rx(target, theta)
-    @qubits = @qubits.rx(target, theta)
-    self
+    self.class.new nil, @qubits.rx(target, theta)
   end
 
   def ry(target, theta)
-    @qubits = @qubits.ry(target, theta)
-    self
+    self.class.new nil, @qubits.ry(target, theta)
   end
 
   def rz(target, theta)
-    @qubits = @qubits.rz(target, theta)
-    self
+    self.class.new nil, @qubits.rz(target, theta)
   end
 
   def r1(target, theta)
-    @qubits = @qubits.r1(target, theta)
-    self
+    self.class.new nil, @qubits.r1(target, theta)
   end
 
   def cnot(control:, target:)
-    @qubits = @qubits.cnot(control: control, target: target)
-    self
+    self.class.new nil, @qubits.cnot(control: control, target: target)
   end
 
   def state
