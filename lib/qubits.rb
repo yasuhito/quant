@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'h'
 require 'i'
 require 'x'
 require 'y'
@@ -7,6 +8,7 @@ require 'z'
 
 # 量子ビット系
 class Qubits
+  include H
   include I
   include X
   include Y

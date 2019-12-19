@@ -55,7 +55,7 @@ class QubitTest < ActiveSupport::TestCase
 
   test 'Hadamard gate' do
     qubits = Qubits[0]
-    qubits[0].H
+    qubits.h(0)
 
     assert_equal [1 / sqrt(2), 1 / sqrt(2)], qubits[0].state
   end

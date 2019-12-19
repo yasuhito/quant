@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'cnot'
-require 'h'
 require 'matrix'
 require 'r'
 require 's'
@@ -10,7 +9,6 @@ require 't'
 # 量子ビット
 class Qubit
   include CNOT
-  include H
   include R
   include S
   include T
