@@ -47,12 +47,12 @@ class Circuit
   end
 
   def ry(target, theta)
-    @qubits.ry(target, theta)
+    @qubits = @qubits.ry(target, theta)
     self
   end
 
   def rz(target, theta)
-    @qubits.rz(target, theta)
+    @qubits = @qubits.rz(target, theta)
     self
   end
 
