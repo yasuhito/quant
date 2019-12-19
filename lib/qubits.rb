@@ -8,7 +8,7 @@ require 's'
 require 't'
 require 'x_gate'
 require 'y_gate'
-require 'z'
+require 'z_gate'
 
 # 量子ビット系
 class Qubits
@@ -17,7 +17,6 @@ class Qubits
   include R
   include S
   include T
-  include Z
 
   attr_reader :qubits
 
@@ -51,6 +50,10 @@ class Qubits
 
   def y(target)
     self.class.new(*YGate.new(@qubits).apply(target))
+  end
+
+  def z(target)
+    self.class.new(*ZGate.new(@qubits).apply(target))
   end
 
   def [](index)
