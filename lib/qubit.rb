@@ -1,12 +1,9 @@
 # frozen_string_literal: true
 
-require 'cnot'
 require 'matrix'
 
 # 量子ビット
 class Qubit
-  include CNOT
-
   attr_accessor :state
 
   def self.[](*state)

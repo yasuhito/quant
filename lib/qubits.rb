@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'cnot'
 require 'h'
 require 'i'
 require 'r'
@@ -11,6 +12,7 @@ require 'z'
 
 # 量子ビット系
 class Qubits
+  include CNOT
   include H
   include I
   include R

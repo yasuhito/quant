@@ -81,35 +81,35 @@ class QubitTest < ActiveSupport::TestCase
     assert_equal [1, 0], qubits[0].state
   end
 
-  test 'T phase shift gate' do
+  test 'T|1>' do
     qubits = Qubits[1]
     qubits.t(0)
 
     assert_equal [0, E**(1i * PI / 4)], qubits[0].state
   end
 
-  test 'Rx rotation gate' do
+  test 'Rx|0>' do
     qubits = Qubits[0]
     qubits.rx(0, 2 * PI)
 
     assert_equal [cos(PI), -1i * sin(PI)], qubits[0].state
   end
 
-  test 'Ry rotation gate' do
+  test 'Ry|0>' do
     qubits = Qubits[0]
     qubits.ry(0, 2 * PI)
 
     assert_equal [cos(PI), sin(PI)], qubits[0].state
   end
 
-  test 'Rz rotation gate' do
+  test 'Rz|0>' do
     qubits = Qubits[0]
     qubits.rz(0, 2 * PI)
 
     assert_equal [E**(-1i * PI), 0], qubits[0].state
   end
 
-  test 'R1 rotation gate' do
+  test 'R1|0>' do
     qubits = Qubits[0]
     qubits.r1(0, 2 * PI)
 
@@ -118,7 +118,7 @@ class QubitTest < ActiveSupport::TestCase
 
   test 'CNOT gate |00>' do
     qubits = Qubits[0, 0]
-    qubits[1].CNOT(qubits[0])
+    qubits.cnot(control: 0, target: 1)
 
     assert_equal [1, 0], qubits[0].state
     assert_equal [1, 0], qubits[1].state
@@ -126,7 +126,7 @@ class QubitTest < ActiveSupport::TestCase
 
   test 'CNOT gate |01>' do
     qubits = Qubits[0, 1]
-    qubits[1].CNOT(qubits[0])
+    qubits.cnot(control: 0, target: 1)
 
     assert_equal [1, 0], qubits[0].state
     assert_equal [0, 1], qubits[1].state
@@ -134,7 +134,7 @@ class QubitTest < ActiveSupport::TestCase
 
   test 'CNOT gate |10>' do
     qubits = Qubits[1, 0]
-    qubits[1].CNOT(qubits[0])
+    qubits.cnot(control: 0, target: 1)
 
     assert_equal [0, 1], qubits[0].state
     assert_equal [1, 0], qubits[1].state
@@ -142,7 +142,7 @@ class QubitTest < ActiveSupport::TestCase
 
   test 'CNOT gate |11>' do
     qubits = Qubits[1, 1]
-    qubits[1].CNOT(qubits[0])
+    qubits.cnot(control: 0, target: 1)
 
     assert_equal [0, 1], qubits[0].state
     assert_equal [1, 0], qubits[1].state

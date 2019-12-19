@@ -3,25 +3,23 @@
 # CNOT ゲート
 module CNOT
   # rubocop:disable Metrics/MethodLength
-  # rubocop:disable Naming/MethodName
-  def CNOT(control)
+  def cnot(control:, target:)
     matrix = Matrix[[1, 0, 0, 0],
                     [0, 1, 0, 0],
                     [0, 0, 0, 1],
                     [0, 0, 1, 0]]
-    qubits = control.tensor_product(self)
+    qubits = @qubits[control].tensor_product(@qubits[target])
     result = matrix * qubits
 
-    @state = if result == Matrix[[1], [0], [0], [0]]
-               [1, 0]
-             elsif result == Matrix[[0], [1], [0], [0]]
-               [0, 1]
-             elsif result == Matrix[[0], [0], [0], [1]]
-               [1, 0]
-             elsif result == Matrix[[0], [0], [1], [0]]
-               [1, 0]
-             end
+    @qubits[target].state = if result == Matrix[[1], [0], [0], [0]]
+                              [1, 0]
+                            elsif result == Matrix[[0], [1], [0], [0]]
+                              [0, 1]
+                            elsif result == Matrix[[0], [0], [0], [1]]
+                              [1, 0]
+                            elsif result == Matrix[[0], [0], [1], [0]]
+                              [1, 0]
+                            end
   end
-  # rubocop:enable Naming/MethodName
   # rubocop:enable Metrics/MethodLength
 end
