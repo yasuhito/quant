@@ -57,7 +57,7 @@ class Circuit
   end
 
   def r1(target, theta)
-    @qubits.r1(target, theta)
+    @qubits = @qubits.r1(target, theta)
     self
   end
 
