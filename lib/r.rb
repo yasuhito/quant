@@ -7,7 +7,10 @@ module R
   # rubocop:disable Metrics/AbcSize
   def rx(target, theta)
     matrix = Matrix[[cos(theta / 2), -1i * sin(theta / 2)], [-1i * sin(theta / 2), cos(theta / 2)]]
-    @qubits[target].state = (matrix * @qubits[target].ket.t).column_vectors[0].to_a
+    qubits = @qubits.dup.tap do |qs|
+      qs[target].state = (matrix * qs[target].ket.t).column_vectors[0].to_a
+    end
+    self.class.new(*qubits)
   end
   # rubocop:enable Metrics/AbcSize
 
