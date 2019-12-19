@@ -41,7 +41,7 @@ class QubitTest < ActiveSupport::TestCase
 
   test 'Pauli Y gate' do
     qubits = Qubits[0]
-    qubits[0].Y
+    qubits.y(0)
 
     assert_equal [0, 1i], qubits[0].state
   end
