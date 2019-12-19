@@ -3,7 +3,7 @@
 # 量子回路
 class Circuit
   def initialize(nqubits)
-    @qubits = Qubits[*([0] * nqubits)]
+    @qubits = Qubits[*Array.new(nqubits, 0)] # rubocop:disable Lint/RedundantSplatExpansion
   end
 
   def i(target)
@@ -22,7 +22,7 @@ class Circuit
   end
 
   def z(target)
-    @qubits.z(target)
+    @qubits = @qubits.z(target)
     self
   end
 
