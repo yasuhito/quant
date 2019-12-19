@@ -4,7 +4,7 @@
 module CNOT
   # rubocop:disable Metrics/MethodLength
   # rubocop:disable Metrics/AbcSize
-  def cnot(control:, target:)
+  def cnot(target, control:)
     matrix = Matrix[[1, 0, 0, 0],
                     [0, 1, 0, 0],
                     [0, 0, 0, 1],

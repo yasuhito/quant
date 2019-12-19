@@ -86,25 +86,25 @@ class CircuitTest < ActiveSupport::TestCase
   end
 
   test 'CNOT gate |00>' do
-    circuit = Circuit.new(2).cnot(control: 0, target: 1)
+    circuit = Circuit.new(2).cnot(1, control: 0)
 
     assert_equal [[1, 0], [1, 0]], circuit.state
   end
 
   test 'CNOT gate |01>' do
-    circuit = Circuit.new(2).x(1).cnot(control: 0, target: 1)
+    circuit = Circuit.new(2).x(1).cnot(1, control: 0)
 
     assert_equal [[1, 0], [0, 1]], circuit.state
   end
 
   test 'CNOT gate |10>' do
-    circuit = Circuit.new(2).x(0).cnot(control: 0, target: 1)
+    circuit = Circuit.new(2).x(0).cnot(1, control: 0)
 
     assert_equal [[0, 1], [1, 0]], circuit.state
   end
 
   test 'CNOT gate |11>' do
-    circuit = Circuit.new(2).x(0).x(1).cnot(control: 0, target: 1)
+    circuit = Circuit.new(2).x(0).x(1).cnot(1, control: 0)
 
     assert_equal [[0, 1], [1, 0]], circuit.state
   end

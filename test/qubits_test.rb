@@ -100,7 +100,7 @@ class QubitsTest < ActiveSupport::TestCase
 
   test 'CNOT gate |00>' do
     qubits = Qubits[0, 0]
-    qubits.cnot(control: 0, target: 1)
+    qubits.cnot(1, control: 0)
 
     assert_equal [1, 0], qubits[0].state
     assert_equal [1, 0], qubits[1].state
@@ -108,7 +108,7 @@ class QubitsTest < ActiveSupport::TestCase
 
   test 'CNOT gate |01>' do
     qubits = Qubits[0, 1]
-    qubits.cnot(control: 0, target: 1)
+    qubits.cnot(1, control: 0)
 
     assert_equal [1, 0], qubits[0].state
     assert_equal [0, 1], qubits[1].state
@@ -116,7 +116,7 @@ class QubitsTest < ActiveSupport::TestCase
 
   test 'CNOT gate |10>' do
     qubits = Qubits[1, 0]
-    qubits.cnot(control: 0, target: 1)
+    qubits.cnot(1, control: 0)
 
     assert_equal [0, 1], qubits[0].state
     assert_equal [1, 0], qubits[1].state
@@ -124,7 +124,7 @@ class QubitsTest < ActiveSupport::TestCase
 
   test 'CNOT gate |11>' do
     qubits = Qubits[1, 1]
-    qubits.cnot(control: 0, target: 1)
+    qubits.cnot(1, control: 0)
 
     assert_equal [0, 1], qubits[0].state
     assert_equal [1, 0], qubits[1].state

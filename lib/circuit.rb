@@ -50,8 +50,8 @@ class Circuit
     self.class.new nil, @qubits.r1(target, theta)
   end
 
-  def cnot(control:, target:)
-    self.class.new nil, @qubits.cnot(control: control, target: target)
+  def cnot(target, control:)
+    self.class.new nil, @qubits.cnot(target, control: control)
   end
 
   def state
