@@ -62,7 +62,7 @@ class Circuit
   end
 
   def cnot(control:, target:)
-    @qubits.cnot(control: control, target: target)
+    @qubits = @qubits.cnot(control: control, target: target)
     self
   end
 
