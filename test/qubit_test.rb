@@ -27,7 +27,7 @@ class QubitTest < ActiveSupport::TestCase
 
   test 'identity gate' do
     qubits = Qubits[0]
-    qubits[0].I
+    qubits.i(0)
 
     assert_equal '|0>', qubits.to_s
   end

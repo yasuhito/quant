@@ -1,7 +1,11 @@
 # frozen_string_literal: true
 
+require 'i'
+
 # 量子ビット系
 class Qubits
+  include I
+
   def self.[](*qubits)
     new(*qubits)
   end

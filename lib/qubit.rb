@@ -2,7 +2,6 @@
 
 require 'cnot'
 require 'h'
-require 'i'
 require 'matrix'
 require 'r'
 require 's'
@@ -15,7 +14,6 @@ require 'z'
 class Qubit
   include CNOT
   include H
-  include I
   include R
   include S
   include T

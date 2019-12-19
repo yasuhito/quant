@@ -2,5 +2,5 @@
 
 # 単位行列
 module I
-  def I; end # rubocop:disable Naming/MethodName
+  def i(target); end
 end
