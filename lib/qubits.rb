@@ -26,15 +26,21 @@ class Qubits
     new(*qubits)
   end
 
+  # rubocop:disable MethodLength
   def initialize(*qubits)
-    @qubits = qubits.map do |each|
-      if each.zero?
-        Qubit[1, 0]
-      else
-        Qubit[0, 1]
-      end
-    end
+    @qubits = if qubits.first.is_a?(Qubit)
+                qubits
+              else
+                qubits.map do |each|
+                  if each.zero?
+                    Qubit[1, 0]
+                  else
+                    Qubit[0, 1]
+                  end
+                end
+              end
   end
+  # rubocop:enable MethodLength
 
   def [](index)
     @qubits[index]
