@@ -2,14 +2,10 @@
 
 require 'cnot'
 require 'matrix'
-require 'r'
-require 't'
 
 # 量子ビット
 class Qubit
   include CNOT
-  include R
-  include T
 
   attr_accessor :state
 
