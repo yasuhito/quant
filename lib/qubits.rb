@@ -2,7 +2,7 @@
 
 require 'cnot'
 require 'h'
-require 'i'
+require 'id_gate'
 require 'r'
 require 's'
 require 't'
@@ -14,7 +14,6 @@ require 'z'
 class Qubits
   include CNOT
   include H
-  include I
   include R
   include S
   include T
@@ -43,8 +42,12 @@ class Qubits
   end
   # rubocop:enable Metrics/MethodLength
 
+  def i(target)
+    self.class.new(*IdGate.new(@qubits).apply(target))
+  end
+
   def x(target)
-    self.class.new(*Xgate.new(@qubits).apply(target))
+    self.class.new(*XGate.new(@qubits).apply(target))
   end
 
   def [](index)

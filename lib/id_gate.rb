@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-# Pauli-X gate
-class XGate
+# 単位行列
+class IdGate
   def initialize(qubits)
     @qubits = qubits.dup
   end
@@ -15,6 +15,6 @@ class XGate
   private
 
   def matrix
-    Matrix[[0, 1], [1, 0]]
+    Matrix.I(2)
   end
 end
