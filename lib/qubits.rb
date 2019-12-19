@@ -38,51 +38,51 @@ class Qubits
   # rubocop:enable Metrics/MethodLength
 
   def i(target)
-    self.class.new(*IdGate.new(@qubits).apply(target))
+    self.class.new(*IdGate.new.apply(@qubits, target))
   end
 
   def x(target)
-    self.class.new(*XGate.new(@qubits).apply(target))
+    self.class.new(*XGate.new.apply(@qubits, target))
   end
 
   def y(target)
-    self.class.new(*YGate.new(@qubits).apply(target))
+    self.class.new(*YGate.new.apply(@qubits, target))
   end
 
   def z(target)
-    self.class.new(*ZGate.new(@qubits).apply(target))
+    self.class.new(*ZGate.new.apply(@qubits, target))
   end
 
   def h(target)
-    self.class.new(*HGate.new(@qubits).apply(target))
+    self.class.new(*HGate.new.apply(@qubits, target))
   end
 
   def s(target)
-    self.class.new(*SGate.new(@qubits).apply(target))
+    self.class.new(*SGate.new.apply(@qubits, target))
   end
 
   def t(target)
-    self.class.new(*TGate.new(@qubits).apply(target))
+    self.class.new(*TGate.new.apply(@qubits, target))
   end
 
   def rx(target, theta)
-    self.class.new(*RxGate.new(@qubits).apply(target, theta))
+    self.class.new(*RxGate.new.apply(@qubits, target, theta))
   end
 
   def ry(target, theta)
-    self.class.new(*RyGate.new(@qubits).apply(target, theta))
+    self.class.new(*RyGate.new.apply(@qubits, target, theta))
   end
 
   def rz(target, theta)
-    self.class.new(*RzGate.new(@qubits).apply(target, theta))
+    self.class.new(*RzGate.new.apply(@qubits, target, theta))
   end
 
   def r1(target, theta)
-    self.class.new(*R1Gate.new(@qubits).apply(target, theta))
+    self.class.new(*R1Gate.new.apply(@qubits, target, theta))
   end
 
   def cnot(target, control:)
-    self.class.new(*CnotGate.new(@qubits).apply(target, control))
+    self.class.new(*CnotGate.new.apply(@qubits, target, control))
   end
 
   def [](index)
