@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
-require 'cnot'
+require 'cnot_gate'
 require 'h_gate'
 require 'id_gate'
 require 'r1_gate'
 require 'rx_gate'
 require 'ry_gate'
 require 'rz_gate'
-require 's'
+require 's_gate'
 require 't_gate'
 require 'x_gate'
 require 'y_gate'
@@ -15,8 +15,6 @@ require 'z_gate'
 
 # 量子ビット系
 class Qubits
-  include CNOT
-
   attr_reader :qubits
 
   def self.[](*qubits)
@@ -81,6 +79,10 @@ class Qubits
 
   def r1(target, theta)
     self.class.new(*R1Gate.new(@qubits).apply(target, theta))
+  end
+
+  def cnot(target, control:)
+    self.class.new(*CnotGate.new(@qubits).apply(target, control))
   end
 
   def [](index)

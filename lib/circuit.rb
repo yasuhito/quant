@@ -34,19 +34,19 @@ class Circuit
     self.class.new nil, @qubits.t(target)
   end
 
-  def rx(target, theta)
+  def rx(target, theta:)
     self.class.new nil, @qubits.rx(target, theta)
   end
 
-  def ry(target, theta)
+  def ry(target, theta:)
     self.class.new nil, @qubits.ry(target, theta)
   end
 
-  def rz(target, theta)
+  def rz(target, theta:)
     self.class.new nil, @qubits.rz(target, theta)
   end
 
-  def r1(target, theta)
+  def r1(target, theta:)
     self.class.new nil, @qubits.r1(target, theta)
   end
 

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # ローテーションゲート Y
 class RyGate
   include Math

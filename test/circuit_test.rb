@@ -62,25 +62,25 @@ class CircuitTest < ActiveSupport::TestCase
   end
 
   test 'Rx|0>' do
-    circuit = Circuit.new(1).rx(0, 2 * PI)
+    circuit = Circuit.new(1).rx(0, theta: 2 * PI)
 
     assert_equal [[cos(PI), -1i * sin(PI)]], circuit.state
   end
 
   test 'Ry|0>' do
-    circuit = Circuit.new(1).ry(0, 2 * PI)
+    circuit = Circuit.new(1).ry(0, theta: 2 * PI)
 
     assert_equal [[cos(PI), sin(PI)]], circuit.state
   end
 
   test 'Rz|0>' do
-    circuit = Circuit.new(1).rz(0, 2 * PI)
+    circuit = Circuit.new(1).rz(0, theta: 2 * PI)
 
     assert_equal [[E**(-1i * PI), 0]], circuit.state
   end
 
   test 'R1|0>' do
-    circuit = Circuit.new(1).r1(0, 2 * PI)
+    circuit = Circuit.new(1).r1(0, theta: 2 * PI)
 
     assert_equal [[1, 0]], circuit.state
   end

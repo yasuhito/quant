@@ -1,18 +1,17 @@
 # frozen_string_literal: true
 
 # CNOT ゲート
-module CNOT
+class CnotGate
+  def initialize(qubits)
+    @qubits = qubits.dup
+  end
+
   # rubocop:disable Metrics/MethodLength
-  # rubocop:disable Metrics/AbcSize
-  def cnot(target, control:)
-    matrix = Matrix[[1, 0, 0, 0],
-                    [0, 1, 0, 0],
-                    [0, 0, 0, 1],
-                    [0, 0, 1, 0]]
+  def apply(target, control)
     qubits = @qubits[control].tensor_product(@qubits[target])
     result = matrix * qubits
 
-    qubits = @qubits.dup.tap do |qs|
+    @qubits.dup.tap do |qs|
       qs[target].state = if result == Matrix[[1], [0], [0], [0]]
                            [1, 0]
                          elsif result == Matrix[[0], [1], [0], [0]]
@@ -23,8 +22,15 @@ module CNOT
                            [1, 0]
                          end
     end
-    self.class.new(*qubits)
   end
   # rubocop:enable Metrics/MethodLength
-  # rubocop:enable Metrics/AbcSize
+
+  private
+
+  def matrix
+    Matrix[[1, 0, 0, 0],
+           [0, 1, 0, 0],
+           [0, 0, 0, 1],
+           [0, 0, 1, 0]]
+  end
 end

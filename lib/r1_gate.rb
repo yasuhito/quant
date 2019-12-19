@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # ローテーションゲート
 class R1Gate
   include Math
