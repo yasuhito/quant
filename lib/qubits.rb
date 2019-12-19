@@ -6,7 +6,7 @@ require 'i'
 require 'r'
 require 's'
 require 't'
-require 'x'
+require 'x_gate'
 require 'y'
 require 'z'
 
@@ -18,9 +18,10 @@ class Qubits
   include R
   include S
   include T
-  include X
   include Y
   include Z
+
+  attr_reader :qubits
 
   def self.[](*qubits)
     new(*qubits)
@@ -41,6 +42,10 @@ class Qubits
               end
   end
   # rubocop:enable Metrics/MethodLength
+
+  def x(target)
+    self.class.new(*Xgate.new(@qubits).apply(target))
+  end
 
   def [](index)
     @qubits[index]
