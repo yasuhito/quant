@@ -7,7 +7,7 @@ class Circuit
   end
 
   def i(target)
-    @qubits.i(target)
+    @qubits = @qubits.i(target)
     self
   end
 

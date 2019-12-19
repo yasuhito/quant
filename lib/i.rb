@@ -2,5 +2,7 @@
 
 # 単位行列
 module I
-  def i(target); end
+  def i(_target)
+    self
+  end
 end
