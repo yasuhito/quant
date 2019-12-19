@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'cnot'
-require 'h'
+require 'h_gate'
 require 'id_gate'
 require 'r'
 require 's'
@@ -13,7 +13,6 @@ require 'z_gate'
 # 量子ビット系
 class Qubits
   include CNOT
-  include H
   include R
   include S
   include T
@@ -54,6 +53,10 @@ class Qubits
 
   def z(target)
     self.class.new(*ZGate.new(@qubits).apply(target))
+  end
+
+  def h(target)
+    self.class.new(*HGate.new(@qubits).apply(target))
   end
 
   def [](index)
