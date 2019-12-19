@@ -25,51 +25,51 @@ class QubitTest < ActiveSupport::TestCase
     assert_equal 19 + 7i, ket1 * ket2
   end
 
-  test 'identity gate' do
+  test 'I|0>' do
     qubits = Qubits[0]
     qubits.i(0)
 
     assert_equal '|0>', qubits.to_s
   end
 
-  test 'Pauli X gate' do
+  test 'X|0>' do
     qubits = Qubits[0]
     qubits.x(0)
 
     assert_equal '|1>', qubits.to_s
   end
 
-  test 'Pauli Y gate' do
+  test 'Y|0>' do
     qubits = Qubits[0]
     qubits.y(0)
 
     assert_equal [0, 1i], qubits[0].state
   end
 
-  test 'Pauli Z gate' do
+  test 'Z|0>' do
     qubits = Qubits[0]
     qubits.z(0)
 
     assert_equal [1, 0], qubits[0].state
   end
 
-  test 'Hadamard gate' do
+  test 'H|0>' do
     qubits = Qubits[0]
     qubits.h(0)
 
     assert_equal [1 / sqrt(2), 1 / sqrt(2)], qubits[0].state
   end
 
-  test 'S phase shift gate |0>' do
+  test 'S|0>' do
     qubits = Qubits[0]
-    qubits[0].S
+    qubits.s(0)
 
     assert_equal [1, 0], qubits[0].state
   end
 
-  test 'S phase shift gate |1>' do
+  test 'S|1>' do
     qubits = Qubits[1]
-    qubits[0].S
+    qubits.s(0)
 
     assert_equal [0, 1i], qubits[0].state
   end

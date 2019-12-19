@@ -2,6 +2,7 @@
 
 require 'h'
 require 'i'
+require 's'
 require 'x'
 require 'y'
 require 'z'
@@ -10,6 +11,7 @@ require 'z'
 class Qubits
   include H
   include I
+  include S
   include X
   include Y
   include Z
