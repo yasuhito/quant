@@ -3,7 +3,7 @@
 require 'cnot'
 require 'h_gate'
 require 'id_gate'
-require 'r'
+require 'r_gate'
 require 's'
 require 't_gate'
 require 'x_gate'
@@ -13,7 +13,6 @@ require 'z_gate'
 # 量子ビット系
 class Qubits
   include CNOT
-  include R
 
   attr_reader :qubits
 
@@ -63,6 +62,22 @@ class Qubits
 
   def t(target)
     self.class.new(*TGate.new(@qubits).apply(target))
+  end
+
+  def rx(target, theta)
+    self.class.new(*RxGate.new(@qubits).apply(target, theta))
+  end
+
+  def ry(target, theta)
+    self.class.new(*RyGate.new(@qubits).apply(target, theta))
+  end
+
+  def rz(target, theta)
+    self.class.new(*RzGate.new(@qubits).apply(target, theta))
+  end
+
+  def r1(target, theta)
+    self.class.new(*R1Gate.new(@qubits).apply(target, theta))
   end
 
   def [](index)
