@@ -26,7 +26,7 @@ class Qubits
     new(*qubits)
   end
 
-  # rubocop:disable MethodLength
+  # rubocop:disable Metrics/MethodLength
   def initialize(*qubits)
     @qubits = if qubits.first.is_a?(Qubit)
                 qubits
@@ -40,7 +40,7 @@ class Qubits
                 end
               end
   end
-  # rubocop:enable MethodLength
+  # rubocop:enable Metrics/MethodLength
 
   def [](index)
     @qubits[index]
