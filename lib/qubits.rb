@@ -14,7 +14,6 @@ require 'z_gate'
 class Qubits
   include CNOT
   include R
-  include S
   include T
 
   attr_reader :qubits
@@ -57,6 +56,10 @@ class Qubits
 
   def h(target)
     self.class.new(*HGate.new(@qubits).apply(target))
+  end
+
+  def s(target)
+    self.class.new(*SGate.new(@qubits).apply(target))
   end
 
   def [](index)
