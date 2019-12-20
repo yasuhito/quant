@@ -14,12 +14,6 @@ class CircuitTest < ActiveSupport::TestCase
     assert_equal '|0>', circuit.to_s
   end
 
-  test 'Y|0>' do
-    circuit = Circuit.new(1).y(0)
-
-    assert_equal [[0, 1i]], circuit.state
-  end
-
   test 'Z|0>' do
     circuit = Circuit.new(1).z(0)
 
