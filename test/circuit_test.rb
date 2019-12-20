@@ -8,12 +8,6 @@ require 'circuit'
 class CircuitTest < ActiveSupport::TestCase
   include Math
 
-  test 'H|0>' do
-    circuit = Circuit.new(1).h(0)
-
-    assert_equal [[1 / sqrt(2), 1 / sqrt(2)]], circuit.state
-  end
-
   test 'S|0>' do
     circuit = Circuit.new(1).s(0)
 
