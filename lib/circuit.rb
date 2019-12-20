@@ -92,6 +92,10 @@ class Circuit
   end
   # rubocop:enable Metrics/AbcSize
 
+  def negate
+    self.class.new nil, @qubits.map(&:negate)
+  end
+
   def to_s
     "|#{@qubits.map(&:to_s).join}>"
   end

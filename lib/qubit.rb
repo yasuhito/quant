@@ -44,6 +44,10 @@ class Qubit
     end
   end
 
+  def negate
+    self.class.new(*(@state.map { |each| each * -1 }))
+  end
+
   def [](index)
     @state[index]
   end
@@ -61,6 +65,10 @@ class Qubit
       '0'
     elsif @state == [0, 1]
       '1'
+    elsif @state == [1 / Math.sqrt(2), 1 / Math.sqrt(2)]
+      '+'
+    elsif @state == [1 / Math.sqrt(2), -1 / Math.sqrt(2)]
+      '-'
     end
   end
 end
