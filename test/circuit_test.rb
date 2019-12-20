@@ -4,7 +4,6 @@ require 'test_helper'
 
 require 'circuit'
 
-# rubocop:disable Metrics/ClassLength
 class CircuitTest < ActiveSupport::TestCase
   include Math
 
@@ -152,4 +151,3 @@ class CircuitTest < ActiveSupport::TestCase
     assert_equal [Qubit[1], [0, E**(2i * PI)]], circuit.state
   end
 end
-# rubocop:enable Metrics/ClassLength
