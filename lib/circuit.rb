@@ -78,11 +78,11 @@ class Circuit
   end
 
   # rubocop:disable Metrics/AbcSize
-  def controlled(gate, target, control:, theta:)
+  def controlled(gate, target, control:)
     return dup if @qubits[control] == Qubit[0]
 
     matrix = Matrix.hstack(Matrix.vstack(Matrix.I(2), Matrix.build(2) { 0 }),
-                           Matrix.vstack(Matrix.build(2) { 0 }, gate.new(theta).matrix))
+                           Matrix.vstack(Matrix.build(2) { 0 }, gate.matrix))
     qs = @qubits[control].tensor_product(@qubits[target])
     result = matrix * qs
     qubits = @qubits.dup.tap do |obj|
