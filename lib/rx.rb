@@ -3,12 +3,10 @@
 require 'gate'
 
 # X rotation gate
-class RxGate < Gate
+class Rx < Gate
   def initialize(theta)
     @theta = theta
   end
-
-  private
 
   def matrix
     Matrix[[cos(@theta / 2), -1i * sin(@theta / 2)],

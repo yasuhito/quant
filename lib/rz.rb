@@ -3,12 +3,10 @@
 require 'gate'
 
 # Z rotation gate
-class RzGate < Gate
+class Rz < Gate
   def initialize(theta)
     @theta = theta
   end
-
-  private
 
   def matrix
     Matrix[[E**(-1i * @theta / 2), 0],

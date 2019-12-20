@@ -4,6 +4,7 @@ require 'test_helper'
 
 require 'circuit'
 
+# rubocop:disable Metrics/ClassLength
 class CircuitTest < ActiveSupport::TestCase
   include Math
 
@@ -67,10 +68,22 @@ class CircuitTest < ActiveSupport::TestCase
     assert_equal [[cos(PI), -1i * sin(PI)]], circuit.state
   end
 
+  test 'Rx|1>' do
+    circuit = Circuit.new(1).x(0).rx(0, theta: 2 * PI)
+
+    assert_equal [[-1i * sin(PI), cos(PI)]], circuit.state
+  end
+
   test 'Ry|0>' do
     circuit = Circuit.new(1).ry(0, theta: 2 * PI)
 
     assert_equal [[cos(PI), sin(PI)]], circuit.state
+  end
+
+  test 'Ry|1>' do
+    circuit = Circuit.new(1).x(0).ry(0, theta: 2 * PI)
+
+    assert_equal [[-1 * sin(PI), cos(PI)]], circuit.state
   end
 
   test 'Rz|0>' do
@@ -79,10 +92,22 @@ class CircuitTest < ActiveSupport::TestCase
     assert_equal [[E**(-1i * PI), 0]], circuit.state
   end
 
+  test 'Rz|1>' do
+    circuit = Circuit.new(1).x(0).rz(0, theta: 2 * PI)
+
+    assert_equal [[0, E**(-1i * PI)]], circuit.state
+  end
+
   test 'R1|0>' do
     circuit = Circuit.new(1).r1(0, theta: 2 * PI)
 
     assert_equal [[1, 0]], circuit.state
+  end
+
+  test 'R1|1>' do
+    circuit = Circuit.new(1).x(0).r1(0, theta: 2 * PI)
+
+    assert_equal [[0, E**(2i * PI)]], circuit.state
   end
 
   test 'CNOT|00>' do
@@ -109,27 +134,124 @@ class CircuitTest < ActiveSupport::TestCase
     assert_equal [[0, 1], [1, 0]], circuit.state
   end
 
-  test 'SWAP|00>' do
+  test 'SWAP(0, 1)|00>' do
     circuit = Circuit.new(2).swap(0, 1)
 
     assert_equal [[1, 0], [1, 0]], circuit.state
   end
 
-  test 'SWAP|01>' do
+  test 'SWAP(0, 1)|01>' do
     circuit = Circuit.new(2).x(1).swap(0, 1)
 
     assert_equal [[0, 1], [1, 0]], circuit.state
   end
 
-  test 'SWAP|10>' do
+  test 'SWAP(0, 1)|10>' do
     circuit = Circuit.new(2).x(0).swap(0, 1)
 
     assert_equal [[1, 0], [0, 1]], circuit.state
   end
 
-  test 'SWAP|11>' do
+  test 'SWAP(0, 1)|11>' do
     circuit = Circuit.new(2).x(0).x(1).swap(0, 1)
 
     assert_equal [[0, 1], [0, 1]], circuit.state
   end
+
+  test 'Controlled(Rx, 1, theta, control: 0)|00>' do
+    circuit = Circuit.new(2).controlled(Rx, 1, control: 0, theta: 2 * PI)
+
+    assert_equal [[1, 0], [1, 0]], circuit.state
+  end
+
+  test 'Controlled(Rx, 1, theta, control: 0)|01>' do
+    circuit = Circuit.new(2).x(1).controlled(Rx, 1, control: 0, theta: 2 * PI)
+
+    assert_equal [[1, 0], [0, 1]], circuit.state
+  end
+
+  test 'Controlled(Rx, 1, theta, control: 0)|10>' do
+    circuit = Circuit.new(2).x(0).controlled(Rx, 1, control: 0, theta: 2 * PI)
+
+    assert_equal [[0, 1], [cos(PI), -1i * sin(PI)]], circuit.state
+  end
+
+  test 'Controlled(Rx, 1, theta, control: 0)|11>' do
+    circuit = Circuit.new(2).x(0).x(1).controlled(Rx, 1, control: 0, theta: 2 * PI)
+
+    assert_equal [[0, 1], [-1i * sin(PI), cos(PI)]], circuit.state
+  end
+
+  test 'Controlled(Ry, 1, theta, control: 0)|00>' do
+    circuit = Circuit.new(2).controlled(Ry, 1, control: 0, theta: 2 * PI)
+
+    assert_equal [[1, 0], [1, 0]], circuit.state
+  end
+
+  test 'Controlled(Ry, 1, theta, control: 0)|01>' do
+    circuit = Circuit.new(2).x(1).controlled(Ry, 1, control: 0, theta: 2 * PI)
+
+    assert_equal [[1, 0], [0, 1]], circuit.state
+  end
+
+  test 'Controlled(Ry, 1, theta, control: 0)|10>' do
+    circuit = Circuit.new(2).x(0).controlled(Ry, 1, control: 0, theta: 2 * PI)
+
+    assert_equal [[0, 1], [cos(PI), sin(PI)]], circuit.state
+  end
+
+  test 'Controlled(Ry, 1, theta, control: 0)|11>' do
+    circuit = Circuit.new(2).x(0).x(1).controlled(Ry, 1, control: 0, theta: 2 * PI)
+
+    assert_equal [[0, 1], [-1 * sin(PI), cos(PI)]], circuit.state
+  end
+
+  test 'Controlled(Rz, 1, theta, control: 0)|00>' do
+    circuit = Circuit.new(2).controlled(Rz, 1, control: 0, theta: 2 * PI)
+
+    assert_equal [[1, 0], [1, 0]], circuit.state
+  end
+
+  test 'Controlled(Rz, 1, theta, control: 0)|01>' do
+    circuit = Circuit.new(2).x(1).controlled(Rz, 1, control: 0, theta: 2 * PI)
+
+    assert_equal [[1, 0], [0, 1]], circuit.state
+  end
+
+  test 'Controlled(Rz, 1, theta, control: 0)|10>' do
+    circuit = Circuit.new(2).x(0).controlled(Rz, 1, control: 0, theta: 2 * PI)
+
+    assert_equal [[0, 1], [E**(-1i * PI), 0]], circuit.state
+  end
+
+  test 'Controlled(Rz, 1, theta, control: 0)|11>' do
+    circuit = Circuit.new(2).x(0).x(1).controlled(Rz, 1, control: 0, theta: 2 * PI)
+
+    assert_equal [[0, 1], [0, E**(-1i * PI)]], circuit.state
+  end
+
+  test 'Controlled(R1, 1, theta, control: 0)|00>' do
+    circuit = Circuit.new(2).controlled(R1, 1, control: 0, theta: 2 * PI)
+
+    assert_equal [[1, 0], [1, 0]], circuit.state
+  end
+
+  test 'Controlled(R1, 1, theta, control: 0)|01>' do
+    circuit = Circuit.new(2).x(1).controlled(R1, 1, control: 0, theta: 2 * PI)
+
+    assert_equal [[1, 0], [0, 1]], circuit.state
+  end
+
+  test 'Controlled(R1, 1, theta, control: 0)|10>' do
+    circuit = Circuit.new(2).x(0).controlled(R1, 1, control: 0, theta: 2 * PI)
+
+    assert_equal [[0, 1], [1, 0]], circuit.state
+  end
+
+  test 'Controlled(R1, 1, theta, control: 0)|11>' do
+    circuit = Circuit.new(2).x(0).x(1).controlled(R1, 1, control: 0, theta: 2 * PI)
+
+    assert_equal [[0, 1], [0, E**(2i * PI)]], circuit.state
+  end
 end
+# rubocop:enable Metrics/ClassLength

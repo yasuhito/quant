@@ -4,10 +4,10 @@ require 'cnot_gate'
 require 'h_gate'
 require 'id_gate'
 require 'qubit'
-require 'r1_gate'
-require 'rx_gate'
-require 'ry_gate'
-require 'rz_gate'
+require 'r1'
+require 'rx'
+require 'ry'
+require 'rz'
 require 's_gate'
 require 'swap_gate'
 require 't_gate'
@@ -50,19 +50,19 @@ class Circuit
   end
 
   def rx(target, theta:)
-    self.class.new nil, RxGate.new(theta).apply(@qubits, target)
+    self.class.new nil, Rx.new(theta).apply(@qubits, target)
   end
 
   def ry(target, theta:)
-    self.class.new nil, RyGate.new(theta).apply(@qubits, target)
+    self.class.new nil, Ry.new(theta).apply(@qubits, target)
   end
 
   def rz(target, theta:)
-    self.class.new nil, RzGate.new(theta).apply(@qubits, target)
+    self.class.new nil, Rz.new(theta).apply(@qubits, target)
   end
 
   def r1(target, theta:)
-    self.class.new nil, R1Gate.new(theta).apply(@qubits, target)
+    self.class.new nil, R1.new(theta).apply(@qubits, target)
   end
 
   def cnot(target, control:)
@@ -76,6 +76,21 @@ class Circuit
   def state
     @qubits.map(&:state)
   end
+
+  # rubocop:disable Metrics/AbcSize
+  def controlled(gate, target, control:, theta:)
+    return dup if @qubits[control] == Qubit[0]
+
+    matrix = Matrix.hstack(Matrix.vstack(Matrix.I(2), Matrix.build(2) { 0 }),
+                           Matrix.vstack(Matrix.build(2) { 0 }, gate.new(theta).matrix))
+    qs = @qubits[control].tensor_product(@qubits[target])
+    result = matrix * qs
+    qubits = @qubits.dup.tap do |obj|
+      obj[target] = Qubit[result[2, 0], result[3, 0]]
+    end
+    self.class.new nil, qubits
+  end
+  # rubocop:enable Metrics/AbcSize
 
   def to_s
     "|#{@qubits.map(&:to_s).join}>"
