@@ -56,30 +56,6 @@ class CircuitTest < ActiveSupport::TestCase
     assert_equal [[0, E**(2i * PI)]], circuit.state
   end
 
-  test 'CNOT|00>' do
-    circuit = Circuit.new(2).cnot(1, control: 0)
-
-    assert_equal '|00>', circuit.to_s
-  end
-
-  test 'CNOT|01>' do
-    circuit = Circuit.new(2).x(1).cnot(1, control: 0)
-
-    assert_equal '|01>', circuit.to_s
-  end
-
-  test 'CNOT|10>' do
-    circuit = Circuit.new(2).x(0).cnot(1, control: 0)
-
-    assert_equal '|11>', circuit.to_s
-  end
-
-  test 'CNOT|11>' do
-    circuit = Circuit.new(2).x(0).x(1).cnot(1, control: 0)
-
-    assert_equal '|10>', circuit.to_s
-  end
-
   test 'SWAP(0, 1)|00>' do
     circuit = Circuit.new(2).swap(0, 1)
 
