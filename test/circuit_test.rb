@@ -8,18 +8,6 @@ require 'circuit'
 class CircuitTest < ActiveSupport::TestCase
   include Math
 
-  test 'I|0>' do
-    circuit = Circuit.new(1).i(0)
-
-    assert_equal '|0>', circuit.to_s
-  end
-
-  test 'Z|0>' do
-    circuit = Circuit.new(1).z(0)
-
-    assert_equal '|0>', circuit.to_s
-  end
-
   test 'H|0>' do
     circuit = Circuit.new(1).h(0)
 
