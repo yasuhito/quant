@@ -9,6 +9,7 @@ require 'rx_gate'
 require 'ry_gate'
 require 'rz_gate'
 require 's_gate'
+require 'swap_gate'
 require 't_gate'
 require 'x_gate'
 require 'y_gate'
@@ -66,6 +67,10 @@ class Circuit
 
   def cnot(target, control:)
     self.class.new nil, CnotGate.new.apply(@qubits, target, control)
+  end
+
+  def swap(qubit1, qubit2)
+    self.class.new nil, SwapGate.new.apply(@qubits, qubit1, qubit2)
   end
 
   def state

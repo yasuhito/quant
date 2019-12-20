@@ -108,4 +108,28 @@ class CircuitTest < ActiveSupport::TestCase
 
     assert_equal [[0, 1], [1, 0]], circuit.state
   end
+
+  test 'SWAP|00>' do
+    circuit = Circuit.new(2).swap(0, 1)
+
+    assert_equal [[1, 0], [1, 0]], circuit.state
+  end
+
+  test 'SWAP|01>' do
+    circuit = Circuit.new(2).x(1).swap(0, 1)
+
+    assert_equal [[0, 1], [1, 0]], circuit.state
+  end
+
+  test 'SWAP|10>' do
+    circuit = Circuit.new(2).x(0).swap(0, 1)
+
+    assert_equal [[1, 0], [0, 1]], circuit.state
+  end
+
+  test 'SWAP|11>' do
+    circuit = Circuit.new(2).x(0).x(1).swap(0, 1)
+
+    assert_equal [[0, 1], [0, 1]], circuit.state
+  end
 end

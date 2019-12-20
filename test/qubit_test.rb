@@ -15,9 +15,9 @@ class QubitTest < ActiveSupport::TestCase
   end
 
   test 'inner product' do
-    ket1 = Qubit[1 + 2i, 2 - 1i, 3]
-    ket2 = Qubit[1 + 2i, 4, 2 + 1i]
+    ket1 = Qubit[1 + 2i, 2 - 1i]
+    ket2 = Qubit[1 + 2i, 2 + 1i]
 
-    assert_equal 19 + 7i, ket1 * ket2
+    assert_equal 8 + 4i, ket1 * ket2
   end
 end

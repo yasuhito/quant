@@ -6,8 +6,16 @@ require 'matrix'
 class Qubit
   attr_reader :state
 
-  def self.[](*state)
-    new(*state)
+  def self.[](*state_or_value)
+    if state_or_value.length == 2
+      new(*state_or_value)
+    elsif state_or_value == [0]
+      new(1, 0)
+    elsif state_or_value == [1]
+      new(0, 1)
+    else
+      raise
+    end
   end
 
   def initialize(*state)
