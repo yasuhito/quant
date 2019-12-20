@@ -17,60 +17,66 @@ require 'z_gate'
 
 # 量子回路
 class Circuit
-  def initialize(nqubits = 0, qubits = nil)
-    @qubits = qubits || Array.new(nqubits) { Qubit[1, 0] }
+  def initialize(*qubits)
+    @qubits = if qubits.first.is_a?(Qubit)
+                qubits
+              elsif qubits.first.is_a?(Array)
+                qubits.first
+              else
+                Array.new(qubits.first) { Qubit[1, 0] }
+              end
   end
 
   def i(target)
-    self.class.new nil, IdGate.new.apply(@qubits, target)
+    self.class.new IdGate.new.apply(@qubits, target)
   end
 
   def x(target)
-    self.class.new nil, XGate.new.apply(@qubits, target)
+    self.class.new XGate.new.apply(@qubits, target)
   end
 
   def y(target)
-    self.class.new nil, YGate.new.apply(@qubits, target)
+    self.class.new YGate.new.apply(@qubits, target)
   end
 
   def z(target)
-    self.class.new nil, ZGate.new.apply(@qubits, target)
+    self.class.new ZGate.new.apply(@qubits, target)
   end
 
   def h(target)
-    self.class.new nil, HGate.new.apply(@qubits, target)
+    self.class.new HGate.new.apply(@qubits, target)
   end
 
   def s(target)
-    self.class.new nil, SGate.new.apply(@qubits, target)
+    self.class.new SGate.new.apply(@qubits, target)
   end
 
   def t(target)
-    self.class.new nil, TGate.new.apply(@qubits, target)
+    self.class.new TGate.new.apply(@qubits, target)
   end
 
   def rx(target, theta:)
-    self.class.new nil, Rx.new(theta).apply(@qubits, target)
+    self.class.new Rx.new(theta).apply(@qubits, target)
   end
 
   def ry(target, theta:)
-    self.class.new nil, Ry.new(theta).apply(@qubits, target)
+    self.class.new Ry.new(theta).apply(@qubits, target)
   end
 
   def rz(target, theta:)
-    self.class.new nil, Rz.new(theta).apply(@qubits, target)
+    self.class.new Rz.new(theta).apply(@qubits, target)
   end
 
   def r1(target, theta:)
-    self.class.new nil, R1.new(theta).apply(@qubits, target)
+    self.class.new R1.new(theta).apply(@qubits, target)
   end
 
   def cnot(target, control:)
-    self.class.new nil, CnotGate.new.apply(@qubits, target, control)
+    self.class.new CnotGate.new.apply(@qubits, target, control)
   end
 
   def swap(qubit1, qubit2)
-    self.class.new nil, SwapGate.new.apply(@qubits, qubit1, qubit2)
+    self.class.new SwapGate.new.apply(@qubits, qubit1, qubit2)
   end
 
   def state
@@ -88,13 +94,9 @@ class Circuit
     qubits = @qubits.dup.tap do |obj|
       obj[target] = Qubit[result[2, 0], result[3, 0]]
     end
-    self.class.new nil, qubits
+    self.class.new qubits
   end
   # rubocop:enable Metrics/AbcSize
-
-  def negate
-    self.class.new nil, @qubits.map(&:negate)
-  end
 
   def to_s
     "|#{@qubits.map(&:to_s).join}>"

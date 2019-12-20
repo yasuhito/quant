@@ -4,26 +4,49 @@ require 'matrix'
 
 # 量子ビット
 class Qubit
+  extend Math
+  include Math
+
   attr_reader :state
 
+  # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Metrics/MethodLength
+  # rubocop:disable Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/PerceivedComplexity
   def self.[](*state_or_value)
     if state_or_value.length == 2
       new(*state_or_value)
     elsif state_or_value == [0]
-      new(1, 0)
+      new 1, 0
     elsif state_or_value == [1]
-      new(0, 1)
+      new 0, 1
+    elsif state_or_value == ['+']
+      new 1 / sqrt(2), 1 / sqrt(2)
+    elsif state_or_value == ['-']
+      new 1 / sqrt(2), -1 / sqrt(2)
+    elsif state_or_value == ['i']
+      new 1 / sqrt(2), 1i / sqrt(2)
+    elsif state_or_value == ['-i']
+      new 1 / sqrt(2), -1i / sqrt(2)
     else
       raise
     end
   end
+  # rubocop:enable Metrics/AbcSize
+  # rubocop:enable Metrics/MethodLength
+  # rubocop:enable Metrics/CyclomaticComplexity
+  # rubocop:enable Metrics/PerceivedComplexity
 
   def initialize(*state)
     @state = state
   end
 
   def *(other)
-    (bra * other.ket.t)[0, 0]
+    if other.is_a?(Qubit)
+      (bra * other.ket.t)[0, 0]
+    else
+      @state.map { |each| each * other }
+    end
   end
 
   def bra
@@ -44,10 +67,6 @@ class Qubit
     end
   end
 
-  def negate
-    self.class.new(*(@state.map { |each| each * -1 }))
-  end
-
   def [](index)
     @state[index]
   end
@@ -65,9 +84,9 @@ class Qubit
       '0'
     elsif @state == [0, 1]
       '1'
-    elsif @state == [1 / Math.sqrt(2), 1 / Math.sqrt(2)]
+    elsif @state == [1 / sqrt(2), 1 / sqrt(2)]
       '+'
-    elsif @state == [1 / Math.sqrt(2), -1 / Math.sqrt(2)]
+    elsif @state == [1 / sqrt(2), -1 / sqrt(2)]
       '-'
     end
   end
