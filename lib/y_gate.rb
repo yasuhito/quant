@@ -1,13 +1,9 @@
 # frozen_string_literal: true
 
-# Pauli-Y ゲート
-class YGate
-  def apply(qubits, target)
-    qubits.dup.tap do |qs|
-      qs[target].state = (matrix * qs[target].ket.t).column_vectors[0].to_a
-    end
-  end
+require 'gate'
 
+# Pauli-Y gate
+class YGate < Gate
   private
 
   def matrix

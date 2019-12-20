@@ -1,15 +1,9 @@
 # frozen_string_literal: true
 
-# フェーズシフトゲート T
-class TGate
-  include Math
+require 'gate'
 
-  def apply(qubits, target)
-    qubits.dup.tap do |qs|
-      qs[target].state = (matrix * qs[target].ket.t).column_vectors[0].to_a
-    end
-  end
-
+# Phase shift gate T
+class TGate < Gate
   private
 
   def matrix

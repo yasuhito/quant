@@ -49,19 +49,19 @@ class Circuit
   end
 
   def rx(target, theta:)
-    self.class.new nil, RxGate.new.apply(@qubits, target, theta)
+    self.class.new nil, RxGate.new(theta).apply(@qubits, target)
   end
 
   def ry(target, theta:)
-    self.class.new nil, RyGate.new.apply(@qubits, target, theta)
+    self.class.new nil, RyGate.new(theta).apply(@qubits, target)
   end
 
   def rz(target, theta:)
-    self.class.new nil, RzGate.new.apply(@qubits, target, theta)
+    self.class.new nil, RzGate.new(theta).apply(@qubits, target)
   end
 
   def r1(target, theta:)
-    self.class.new nil, R1Gate.new.apply(@qubits, target, theta)
+    self.class.new nil, R1Gate.new(theta).apply(@qubits, target)
   end
 
   def cnot(target, control:)
