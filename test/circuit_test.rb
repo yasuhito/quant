@@ -8,30 +8,6 @@ require 'circuit'
 class CircuitTest < ActiveSupport::TestCase
   include Math
 
-  test 'S|0>' do
-    circuit = Circuit.new(1).s(0)
-
-    assert_equal '|0>', circuit.to_s
-  end
-
-  test 'S|1>' do
-    circuit = Circuit.new(1).x(0).s(0)
-
-    assert_equal [[0, 1i]], circuit.state
-  end
-
-  test 'T|0>' do
-    circuit = Circuit.new(1).t(0)
-
-    assert_equal '|0>', circuit.to_s
-  end
-
-  test 'T|1>' do
-    circuit = Circuit.new(1).x(0).t(0)
-
-    assert_equal [[0, E**(1i * PI / 4)]], circuit.state
-  end
-
   test 'Rx|0>' do
     circuit = Circuit.new(1).rx(0, theta: 2 * PI)
 
