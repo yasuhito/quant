@@ -4,7 +4,7 @@ require 'matrix'
 
 # 量子ビット
 class Qubit
-  attr_accessor :state
+  attr_reader :state
 
   def self.[](*state)
     new(*state)
