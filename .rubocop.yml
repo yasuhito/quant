@@ -1,0 +1,7 @@
+# コメントは日本語で OK
+Style/AsciiComments:
+  Enabled: false
+
+# 行の文字数を制限しない
+Metrics/LineLength:
+  Enabled: false
