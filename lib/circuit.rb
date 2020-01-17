@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'cnot_gate'
-require 'h_gate'
+require 'h'
 require 'id_gate'
 require 'qubit'
 require 'r1'
@@ -44,7 +44,7 @@ class Circuit
   end
 
   def h(target)
-    self.class.new HGate.new.apply(@qubits, target)
+    self.class.new H.new.apply(@qubits, target)
   end
 
   def s(target)
@@ -83,7 +83,6 @@ class Circuit
     @qubits.map(&:state)
   end
 
-  # rubocop:disable Metrics/AbcSize
   def controlled(gate, target, control:)
     return dup if @qubits[control] == Qubit[0]
 
@@ -96,7 +95,6 @@ class Circuit
     end
     self.class.new qubits
   end
-  # rubocop:enable Metrics/AbcSize
 
   def to_s
     "|#{@qubits.map(&:to_s).join}>"

@@ -2,8 +2,6 @@
 
 # CNOT ゲート
 class CnotGate
-  # rubocop:disable Metrics/MethodLength
-  # rubocop:disable Metrics/AbcSize
   def apply(qubits, target, control)
     qs = qubits[control].tensor_product(qubits[target])
     result = matrix * qs
@@ -20,8 +18,6 @@ class CnotGate
                     end
     end
   end
-  # rubocop:enable Metrics/MethodLength
-  # rubocop:enable Metrics/AbcSize
 
   private
 

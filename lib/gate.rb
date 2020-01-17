@@ -1,8 +1,10 @@
 # frozen_string_literal: true
 
+require 'symbolic'
+
 # 量子ゲート
 class Gate
-  include Math
+  using Symbolic
 
   def apply(qubits, target)
     qubits.dup.tap do |qs|

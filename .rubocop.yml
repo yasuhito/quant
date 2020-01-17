@@ -5,3 +5,27 @@ Style/AsciiComments:
 # 行の文字数を制限しない
 Metrics/LineLength:
   Enabled: false
+
+# クラスの長さを制限しない
+Metrics/ClassLength:
+  Enabled: false
+
+# メソッドの長さを制限しない
+Metrics/MethodLength:
+  Enabled: false
+
+# 複雑なメソッド OK
+Metrics/AbcSize:
+  Enabled: false
+
+# 複雑なメソッド OK
+Metrics/CyclomaticComplexity:
+  Enabled: false
+
+# 複雑なメソッド OK
+Metrics/PerceivedComplexity:
+  Enabled: false
+
+# メソッドのパラメータに x のような短い名前を使う
+Naming/UncommunicativeMethodParamName:
+  Enabled: false

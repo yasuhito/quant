@@ -7,5 +7,4 @@ end
 
 group :development, :test do
   gem 'activesupport'
-  gem 'mocha', require: false
 end

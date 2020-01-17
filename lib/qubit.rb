@@ -1,18 +1,12 @@
 # frozen_string_literal: true
 
 require 'matrix'
+require 'symbolic'
 
 # 量子ビット
 class Qubit
-  extend Math
-  include Math
-
-  attr_reader :state
-
-  # rubocop:disable Metrics/AbcSize
-  # rubocop:disable Metrics/MethodLength
-  # rubocop:disable Metrics/CyclomaticComplexity
-  # rubocop:disable Metrics/PerceivedComplexity
+  include Symbolic
+  using Symbolic
   def self.[](*state_or_value)
     if state_or_value.length == 2
       new(*state_or_value)
@@ -21,21 +15,17 @@ class Qubit
     elsif state_or_value == [1]
       new 0, 1
     elsif state_or_value == ['+']
-      new 1 / sqrt(2), 1 / sqrt(2)
+      new 1 / Sqrt(2), 1 / Sqrt(2)
     elsif state_or_value == ['-']
-      new 1 / sqrt(2), -1 / sqrt(2)
+      new 1 / Sqrt(2), -1 / Sqrt(2)
     elsif state_or_value == ['i']
-      new 1 / sqrt(2), 1i / sqrt(2)
+      new 1 / Sqrt(2), 1i / Sqrt(2)
     elsif state_or_value == ['-i']
-      new 1 / sqrt(2), -1i / sqrt(2)
+      new 1 / Sqrt(2), -1i / Sqrt(2)
     else
       raise
     end
   end
-  # rubocop:enable Metrics/AbcSize
-  # rubocop:enable Metrics/MethodLength
-  # rubocop:enable Metrics/CyclomaticComplexity
-  # rubocop:enable Metrics/PerceivedComplexity
 
   def initialize(*state)
     @state = state
@@ -45,7 +35,7 @@ class Qubit
     if other.is_a?(Qubit)
       (bra * other.ket.t)[0, 0]
     else
-      @state.map { |each| each * other }
+      @state.map { |each| (each * other).simplify }
     end
   end
 
@@ -65,6 +55,10 @@ class Qubit
         self[1] * other[row % 2]
       end
     end
+  end
+
+  def state
+    @state.map(&:simplify)
   end
 
   def [](index)

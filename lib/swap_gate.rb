@@ -2,8 +2,6 @@
 
 # SWAP ゲート
 class SwapGate
-  # rubocop:disable Metrics/MethodLength
-  # rubocop:disable Metrics/AbcSize
   def apply(qubits, qubit1, qubit2)
     qs = qubits[qubit1].tensor_product(qubits[qubit2])
     result = matrix * qs
@@ -24,8 +22,6 @@ class SwapGate
       end
     end
   end
-  # rubocop:enable Metrics/MethodLength
-  # rubocop:enable Metrics/AbcSize
 
   private
 
