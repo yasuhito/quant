@@ -27,5 +27,5 @@ Metrics/PerceivedComplexity:
   Enabled: false
 
 # メソッドのパラメータに x のような短い名前を使う
-Naming/UncommunicativeMethodParamName:
+Naming/MethodParameterName:
   Enabled: false
