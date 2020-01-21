@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'symbolic/base'
-require 'symbolic/product'
 require 'symbolic/sum'
 
 module Symbolic

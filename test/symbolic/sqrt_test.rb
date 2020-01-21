@@ -2,7 +2,6 @@
 
 require 'test_helper'
 
-require 'symbolic/product'
 require 'symbolic/sqrt'
 
 module Symbolic

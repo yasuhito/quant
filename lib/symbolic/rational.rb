@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'symbolic/base'
-require 'symbolic/product'
 
 module Symbolic
   # 分数のシンボリック演算
