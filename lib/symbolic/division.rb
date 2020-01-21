@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module Symbolic
+  # シンボリックな除算
   class Div
     attr_reader :u
     attr_reader :v
