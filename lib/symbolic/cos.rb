@@ -5,6 +5,8 @@ require 'symbolic/sqrt'
 module Symbolic
   # コサインのシンボリック演算
   class Cos
+    attr_reader :x
+
     def initialize(x)
       @x = x
     end
@@ -14,10 +16,18 @@ module Symbolic
         1
       elsif @x == Pi
         0
+      elsif @x.is_a?(Numeric) && @x.negative?
+        Cos(-1 * @x)
       elsif @x[0] == :* && @x[1].class == Rational && @x[2] == Pi &&
             [1, 2, 3, 4, 6].include?(@x[1].denominator) && @x[1].numerator.is_a?(Integer)
         simplify_kn_pi
+      else
+        self
       end
+    end
+
+    def ==(other)
+      @x == other.x
     end
 
     private

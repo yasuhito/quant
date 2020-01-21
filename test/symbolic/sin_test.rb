@@ -7,6 +7,12 @@ require 'symbolic/sin'
 
 module Symbolic
   class SinTest < ActiveSupport::TestCase
+    test 'Sin(-1) = -Sin(1)' do
+      sin = Sin(-1)
+
+      assert_equal(-Sin(1), sin)
+    end
+
     test 'Sin(0) = 0' do
       sin = Sin(0)
 
