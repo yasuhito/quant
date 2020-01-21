@@ -13,6 +13,12 @@ module Symbolic
       assert_equal(-Sin(1), sin)
     end
 
+    test 'Sin(-1 * 2 * 3) = -Sin(6)' do
+      sin = Sin([:*, -1, 2, 3])
+
+      assert_equal(-Sin(6), sin)
+    end
+
     test 'Sin(0) = 0' do
       sin = Sin(0)
 

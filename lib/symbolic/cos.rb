@@ -18,7 +18,9 @@ module Symbolic
         0
       elsif @x.is_a?(Numeric) && @x.negative?
         Cos(-1 * @x)
-      elsif @x[0] == :* && @x[1].class == Rational && @x[2] == Pi &&
+      elsif @x[0] == :* && @x[1].is_a?(Numeric) && @x[1].negative?
+        Cos(([-1, @x[1]] + @x[2..-1]).inject(:*))
+      elsif @x[0] == :* && @x[1].is_a?(Rational) && @x[2] == Pi &&
             [1, 2, 3, 4, 6].include?(@x[1].denominator) && @x[1].numerator.is_a?(Integer)
         simplify_kn_pi
       else

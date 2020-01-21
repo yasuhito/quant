@@ -12,6 +12,12 @@ module Symbolic
       assert_equal(Cos(1), cos)
     end
 
+    test 'Cos(-1 * 2 * 3) = Cos(6)' do
+      cos = Cos([:*, -1, 2, 3])
+
+      assert_equal(Cos(6), cos)
+    end
+
     test 'Cos(0) = 1' do
       cos = Cos(0)
 
