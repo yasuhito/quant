@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'gate'
+require 'symbolic/division'
 
 # X rotation gate
 class Rx < Gate
@@ -9,7 +10,7 @@ class Rx < Gate
   end
 
   def matrix
-    Matrix[[cos(@theta / 2), -1i * sin(@theta / 2)],
-           [-1i * sin(@theta / 2), cos(@theta / 2)]]
+    Matrix[[Cos(Div(@theta, 2)), -1i * Sin(Div(@theta, 2))],
+           [-1i * Sin(Div(@theta, 2)), Cos(Div(@theta, 2))]]
   end
 end
