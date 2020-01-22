@@ -12,6 +12,12 @@ module Symbolic
       assert_equal :x, prod
     end
 
+    test 'Prod(x, y) = Prod(x, y)' do
+      prod = Prod(:x, :y)
+
+      assert_equal %i[y x], prod.expressions
+    end
+
     test 'Prod(a1, a2, ..., 0, ...an) = 0' do
       prod = Prod(:x, :y, :z, 0)
 
@@ -34,6 +40,12 @@ module Symbolic
       prod = Prod(:x, 1)
 
       assert_equal :x, prod
+    end
+
+    test 'Prod(Prod(:a, :b), Prod(:x, :y)) = Prod(:a, :b, :x, :y)' do
+      prod = Prod(Prod(:a, :b), Prod(:x, :y))
+
+      assert_equal %i[a b x y], prod.expressions.sort
     end
   end
 end

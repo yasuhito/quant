@@ -15,7 +15,7 @@ module Symbolic
     end
 
     def *(other)
-      Product.new(self, other)
+      Product(self, other)
     end
 
     def conj
