@@ -77,5 +77,46 @@ module Symbolic
         assert_equal :Undefined, exponent([:fraction, 1, 3])
       end
     end
+
+    class TermTest < ActiveSupport::TestCase
+      include Operator
+
+      test 'term(u) = ・u when u is a symbol' do
+        assert_equal %i[* x], term(:x)
+      end
+
+      test 'term(u) = ・u when u is a sum' do
+        assert_equal [:*, %i[+ x y]], term(%i[+ x y])
+      end
+
+      test 'term(u) = ・u when u is a power' do
+        assert_equal [:*, [:^, :x, 2]], term([:^, :x, 2])
+      end
+
+      test 'term(u) = ・u when u is a factorial' do
+        assert_equal [:*, %i[! x]], term(%i[! x])
+      end
+
+      test 'term(u) = ・u when u is a function' do
+        assert_equal [:*, %i[f f x]], term(%i[f f x])
+      end
+
+      test 'term(u) = u2···un when u = u1···un is a product and u1 is constant' do
+        assert_equal %i[* x y z], term([:*, 2, :x, :y, :z])
+        assert_equal %i[* x y z], term([:*, [:fraction, 1, 3], :x, :y, :z])
+      end
+
+      test 'term(u) = u when u = u1···un is a product and u1 is not constant' do
+        assert_equal %i[* x y z], term(%i[* x y z])
+      end
+
+      test 'term(u) = Undefined when u is an integer' do
+        assert_equal :Undefined, term(1)
+      end
+
+      test 'term(u) = Undefined when u is a fraction' do
+        assert_equal :Undefined, term([:fraction, 1, 3])
+      end
+    end
   end
 end
