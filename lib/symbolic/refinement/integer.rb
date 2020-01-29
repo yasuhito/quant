@@ -20,14 +20,12 @@ module Symbolic
         :Undefined
       end
 
-      def <(other)
-        case other
+      def compare(v)
+        case v
         when Integer
-          super other
+          self < v
         when Fraction
-          super Rational(other.operands[0], other.operands[1])
-        else
-          raise 'Not implemented yet'
+          self < Rational(v.operands[0], v.operands[1])
         end
       end
     end

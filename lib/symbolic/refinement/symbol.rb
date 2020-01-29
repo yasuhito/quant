@@ -19,6 +19,10 @@ module Symbolic
       def const
         1
       end
+
+      def compare(v)
+        return self < v if v.is_a?(Symbol)
+      end
     end
   end
 end

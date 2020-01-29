@@ -22,6 +22,18 @@ module Symbolic
       assert_equal 1, Sum(:x, :y).const
     end
 
+    test '(a + b)#compare(a + c) = true' do
+      assert Sum(:a, :b).compare(Sum(:a, :c))
+    end
+
+    test '(a + c + d)#compare(b + c + d) = true' do
+      assert Sum(:a, :c, :d).compare(Sum(:b, :c, :d))
+    end
+
+    test '(c + d)#compare(b + c + d) = true' do
+      assert Sum(:c, :d).compare(Sum(:b, :c, :d))
+    end
+
     # test 'Sum(x) = x' do
     #   sum = Sum(:x)
 

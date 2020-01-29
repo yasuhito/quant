@@ -24,5 +24,17 @@ module Symbolic
     test 'x#const = 1' do
       assert_equal 1, :x.const
     end
+
+    test 'a.compare(b) = true' do
+      assert :a.compare(:b)
+    end
+
+    test 'compare(v1, v2) = true' do
+      assert :v1.compare(:v2)
+    end
+
+    test 'compare(x1, xa) = true' do
+      assert :x1.compare(:xa)
+    end
   end
 end

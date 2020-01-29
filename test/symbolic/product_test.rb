@@ -38,6 +38,18 @@ module Symbolic
       assert_equal 1, Product(:x, :y, :z).const
     end
 
+    test '(a·b)#compare(a·c) = true' do
+      assert Product(:a, :b).compare(Product(:a, :c))
+    end
+
+    test '(a·c·d)#compare(b·c·d) = true' do
+      assert Product(:a, :c, :d).compare(Product(:b, :c, :d))
+    end
+
+    test '(c·d)#compare(b·c·d) = true' do
+      assert Product(:c, :d).compare(Product(:b, :c, :d))
+    end
+
     # test 'Product(x) = x' do
     #   prod = Product(:x)
 

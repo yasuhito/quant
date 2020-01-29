@@ -1,8 +1,13 @@
 # frozen_string_literal: true
 
+require 'symbolic/refinement/integer'
+require 'symbolic/refinement/symbol'
+
 module Symbolic
   # シンボリックなべき乗
   class Power
+    using Symbolic::Refinement
+
     attr_reader :operands
 
     def initialize(*operands)
@@ -23,6 +28,14 @@ module Symbolic
 
     def const
       1
+    end
+
+    def compare(v)
+      return unless v.is_a?(Power)
+
+      return base.compare(v.base) if base != v.base
+
+      exponent.compare(v.exponent)
     end
 
     def [](n)

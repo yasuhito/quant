@@ -23,5 +23,9 @@ module Symbolic
     test '#const = Undefined' do
       assert_equal :Undefined, 1.const
     end
+
+    test '2#compare(5/2) = true' do
+      assert 2.compare(Fraction(5, 2))
+    end
   end
 end

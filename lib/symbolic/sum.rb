@@ -1,10 +1,14 @@
 # frozen_string_literal: true
 
 require 'symbolic/product'
+require 'symbolic/refinement/integer'
+require 'symbolic/refinement/symbol'
 
 module Symbolic
   # シンボリックな和
   class Sum
+    using Symbolic::Refinement
+
     attr_reader :operands
 
     def initialize(*operands)
@@ -25,6 +29,22 @@ module Symbolic
 
     def const
       1
+    end
+
+    def compare(v)
+      return unless v.is_a?(Sum)
+
+      return @operands.last.compare(v.operands.last) if @operands.last != v.operands.last
+
+      m = length
+      n = v.length
+      if [m, n].min >= 2
+        0.upto([m, n].min - 2) do |j|
+          return @operands[m - j - 2].compare(v[n - j - 2]) if @operands[m - j - 1] == v[n - j - 1] && @operands[m - j - 2] != v[n - j - 2]
+        end
+      end
+
+      m.compare(n)
     end
 
     def length

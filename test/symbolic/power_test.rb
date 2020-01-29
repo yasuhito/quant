@@ -22,6 +22,14 @@ module Symbolic
       assert_equal 1, Power(:x, 2).const
     end
 
+    test '((1+x)^2)#compare((1+x)^3) = true' do
+      assert Power(Sum(1, :x), 2).compare(Power(Sum(1, :x), 3))
+    end
+
+    test '((1+x)^3)#compare((1+y)^2) = true' do
+      assert Power(Sum(1, :x), 3).compare(Power(Sum(1, :y), 2))
+    end
+
     # test '0^w = 0' do
     #   pow = Power(0, :w)
 
