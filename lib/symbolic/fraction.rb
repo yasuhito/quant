@@ -25,6 +25,17 @@ module Symbolic
       :Undefined
     end
 
+    def compare(v)
+      case v
+      when Integer
+        Rational(@operands[0], @operands[1]) < v
+      when Fraction
+        Rational(@operands[0], @operands[1]) < Rational(v.operands[0], v.operands[1])
+      else
+        true
+      end
+    end
+
     def ==(other)
       @operands == other.operands
     end

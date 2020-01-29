@@ -26,6 +26,8 @@ module Symbolic
           self < v
         when Fraction
           self < Rational(v.operands[0], v.operands[1])
+        else
+          true
         end
       end
     end
