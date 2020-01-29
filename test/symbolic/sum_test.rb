@@ -6,32 +6,36 @@ require 'symbolic/sum'
 
 module Symbolic
   class SumTest < ActiveSupport::TestCase
-    test '(x + y)#base = x + y' do
+    test '(x + y).base = x + y' do
       assert_equal Sum(:x, :y), Sum(:x, :y).base
     end
 
-    test '(x + y)#exponent = 1' do
+    test '(x + y).exponent = 1' do
       assert_equal 1, Sum(:x, :y).exponent
     end
 
-    test '(x + y)#term = ·(x + y)' do
+    test '(x + y).term = ·(x + y)' do
       assert_equal Product(Sum(:x, :y)), Sum(:x, :y).term
     end
 
-    test '(x + y)#const = 1' do
+    test '(x + y).const = 1' do
       assert_equal 1, Sum(:x, :y).const
     end
 
-    test '(a + b)#compare(a + c) = true' do
+    test '(a + b).compare(a + c) = true' do
       assert Sum(:a, :b).compare(Sum(:a, :c))
     end
 
-    test '(a + c + d)#compare(b + c + d) = true' do
+    test '(a + c + d).compare(b + c + d) = true' do
       assert Sum(:a, :c, :d).compare(Sum(:b, :c, :d))
     end
 
-    test '(c + d)#compare(b + c + d) = true' do
+    test '(c + d).compare(b + c + d) = true' do
       assert Sum(:c, :d).compare(Sum(:b, :c, :d))
+    end
+
+    test '(1 + x).compare(y) = true' do
+      assert Sum(1, :x).compare(:y)
     end
 
     # test 'Sum(x) = x' do
