@@ -21,7 +21,11 @@ module Symbolic
       end
 
       def compare(v)
-        return self < v if v.is_a?(Symbol)
+        if v.is_a?(Symbol)
+          self < v
+        else
+          !v.compare(self)
+        end
       end
     end
   end

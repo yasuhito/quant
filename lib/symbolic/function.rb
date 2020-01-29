@@ -33,21 +33,28 @@ module Symbolic
     end
 
     def compare(v)
-      return unless v.is_a?(Function)
+      case v
+      when Function
+        if @name != v.name
+          @name.compare v.name
+        else
+          return @operands.first.compare v.operands.first if @operands.first != v.operands.first
 
-      if @name != v.name
-        @name.compare v.name
-      else
-        return @operands.first.compare v.operands.first if @operands.first != v.operands.first
+          m = @operands.size
+          n = v.operands.size
+          if [m, n].min >= 1
+            0.upto([m, n].min - 2) do |j|
+              return @operands[j + 1].compare(v.operands[j + 1]) if (@operands[j] == v.operands[j]) && (@operands[j + 1] != v.operands[j + 1])
+            end
 
-        m = @operands.size
-        n = v.operands.size
-        if [m, n].min >= 1
-          0.upto([m, n].min - 2) do |j|
-            return @operands[j + 1].compare(v.operands[j + 1]) if (@operands[j] == v.operands[j]) && (@operands[j + 1] != v.operands[j + 1])
+            m.compare(n)
           end
-
-          m.compare(n)
+        end
+      when Symbol
+        if @name == v
+          false
+        else
+          @name.compare v
         end
       end
     end
