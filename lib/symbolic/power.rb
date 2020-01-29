@@ -31,11 +31,14 @@ module Symbolic
     end
 
     def compare(v)
-      return unless v.is_a?(Power)
+      case v
+      when Power
+        return base.compare(v.base) if base != v.base
 
-      return base.compare(v.base) if base != v.base
-
-      exponent.compare(v.exponent)
+        exponent.compare(v.exponent)
+      when Sum, Factorial, Function, Symbol
+        compare Power(v, 1)
+      end
     end
 
     def [](n)

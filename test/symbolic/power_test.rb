@@ -6,28 +6,32 @@ require 'symbolic/power'
 
 module Symbolic
   class PowerTest < ActiveSupport::TestCase
-    test 'x^2#base = x' do
+    test 'x^2.base = x' do
       assert_equal :x, Power(:x, 2).base
     end
 
-    test 'x^2#exponent = 2' do
+    test 'x^2.exponent = 2' do
       assert_equal 2, Power(:x, 2).exponent
     end
 
-    test 'x^2#term = ·x^2' do
+    test 'x^2.term = ·x^2' do
       assert_equal Product(Power(:x, 2)), Power(:x, 2).term
     end
 
-    test 'x^2#const = 1' do
+    test 'x^2.const = 1' do
       assert_equal 1, Power(:x, 2).const
     end
 
-    test '((1+x)^2)#compare((1+x)^3) = true' do
+    test '((1+x)^2).compare((1+x)^3) = true' do
       assert Power(Sum(1, :x), 2).compare(Power(Sum(1, :x), 3))
     end
 
-    test '((1+x)^3)#compare((1+y)^2) = true' do
+    test '((1+x)^3).compare((1+y)^2) = true' do
       assert Power(Sum(1, :x), 3).compare(Power(Sum(1, :y), 2))
+    end
+
+    test '((1+x)^3).compare(1+y) = true' do
+      assert Power(Sum(1, :x), 3).compare(Sum(1, :y))
     end
 
     # test '0^w = 0' do
