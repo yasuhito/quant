@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'symbolic/base'
-require 'symbolic/rational'
+# require 'symbolic/rational'
 
 # シンボリック計算
 module Symbolic

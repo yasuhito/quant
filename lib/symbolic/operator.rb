@@ -1,100 +1,53 @@
 # frozen_string_literal: true
 
+require 'symbolic/fraction'
+require 'symbolic/refinement/integer'
+
+# Symbolic Algebra
 module Symbolic
+  using Symbolic::Refinement
+
   UNDEFINED = :Undefined
 
   # Symbolic computation operators
   module Operator
-    # Returns the base of an ASAE
-    #
-    # base(u) = | u when u is a symbol, product, sum, factorial, or function,
-    #           | operand(u, 1) when u is a power,
-    #           | Undefined when u is an integer or fraction
-    #
-    # Examples:
-    #   base(x^2) = x
-    #   base(x) = x
-    def base(u)
-      return u if u.is_a?(Symbol)
-      return u if u.is_a?(Array) && u[0] == :*
-      return u if u.is_a?(Array) && u[0] == :+
-      return u if u.is_a?(Array) && u[0] == :!
-      return u if u.is_a?(Array) && u[0] == :f
+    # Returns the order relation of ASAEs
+    def compare(u, v)
+      # O-1: Suppose that u and v are both constants (integers or fractions).
+      #      Then, compare(u, v) → u < v
+      return u < v if (u.is_a?(Integer) || u.is_a?(Fraction)) && (v.is_a?(Integer) || v.is_a?(Fraction))
 
-      return operand(u, 1) if u.is_a?(Array) && u[0] == :^
+      # O-2: Suppose that u and v are both symbols.
+      #      Then, compare(u, v) is defined by the lexicographical order of the symbols.
+      return u < v if u.is_a?(Symbol) && v.is_a?(Symbol)
 
-      return UNDEFINED if u.is_a?(Integer)
-      return UNDEFINED if u.is_a?(Array) && u[0] == :fraction
-    end
+      # O-3: u and v are either both products or both sums.
+      if (u.is_a?(Sum) && v.is_a?(Sum)) || (u.is_a?(Product) && v.is_a?(Product))
+        return compare(u.operands.last, v.operands.last) if u.operands.last != v.operands.last
 
-    # Returns the exponent of an ASAE
-    #
-    # exponent(u) = | 1 when u is a symbol, product, sum, factorial, or function,
-    #               | operand(u, 2) when u is a power,
-    #               | Undefined when u is an integer or fraction
-    #
-    # Examples:
-    #   exponent(x^2) = 2
-    #   exponent(x) = 1
-    def exponent(u)
-      return 1 if u.is_a?(Symbol)
-      return 1 if u.is_a?(Array) && u[0] == :*
-      return 1 if u.is_a?(Array) && u[0] == :+
-      return 1 if u.is_a?(Array) && u[0] == :!
-      return 1 if u.is_a?(Array) && u[0] == :f
+        m = u.length
+        n = v.length
+        if [m, n].min >= 2
+          0.upto([m, n].min - 2) do |j|
+            return compare(u[m - j - 2], v[n - j - 2]) if u[m - j - 1] == v[n - j - 1] && u[m - j - 2] != v[n - j - 2]
+          end
+        end
 
-      return operand(u, 2) if u.is_a?(Array) && u[0] == :^
+        return compare(m, n)
+      end
 
-      return UNDEFINED if u.is_a?(Integer)
-      return UNDEFINED if u.is_a?(Array) && u[0] == :fraction
-    end
+      # O-4: u and v are both powers.
+      if u.is_a?(Power) && v.is_a?(Power)
+        return compare(u.base, v.base) if u.base != v.base
 
-    # Returns the like-term part of an ASAE
-    #
-    # term(u) = | ·u when u is a symbol, sum, power, factorial, or function,
-    #           | u2···un when u = u1···un is a product and u1 is constant,
-    #           | u when when u = u1 ··· un is a product and u1 is not constant,
-    #           | Undefined when u is an integer or fraction
-    def term(u)
-      return [:*, u] if u.is_a?(Symbol)
-      return [:*, u] if u.is_a?(Array) && u[0] == :+
-      return [:*, u] if u.is_a?(Array) && u[0] == :^
-      return [:*, u] if u.is_a?(Array) && u[0] == :!
-      return [:*, u] if u.is_a?(Array) && u[0] == :f
+        return compare(u.exponent, v.exponent)
+      end
 
-      return [:*, *u[2..-1]] if u.is_a?(Array) && u[0] == :* && u[1].is_a?(Integer)
-      return [:*, *u[2..-1]] if u.is_a?(Array) && u[0] == :* && u[1].is_a?(Array) && u[1][0] == :fraction
-
-      return u if u.is_a?(Array) && u[0] == :* && !(u[1].is_a?(Integer) || (u[1].is_a?(Array) && u[1][0] == :fraction))
-
-      return UNDEFINED if u.is_a?(Integer)
-      return UNDEFINED if u.is_a?(Array) && u[0] == :fraction
-    end
-
-    # Returns the const part of an ASAE
-    #
-    # const(u) = | 1 when u is a symbol, sum, power, factorial, or function,
-    #            | u1 when u = u1···un is a product and u1 is constant,
-    #            | 1 when u = u1···un is a product and u1 is not constant,
-    #            | Undefined when u is an integer or fraction
-    def const(u)
-      return 1 if u.is_a?(Symbol)
-      return 1 if u.is_a?(Array) && u[0] == :+
-      return 1 if u.is_a?(Array) && u[0] == :^
-      return 1 if u.is_a?(Array) && u[0] == :!
-      return 1 if u.is_a?(Array) && u[0] == :f
-
-      return u[1] if u.is_a?(Array) && u[0] == :* && u[1].is_a?(Integer)
-      return u[1] if u.is_a?(Array) && u[0] == :* && u[1].is_a?(Array) && u[1][0] == :fraction
-
-      return 1 if u.is_a?(Array) && u[0] == :* && !(u[1].is_a?(Integer) || (u[1].is_a?(Array) && u[1][0] == :fraction))
-
-      return UNDEFINED if u.is_a?(Integer)
-      return UNDEFINED if u.is_a?(Array) && u[0] == :fraction
+      raise 'Not implemented yet'
     end
 
     def operand(u, i)
-      u[i]
+      u[i - 1]
     end
   end
 end

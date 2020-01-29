@@ -6,46 +6,78 @@ require 'symbolic/product'
 
 module Symbolic
   class ProductTest < ActiveSupport::TestCase
-    test 'Prod(x) = x' do
-      prod = Prod(:x)
-
-      assert_equal :x, prod
+    test '(x * y)#base = x * y' do
+      assert_equal Product(:x, :y), Product(:x, :y).base
     end
 
-    test 'Prod(x, y) = Prod(x, y)' do
-      prod = Prod(:x, :y)
-
-      assert_equal %i[y x], prod.expressions
+    test '(x * y)#exponent = 1' do
+      assert_equal 1, Product(:x, :y).exponent
     end
 
-    test 'Prod(a1, a2, ..., 0, ...an) = 0' do
-      prod = Prod(:x, :y, :z, 0)
-
-      assert_equal 0, prod
+    test '(2 * x * y * z)#term = x * y * z' do
+      assert_equal Product(:x, :y, :z), Product(2, :x, :y, :z).term
     end
 
-    test 'Prod(Num1, Num2) = Num1 * Num2' do
-      prod = Prod(2, 3)
-
-      assert_equal 6, prod
+    test '(1/3 * x * y * z)#term = x * y * z' do
+      assert_equal Product(:x, :y, :z), Product(Fraction(1, 3), :x, :y, :z).term
     end
 
-    test 'Prod(1, x) = x' do
-      prod = Prod(1, :x)
-
-      assert_equal :x, prod
+    test '(x * y * z)#term = x * y * z' do
+      assert_equal Product(:x, :y, :z), Product(:x, :y, :z).term
     end
 
-    test 'Prod(x, 1) = x' do
-      prod = Prod(:x, 1)
-
-      assert_equal :x, prod
+    test '(2 * x * y * z)#const = 2' do
+      assert_equal 2, Product(2, :x, :y, :z).const
     end
 
-    test 'Prod(Prod(:a, :b), Prod(:x, :y)) = Prod(:a, :b, :x, :y)' do
-      prod = Prod(Prod(:a, :b), Prod(:x, :y))
-
-      assert_equal %i[a b x y], prod.expressions.sort
+    test '(1/3 * x * y * z)#const = 1/3' do
+      assert_equal Fraction(1, 3), Product(Fraction(1, 3), :x, :y, :z).const
     end
+
+    test '(x * y * z).const = 1' do
+      assert_equal 1, Product(:x, :y, :z).const
+    end
+
+    # test 'Product(x) = x' do
+    #   prod = Product(:x)
+
+    #   assert_equal :x, prod
+    # end
+
+    # test 'Product(x, y) = Product(x, y)' do
+    #   prod = Product(:x, :y)
+
+    #   assert_equal %i[y x], prod.expressions
+    # end
+
+    # test 'Product(a1, a2, ..., 0, ...an) = 0' do
+    #   prod = Product(:x, :y, :z, 0)
+
+    #   assert_equal 0, prod
+    # end
+
+    # test 'Product(Num1, Num2) = Num1 * Num2' do
+    #   prod = Product(2, 3)
+
+    #   assert_equal 6, prod
+    # end
+
+    # test 'Product(1, x) = x' do
+    #   prod = Product(1, :x)
+
+    #   assert_equal :x, prod
+    # end
+
+    # test 'Product(x, 1) = x' do
+    #   prod = Product(:x, 1)
+
+    #   assert_equal :x, prod
+    # end
+
+    # test 'Product(Product(:a, :b), Product(:x, :y)) = Product(:a, :b, :x, :y)' do
+    #   prod = Product(Product(:a, :b), Product(:x, :y))
+
+    #   assert_equal %i[a b x y], prod.expressions.sort
+    # end
   end
 end

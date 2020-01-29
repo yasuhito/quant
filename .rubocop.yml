@@ -3,7 +3,7 @@ Style/AsciiComments:
   Enabled: false
 
 # 行の文字数を制限しない
-Metrics/LineLength:
+Layout/LineLength:
   Enabled: false
 
 # クラスの長さを制限しない

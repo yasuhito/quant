@@ -2,161 +2,65 @@
 
 require 'test_helper'
 
+require 'symbolic/factorial'
+require 'symbolic/fraction'
+require 'symbolic/function'
 require 'symbolic/operator'
+require 'symbolic/power'
+require 'symbolic/product'
+require 'symbolic/sum'
 
 module Symbolic
   module Operator
-    class BaseTest < ActiveSupport::TestCase
+    class CompareTest < ActiveSupport::TestCase
       include Operator
 
-      test 'base(u) = u when u is a symbol' do
-        assert_equal :x, base(:x)
+      test 'compare(2, 5/2) = true' do
+        assert compare(2, Fraction(5, 2))
       end
 
-      test 'base(u) = u when u is a product' do
-        assert_equal %i[* x y], base(%i[* x y])
+      test 'compare(a, b) = true' do
+        assert compare(:a, :b)
       end
 
-      test 'base(u) = u when u is a sum' do
-        assert_equal %i[+ x y], base(%i[+ x y])
+      test 'compare(v1, v2) = true' do
+        assert compare(:v1, :v2)
       end
 
-      test 'base(u) = u when u is a factorial' do
-        assert_equal %i[! x], base(%i[! x])
+      test 'compare(x1, xa) = true' do
+        assert compare(:x1, :xa)
       end
 
-      test 'base(u) = u when u is a function' do
-        assert_equal %i[f f x], base(%i[f f x])
+      test 'compare(a + b, a + c) = true' do
+        assert compare(Sum(:a, :b), Sum(:a, :c))
       end
 
-      test 'base(u) = operand(u, 1) when u is a power' do
-        assert_equal :x, base([:^, :x, 2])
+      test 'compare(a + c + d, b + c + d) = true' do
+        assert compare(Sum(:a, :c, :d), Sum(:b, :c, :d))
       end
 
-      test 'base(u) = Undefined when u is an integer' do
-        assert_equal :Undefined, base(1)
+      test 'compare(c + d, b + c + d) = true' do
+        assert compare(Sum(:c, :d), Sum(:b, :c, :d))
       end
 
-      test 'base(u) = Undefined when u is a fraction' do
-        assert_equal :Undefined, base([:fraction, 1, 3])
-      end
-    end
-
-    class ExponentTest < ActiveSupport::TestCase
-      include Operator
-
-      test 'exponent(u) = 1 when u is a symbol' do
-        assert_equal 1, exponent(:x)
+      test 'compare(a·b, a·c) = true' do
+        assert compare(Product(:a, :b), Product(:a, :c))
       end
 
-      test 'exponent(u) = 1 when u is a product' do
-        assert_equal 1, exponent(%i[* x y])
+      test 'compare(a·c·d, b·c·d) = true' do
+        assert compare(Product(:a, :c, :d), Product(:b, :c, :d))
       end
 
-      test 'exponent(u) = 1 when u is a sum' do
-        assert_equal 1, exponent(%i[+ x y])
+      test 'compare(c·d, b·c·d) = true' do
+        assert compare(Product(:c, :d), Product(:b, :c, :d))
       end
 
-      test 'exponent(u) = 1 when u is a factorial' do
-        assert_equal 1, exponent(%i[! x])
+      test 'compare((1+x)^2, (1+x)^3) = true' do
+        assert compare(Power(Sum(1, :x), 2), Power(Sum(1, :x), 3))
       end
 
-      test 'exponent(u) = 1 when u is a function' do
-        assert_equal 1, exponent(%i[f f x])
-      end
-
-      test 'exponent(u) = operand(u, 2) when u is a power' do
-        assert_equal 2, exponent([:^, :x, 2])
-      end
-
-      test 'exponent(u) = Undefined when u is an integer' do
-        assert_equal :Undefined, exponent(1)
-      end
-
-      test 'exponent(u) = Undefined when u is a fraction' do
-        assert_equal :Undefined, exponent([:fraction, 1, 3])
-      end
-    end
-
-    class TermTest < ActiveSupport::TestCase
-      include Operator
-
-      test 'term(u) = ·u when u is a symbol' do
-        assert_equal %i[* x], term(:x)
-      end
-
-      test 'term(u) = ·u when u is a sum' do
-        assert_equal [:*, %i[+ x y]], term(%i[+ x y])
-      end
-
-      test 'term(u) = ·u when u is a power' do
-        assert_equal [:*, [:^, :x, 2]], term([:^, :x, 2])
-      end
-
-      test 'term(u) = ·u when u is a factorial' do
-        assert_equal [:*, %i[! x]], term(%i[! x])
-      end
-
-      test 'term(u) = ·u when u is a function' do
-        assert_equal [:*, %i[f f x]], term(%i[f f x])
-      end
-
-      test 'term(u) = u2···un when u = u1···un is a product and u1 is constant' do
-        assert_equal %i[* x y z], term([:*, 2, :x, :y, :z])
-        assert_equal %i[* x y z], term([:*, [:fraction, 1, 3], :x, :y, :z])
-      end
-
-      test 'term(u) = u when u = u1···un is a product and u1 is not constant' do
-        assert_equal %i[* x y z], term(%i[* x y z])
-      end
-
-      test 'term(u) = Undefined when u is an integer' do
-        assert_equal :Undefined, term(1)
-      end
-
-      test 'term(u) = Undefined when u is a fraction' do
-        assert_equal :Undefined, term([:fraction, 1, 3])
-      end
-    end
-
-    class ConstTest < ActiveSupport::TestCase
-      include Operator
-
-      test 'const(u) = 1 when u is a symbol' do
-        assert_equal 1, const(:x)
-      end
-
-      test 'const(u) = 1 when u is a sum' do
-        assert_equal 1, const(%i[+ x y])
-      end
-
-      test 'const(u) = 1 when u is a power' do
-        assert_equal 1, const([:^, :x, 2])
-      end
-
-      test 'const(u) = 1 when u is a factorial' do
-        assert_equal 1, const(%i[! x])
-      end
-
-      test 'const(u) = 1 when u is a function' do
-        assert_equal 1, const(%i[f f x])
-      end
-
-      test 'const(u) = u1 when u = u1···un is a product and u1 is constant' do
-        assert_equal 2, const([:*, 2, :x, :y, :z])
-        assert_equal [:fraction, 1, 3], const([:*, [:fraction, 1, 3], :x, :y, :z])
-      end
-
-      test 'const(u) = u1 when u = u1···un is a product and u1 is not constant' do
-        assert_equal 1, const(%i[* x y z])
-      end
-
-      test 'const(u) = Undefined when u is an integer' do
-        assert_equal :Undefined, const(1)
-      end
-
-      test 'const(u) = Undefined when u is a fraction' do
-        assert_equal :Undefined, const([:fraction, 1, 3])
+      test 'compare((1+x)^3, (1+y)^2) = true' do
+        assert compare(Power(Sum(1, :x), 3), Power(Sum(1, :y), 2))
       end
     end
   end

@@ -21,17 +21,17 @@ class Complex
     dup
   end
 
-  def inspect
-    if real.zero?
-      if imag == 1
-        'i'
-      elsif imag == -1
-        '-i'
-      else
-        "#{imag}i"
-      end
-    else
-      "#{real}+#{imag}i"
-    end
-  end
+  # def inspect
+  #   if real.zero?
+  #     if imag == 1
+  #       'i'
+  #     elsif imag == -1
+  #       '-i'
+  #     else
+  #       "#{imag}i"
+  #     end
+  #   else
+  #     "#{real}+#{imag}i"
+  #   end
+  # end
 end
