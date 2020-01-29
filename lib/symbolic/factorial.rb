@@ -31,9 +31,16 @@ module Symbolic
     end
 
     def compare(v)
-      return unless v.is_a?(Factorial)
-
-      @operands[0].compare v.operands[0]
+      case v
+      when Factorial
+        @operands[0].compare v.operands[0]
+      when Function, Symbol
+        if @operands[0] == v
+          false
+        else
+          compare Factorial(v)
+        end
+      end
     end
 
     def ==(other)

@@ -21,5 +21,9 @@ module Symbolic
     test 'x!#const = 1' do
       assert_equal 1, Factorial(:x).const
     end
+
+    test '(m!).compare(n) = true' do
+      assert Factorial(:m).compare(:n)
+    end
   end
 end
