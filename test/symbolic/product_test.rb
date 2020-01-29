@@ -6,31 +6,31 @@ require 'symbolic/product'
 
 module Symbolic
   class ProductTest < ActiveSupport::TestCase
-    test '(x * y)#base = x * y' do
+    test '(x * y).base = x * y' do
       assert_equal Product(:x, :y), Product(:x, :y).base
     end
 
-    test '(x * y)#exponent = 1' do
+    test '(x * y).exponent = 1' do
       assert_equal 1, Product(:x, :y).exponent
     end
 
-    test '(2 * x * y * z)#term = x * y * z' do
+    test '(2 * x * y * z).term = x * y * z' do
       assert_equal Product(:x, :y, :z), Product(2, :x, :y, :z).term
     end
 
-    test '(1/3 * x * y * z)#term = x * y * z' do
+    test '(1/3 * x * y * z).term = x * y * z' do
       assert_equal Product(:x, :y, :z), Product(Fraction(1, 3), :x, :y, :z).term
     end
 
-    test '(x * y * z)#term = x * y * z' do
+    test '(x * y * z).term = x * y * z' do
       assert_equal Product(:x, :y, :z), Product(:x, :y, :z).term
     end
 
-    test '(2 * x * y * z)#const = 2' do
+    test '(2 * x * y * z).const = 2' do
       assert_equal 2, Product(2, :x, :y, :z).const
     end
 
-    test '(1/3 * x * y * z)#const = 1/3' do
+    test '(1/3 * x * y * z).const = 1/3' do
       assert_equal Fraction(1, 3), Product(Fraction(1, 3), :x, :y, :z).const
     end
 
@@ -38,16 +38,20 @@ module Symbolic
       assert_equal 1, Product(:x, :y, :z).const
     end
 
-    test '(a·b)#compare(a·c) = true' do
+    test '(a·b).compare(a·c) = true' do
       assert Product(:a, :b).compare(Product(:a, :c))
     end
 
-    test '(a·c·d)#compare(b·c·d) = true' do
+    test '(a·c·d).compare(b·c·d) = true' do
       assert Product(:a, :c, :d).compare(Product(:b, :c, :d))
     end
 
-    test '(c·d)#compare(b·c·d) = true' do
+    test '(c·d).compare(b·c·d) = true' do
       assert Product(:c, :d).compare(Product(:b, :c, :d))
+    end
+
+    test '(a·x^2).compare(x^3) = true' do
+      assert Product(:a, Power(:x, 2)).compare(Power(:x, 3))
     end
 
     # test 'Product(x) = x' do

@@ -39,19 +39,22 @@ module Symbolic
     end
 
     def compare(v)
-      return unless v.is_a?(Product)
+      case v
+      when Product
+        return @operands.last.compare(v.operands.last) if @operands.last != v.operands.last
 
-      return @operands.last.compare(v.operands.last) if @operands.last != v.operands.last
-
-      m = length
-      n = v.length
-      if [m, n].min >= 2
-        0.upto([m, n].min - 2) do |j|
-          return @operands[m - j - 2].compare(v[n - j - 2]) if @operands[m - j - 1] == v[n - j - 1] && @operands[m - j - 2] != v[n - j - 2]
+        m = length
+        n = v.length
+        if [m, n].min >= 2
+          0.upto([m, n].min - 2) do |j|
+            return @operands[m - j - 2].compare(v[n - j - 2]) if @operands[m - j - 1] == v[n - j - 1] && @operands[m - j - 2] != v[n - j - 2]
+          end
         end
-      end
 
-      m.compare(n)
+        m.compare(n)
+      when Power, Sum, Factorial, Function, Symbol
+        compare Product(v)
+      end
     end
 
     def length
