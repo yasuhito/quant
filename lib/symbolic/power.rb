@@ -29,32 +29,71 @@ module Symbolic
       end
 
       return 1 if base == 1
-      return simplify_integer_power(base, exponent) if exponent.is_a?(Integer)
+      return simplify_integer_power if exponent.is_a?(Integer)
 
       self
     end
 
-    def simplify_integer_power(v, n)
-      return simplify_rne(Power.new(v, n)) if v.is_a?(Integer) || v.is_a?(Fraction)
-      return 1 if n.zero?
-      return v if n == 1
+    def simplify_integer_power
+      return simplify_rne(Power.new(base, exponent)) if base.is_a?(Integer) || base.is_a?(Fraction)
+      return 1 if exponent.zero?
+      return base if exponent == 1
 
-      if v.is_a?(Power)
-        r = v.operands[0]
-        s = v.operands[1]
-        p = simplify_product(Power.new(s, n))
+      if base.is_a?(Power)
+        r = base.operands[0]
+        s = base.operands[1]
+        p = simplify_product(Power.new(s, exponent))
 
         if p.is_a?(Integer)
-          simplify_integer_power(r, p)
+          Power.new(r, p).simplify_integer_power
         else
           Power.new(r, p)
         end
-      elsif v.is_a?(Product)
-        simplify_product Product(*(v.operands.map { |each| Power(each, n).simplify_integer_power(each, n) }))
+      elsif base.is_a?(Product)
+        simplify_product Product(*(base.operands.map { |each| Power.new(each, exponent).simplify_integer_power }))
       else
-        Power(v, n)
+        self
       end
     end
+
+    def base
+      @operands[0]
+    end
+
+    def exponent
+      @operands[1]
+    end
+
+    def term
+      Product(self)
+    end
+
+    def const
+      1
+    end
+
+    def compare(v)
+      case v
+      when Power
+        return base.compare(v.base) if base != v.base
+
+        exponent.compare(v.exponent)
+      when Sum, Factorial, Function, Symbol
+        compare Power.new(v, 1)
+      end
+    end
+
+    def ==(other)
+      return false unless other.is_a?(Power)
+
+      @operands == other.operands
+    end
+
+    def zero?
+      false
+    end
+
+    private
 
     def simplify_product(u)
       return :Undefined if u.operands.include?(:Undefined)
@@ -214,45 +253,8 @@ module Symbolic
       raise "Not implemented yet: evaluate_product(#{v}, #{w})"
     end
 
-    def base
-      @operands[0]
-    end
-
-    def exponent
-      @operands[1]
-    end
-
-    def term
-      Product(self)
-    end
-
-    def const
-      1
-    end
-
-    def compare(v)
-      case v
-      when Power
-        return base.compare(v.base) if base != v.base
-
-        exponent.compare(v.exponent)
-      when Sum, Factorial, Function, Symbol
-        compare Power(v, 1)
-      end
-    end
-
     def [](n)
       @operands[n]
-    end
-
-    def ==(other)
-      return false unless other.is_a?(Power)
-
-      @operands == other.operands
-    end
-
-    def zero?
-      false
     end
   end
 end
