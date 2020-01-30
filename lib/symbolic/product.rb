@@ -66,17 +66,19 @@ module Symbolic
           l
         end
       elsif l.size == 2 && l.any? { |each| each.is_a?(Product) }
-        if l[0].is_a?(Product) && !l[1].is_a?(Product)
+        if l[0].is_a?(Product) && l[1].is_a?(Product)
+          merge_products l[0].operands, l[1].operands
+        elsif l[0].is_a?(Product) && !l[1].is_a?(Product)
           merge_products l[0].operands, [l[1]]
         else
-          raise "Not implemented yet: simplify_product_rec(#{l})"
+          merge_products [l[0]], l[1].operands
         end
       elsif l.size > 2
         w = simplify_product_rec(l[1..-1])
         if l[0].is_a?(Product)
-          raise "Not implemented yet: simplify_product_rec(#{l})"
+          merge_products l[0].operands, w
         else
-          merge_products([l[0]], w)
+          merge_products [l[0]], w
         end
       else
         raise "Not implemented yet: simplify_product_rec(#{l})"

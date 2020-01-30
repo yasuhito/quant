@@ -72,6 +72,14 @@ module Symbolic
       test '(c·2·b·c·a).simplify = 2·a·b·c^2' do
         assert_equal Product(2, :a, :b, Power(:c, 2)), Product(:c, 2, :b, :c, :a).simplify
       end
+
+      test '(2·a·c·e)·(3·b·d·e).simplify = 6·a·b·c·d·e^2' do
+        assert_equal Product(6, :a, :b, :c, :d, Power(:e, 2)), Product(Product(2, :a, :c, :e), Product(3, :b, :d, :e)).simplify
+      end
+
+      test '(a·b)·b·c = a·b^2·c' do
+        Product(Product(:a, :b), :b, :c).simplify
+      end
     end
   end
 end
