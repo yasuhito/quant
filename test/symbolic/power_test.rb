@@ -78,6 +78,11 @@ module Symbolic
       test '(((x^(1/2))^(1/2))^8).simplify = x^2' do
         assert_equal Power(:x, 2), Power(Power(Power(:x, Fraction(1, 2)), Fraction(1, 2)), 8).simplify
       end
+
+      test '(((x·y)^(1/2)·z^2)^2).simplify = x·y·z^4' do
+        assert_equal Product(:x, :y, Power(:z, 4)),
+                     Power(Product(Power(Product(:x, :y), Fraction(1, 2)), Power(:z, 2)), 2).simplify
+      end
     end
   end
 end

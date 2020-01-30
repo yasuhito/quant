@@ -60,6 +60,10 @@ module Symbolic
 
       @operands == other.operands
     end
+
+    def zero?
+      @operands[0].zero?
+    end
   end
 end
 

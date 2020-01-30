@@ -14,6 +14,11 @@ module Symbolic
       @operands = operands
     end
 
+    # TODO: 後で実装
+    def simplify
+      self
+    end
+
     def base
       self
     end
@@ -66,7 +71,14 @@ module Symbolic
     end
 
     def ==(other)
+      return false unless other.is_a?(Product)
+
       @operands == other.operands
+    end
+
+    # TODO: 後で実装
+    def zero?
+      false
     end
 
     # # (define (simplify-product u)

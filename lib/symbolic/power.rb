@@ -38,30 +38,94 @@ module Symbolic
       return simplify_rne(Power.new(v, n)) if v.is_a?(Integer) || v.is_a?(Fraction)
       return 1 if n.zero?
       return v if n == 1
-      return Power(v, n) if v.is_a?(Symbol)
 
-      r = v.operands[0]
-      s = v.operands[1]
-      p = simplify_product(Power.new(s, n))
+      if v.is_a?(Power)
+        r = v.operands[0]
+        s = v.operands[1]
+        p = simplify_product(Power.new(s, n))
 
-      if p.is_a?(Integer)
-        simplify_integer_power(r, p)
+        if p.is_a?(Integer)
+          simplify_integer_power(r, p)
+        else
+          Power.new(r, p)
+        end
+      elsif v.is_a?(Product)
+        simplify_product Product(*(v.operands.map { |each| Power(each, n).simplify_integer_power(each, n) }))
       else
-        Power.new(r, p)
+        Power(v, n)
       end
     end
 
     def simplify_product(u)
+      return :Undefined if u.operands.include?(:Undefined)
+      return 0 if u.operands.any?(&:zero?)
       return u.operands[0] if u.operands.size == 1
 
       v = simplify_product_rec(u.operands)
+      if v.size == 1
+        v[0]
+      elsif v.size > 1
+        Product(*v)
+      else
+        1
+      end
     end
 
     # Let L = [u1, u2,...,un] be a non-empty list with n ≥ 2 non-zero ASAEs.
     # The operator Simplify product rec(L) (for "Simplify product recursive")
     # returns a list with zero or more operands.
     def simplify_product_rec(l)
-      p = simplify_rne(Product(*l))
+      if l.size == 2 && !l.any? { |each| each.is_a?(Product) }
+        if (l[0].is_a?(Integer) || l[0].is_a?(Fraction)) && (l[1].is_a?(Integer) || l[1].is_a?(Fraction))
+          p = simplify_rne(Product(*l))
+          if p == 1
+            []
+          else
+            [p]
+          end
+        elsif l[0] == 1
+          [l[1]]
+        elsif l[1] == 1
+          [l[0]]
+        elsif l[0].base == l[1].base
+          raise "Not implemented yet: simplify_product_rec(#{l})"
+        elsif l[1].compare(l[1])
+          raise "Not implemented yet: simplify_product_rec(#{l})"
+        else
+          l
+        end
+      elsif l.size == 2 && l.any? { |each| each.is_a?(Product) }
+        if l[0].is_a?(Product) && !l[1].is_a?(Product)
+          merge_products l[0].operands, [l[1]]
+        else
+          raise "Not implemented yet: simplify_product_rec(#{l})"
+        end
+      else
+        raise "Not implemented yet: simplify_product_rec(#{l})"
+      end
+    end
+
+    def merge_products(p, q)
+      if q.empty?
+        p
+      elsif p.empty?
+        q
+      else
+        p1 = p[0]
+        q1 = q[0]
+        h = simplify_product_rec([p1, q1])
+        if h.empty?
+          merge_products p[1..-1], q[1..-1]
+        elsif h.size == 1
+          raise "Not implemented yet: merge_products(#{p}, #{q})"
+        elsif h == [p1, q1]
+          [p1] + merge_products(p[1..-1], q)
+        elsif h == [q1, p1]
+          raise "Not implemented yet: merge_products(#{p}, #{q})"
+        else
+          raise "Not implemented yet: merge_products(#{p}, #{q})"
+        end
+      end
     end
 
     # RNE = rational number expression
