@@ -2,7 +2,10 @@
 
 require 'test_helper'
 
+require 'symbolic/fraction'
+require 'symbolic/power'
 require 'symbolic/product'
+require 'symbolic/sum'
 
 module Symbolic
   class ProductTest
@@ -57,30 +60,27 @@ module Symbolic
     end
 
     class SimplificationTest < ActiveSupport::TestCase
-      # SPRD-1
-      test '((1/0)·2).simplify = (Undefined·2).simplify = Undefined' do
+      test 'SPRD-1: (1/0)·2 → Undefined·2 → Undefined' do
         assert_equal :Undefined, Product(Fraction(1, 0), 2).simplify
       end
 
-      # SPRD-2
-      test 'x·0 = 0' do
+      test 'SPRD-2: x·0 → 0' do
         assert_equal 0, Product(:x, 0).simplify
       end
 
-      # SPRD-3
-      test '·2 = 2' do
+      test 'SPRD-3: ·2 → 2' do
         assert_equal 2, Product(2).simplify
       end
 
-      test '(c·2·b·c·a).simplify = 2·a·b·c^2' do
+      test '(c·2·b·c·a) → 2·a·b·c^2' do
         assert_equal Product(2, :a, :b, Power(:c, 2)), Product(:c, 2, :b, :c, :a).simplify
       end
 
-      test '(2·a·c·e)·(3·b·d·e).simplify = 6·a·b·c·d·e^2' do
+      test '(2·a·c·e)·(3·b·d·e) → 6·a·b·c·d·e^2' do
         assert_equal Product(6, :a, :b, :c, :d, Power(:e, 2)), Product(Product(2, :a, :c, :e), Product(3, :b, :d, :e)).simplify
       end
 
-      test '(a·b)·b·c = a·b^2·c' do
+      test '(a·b)·b·c → a·b^2·c' do
         Product(Product(:a, :b), :b, :c).simplify
       end
     end
