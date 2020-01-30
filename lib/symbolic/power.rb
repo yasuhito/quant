@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'symbolic/rational_number_expression'
 require 'symbolic/refinement/integer'
 require 'symbolic/refinement/symbol'
 
@@ -7,6 +8,8 @@ module Symbolic
   # シンボリックなべき乗
   class Power
     using Symbolic::Refinement
+
+    include RationalNumberExpression
 
     attr_reader :operands
 
@@ -42,7 +45,7 @@ module Symbolic
       if base.is_a?(Power)
         r = base.operands[0]
         s = base.operands[1]
-        p = simplify_product(Power.new(s, exponent))
+        p = Product.new(s, exponent).simplify_product
 
         if p.is_a?(Integer)
           Power.new(r, p).simplify_integer_power
@@ -50,7 +53,7 @@ module Symbolic
           Power.new(r, p)
         end
       elsif base.is_a?(Product)
-        simplify_product Product(*(base.operands.map { |each| Power.new(each, exponent).simplify_integer_power }))
+        Product(*(base.operands.map { |each| Power.new(each, exponent).simplify_integer_power })).simplify_product
       else
         self
       end
@@ -94,164 +97,6 @@ module Symbolic
     end
 
     private
-
-    def simplify_product(u)
-      return :Undefined if u.operands.include?(:Undefined)
-      return 0 if u.operands.any?(&:zero?)
-      return u.operands[0] if u.operands.size == 1
-
-      v = simplify_product_rec(u.operands)
-      if v.size == 1
-        v[0]
-      elsif v.size > 1
-        Product(*v)
-      else
-        1
-      end
-    end
-
-    # Let L = [u1, u2,...,un] be a non-empty list with n ≥ 2 non-zero ASAEs.
-    # The operator Simplify product rec(L) (for "Simplify product recursive")
-    # returns a list with zero or more operands.
-    def simplify_product_rec(l)
-      if l.size == 2 && !l.any? { |each| each.is_a?(Product) }
-        if (l[0].is_a?(Integer) || l[0].is_a?(Fraction)) && (l[1].is_a?(Integer) || l[1].is_a?(Fraction))
-          p = simplify_rne(Product(*l))
-          if p == 1
-            []
-          else
-            [p]
-          end
-        elsif l[0] == 1
-          [l[1]]
-        elsif l[1] == 1
-          [l[0]]
-        elsif l[0].base == l[1].base
-          raise "Not implemented yet: simplify_product_rec(#{l})"
-        elsif l[1].compare(l[1])
-          raise "Not implemented yet: simplify_product_rec(#{l})"
-        else
-          l
-        end
-      elsif l.size == 2 && l.any? { |each| each.is_a?(Product) }
-        if l[0].is_a?(Product) && !l[1].is_a?(Product)
-          merge_products l[0].operands, [l[1]]
-        else
-          raise "Not implemented yet: simplify_product_rec(#{l})"
-        end
-      else
-        raise "Not implemented yet: simplify_product_rec(#{l})"
-      end
-    end
-
-    def merge_products(p, q)
-      if q.empty?
-        p
-      elsif p.empty?
-        q
-      else
-        p1 = p[0]
-        q1 = q[0]
-        h = simplify_product_rec([p1, q1])
-        if h.empty?
-          merge_products p[1..-1], q[1..-1]
-        elsif h.size == 1
-          raise "Not implemented yet: merge_products(#{p}, #{q})"
-        elsif h == [p1, q1]
-          [p1] + merge_products(p[1..-1], q)
-        elsif h == [q1, p1]
-          raise "Not implemented yet: merge_products(#{p}, #{q})"
-        else
-          raise "Not implemented yet: merge_products(#{p}, #{q})"
-        end
-      end
-    end
-
-    # RNE = rational number expression
-    def simplify_rne(u)
-      v = simplify_rne_rec(u)
-      if v == :Undefined
-        :Undefined
-      else
-        simplify_rational_number v
-      end
-    end
-
-    def simplify_rne_rec(u)
-      if u.is_a?(Integer)
-        return u
-      elsif u.is_a?(Fraction)
-        if denominator_fun(u).zero?
-          return :Undefined
-        else
-          return u
-        end
-      elsif u.operands.size == 2
-        if u.is_a?(Product)
-          v = simplify_rne_rec(u.operands[0])
-          w = simplify_rne_rec(u.operands[1])
-          if v == :Undefined || w == :Undefined
-            return :Undefined
-          else
-            if u.is_a?(Product)
-              return evaluate_product(v, w)
-            end
-
-            raise "Not implemented yet u=#{u}, v=#{v}, w=#{w}"
-          end
-        elsif u.is_a?(Power)
-          v = simplify_rne_rec(@operands[0])
-          if v == :Undefined
-            return :Undefined
-          else
-            return evaluate_power(v, @operands[1])
-          end
-        end
-      end
-
-      raise "Not implemented yet: simplify_rne_rec(#{u})"
-    end
-
-    def simplify_rational_number(u)
-      return u if u.is_a?(Integer)
-    end
-
-    def evaluate_power(v, n)
-      if !numerator_fun(v).zero?
-        if n > 0
-          s = evaluate_power(v, n - 1)
-          evaluate_product(s, v)
-        elsif n.zero?
-          1
-        end
-      end
-    end
-
-    def numerator_fun(v)
-      return v if v.is_a?(Integer)
-    end
-
-    def denominator_fun(v)
-      return v.operands[1] if v.is_a?(Fraction)
-
-      raise "Not implemented yet: denominator_fun(#{v})"
-    end
-
-    # v, w are both constants
-    def evaluate_product(v, w)
-      product = v * w
-      if product.is_a?(Integer)
-        return product
-      elsif product.is_a?(Rational)
-        if product.denominator == 1
-          return product.numerator
-        else
-          return product
-        end
-      end
-
-      raise "Not implemented yet: evaluate_product(#{v}, #{w})"
-    end
 
     def [](n)
       @operands[n]
