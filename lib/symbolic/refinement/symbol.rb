@@ -4,6 +4,10 @@ module Symbolic
   # Symbol refinements
   module Refinement
     refine Symbol do
+      def simplify
+        self
+      end
+
       def base
         self
       end
@@ -26,6 +30,10 @@ module Symbolic
         else
           !v.compare(self)
         end
+      end
+
+      def zero?
+        false
       end
     end
   end

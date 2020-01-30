@@ -2,79 +2,82 @@
 
 require 'test_helper'
 
+require 'symbolic/fraction'
 require 'symbolic/power'
+require 'symbolic/sum'
 
 module Symbolic
-  class PowerTest < ActiveSupport::TestCase
-    test 'x^2.base = x' do
-      assert_equal :x, Power(:x, 2).base
+  class PowerTest
+    class OperatorTest < ActiveSupport::TestCase
+      test 'x^2.base = x' do
+        assert_equal :x, Power(:x, 2).base
+      end
+
+      test 'x^2.exponent = 2' do
+        assert_equal 2, Power(:x, 2).exponent
+      end
+
+      test 'x^2.term = ·x^2' do
+        assert_equal Product(Power(:x, 2)), Power(:x, 2).term
+      end
+
+      test 'x^2.const = 1' do
+        assert_equal 1, Power(:x, 2).const
+      end
+
+      test '((1+x)^2).compare((1+x)^3) = true' do
+        assert Power(Sum(1, :x), 2).compare(Power(Sum(1, :x), 3))
+      end
+
+      test '((1+x)^3).compare((1+y)^2) = true' do
+        assert Power(Sum(1, :x), 3).compare(Power(Sum(1, :y), 2))
+      end
+
+      test '((1+x)^3).compare(1+y) = true' do
+        assert Power(Sum(1, :x), 3).compare(Sum(1, :y))
+      end
     end
 
-    test 'x^2.exponent = 2' do
-      assert_equal 2, Power(:x, 2).exponent
+    class SimplificationTest < ActiveSupport::TestCase
+      test '((1/0)^2).simplify = Undefined' do
+        assert_equal :Undefined, Power(Fraction(1, 0), 2).simplify
+      end
+
+      test '(2^(1/0)).simplify = Undefined' do
+        assert_equal :Undefined, Power(2, Fraction(1, 0)).simplify
+      end
+
+      test '(0^2).simplify = 1' do
+        assert_equal 1, Power(0, 2).simplify
+      end
+
+      test '(0^(1/2)).simplify = 1' do
+        assert_equal 1, Power(0, Fraction(1, 2)).simplify
+      end
+
+      test '(0^(-1)).simplify = Undefined' do
+        assert_equal :Undefined, Power(0, -1).simplify
+      end
+
+      test '(1^x).simplify = 1' do
+        assert_equal 1, Power(1, :x).simplify
+      end
+
+      test '(2^2).simplify = 4' do
+        assert_equal 4, Power(2, 2).simplify
+      end
+
+      test '(2^0).simplify = 1' do
+        assert_equal 1, Power(2, 0).simplify
+      end
+
+      test '(2^1).simplify = 2' do
+        assert_equal 2, Power(2, 1).simplify
+      end
+
+      test '(((x^(1/2))^(1/2))^8).simplify = x^2' do
+        assert_equal Power(:x, 2), Power(Power(Power(:x, Fraction(1, 2)), Fraction(1, 2)), 8).simplify
+      end
     end
-
-    test 'x^2.term = ·x^2' do
-      assert_equal Product(Power(:x, 2)), Power(:x, 2).term
-    end
-
-    test 'x^2.const = 1' do
-      assert_equal 1, Power(:x, 2).const
-    end
-
-    test '((1+x)^2).compare((1+x)^3) = true' do
-      assert Power(Sum(1, :x), 2).compare(Power(Sum(1, :x), 3))
-    end
-
-    test '((1+x)^3).compare((1+y)^2) = true' do
-      assert Power(Sum(1, :x), 3).compare(Power(Sum(1, :y), 2))
-    end
-
-    test '((1+x)^3).compare(1+y) = true' do
-      assert Power(Sum(1, :x), 3).compare(Sum(1, :y))
-    end
-
-    # test '0^w = 0' do
-    #   pow = Power(0, :w)
-
-    #   assert_equal 0, pow
-    # end
-
-    # test '1^w = 1' do
-    #   pow = Power(1, :w)
-
-    #   assert_equal 1, pow
-    # end
-
-    # test 'v^0 = 1' do
-    #   pow = Power(:v, 0)
-
-    #   assert_equal 1, pow
-    # end
-
-    # test 'v^1 = v' do
-    #   pow = Power(:v, 1)
-
-    #   assert_equal :v, pow
-    # end
-
-    # test '2^3 = 8' do
-    #   pow = Power(2, 3)
-
-    #   assert_equal 2**3, pow
-    # end
-
-    # test '(r^s)^Int = r^(s*Int)' do
-    #   pow = Power(Power(:r, :s), 2)
-
-    #   assert_equal :r, pow.v
-    #   assert_equal [:*, :s, 2], pow.w
-    # end
-
-    # test '(x*y*z)^Int = x^Int * y^Int * z^Int' do
-    #   pow = Power(%i[* x y z], 2)
-
-    #   assert_equal [:*, Power(:x, 2), Power(:y, 2), Power(:z, 2)], pow
-    # end
   end
 end

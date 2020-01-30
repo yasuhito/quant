@@ -4,6 +4,10 @@ module Symbolic
   # Integer refinements
   module Refinement
     refine Integer do
+      def simplify
+        self
+      end
+
       def base
         :Undefined
       end
