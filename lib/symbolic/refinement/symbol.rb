@@ -32,6 +32,14 @@ module Symbolic
         end
       end
 
+      def product?
+        false
+      end
+
+      def constant?
+        false
+      end
+
       def zero?
         false
       end

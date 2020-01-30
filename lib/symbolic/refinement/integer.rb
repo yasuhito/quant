@@ -34,6 +34,14 @@ module Symbolic
           true
         end
       end
+
+      def constant?
+        true
+      end
+
+      def product?
+        false
+      end
     end
   end
 end

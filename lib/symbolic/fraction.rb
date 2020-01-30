@@ -55,10 +55,22 @@ module Symbolic
       end
     end
 
+    def rational
+      Rational(@operands[0], @operands[1])
+    end
+
     def ==(other)
       return false unless other.is_a?(Fraction)
 
       @operands == other.operands
+    end
+
+    def constant?
+      true
+    end
+
+    def product?
+      false
     end
 
     def zero?

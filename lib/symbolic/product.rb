@@ -22,10 +22,11 @@ module Symbolic
     end
 
     def simplify_product
-      return :Undefined if @operands.include?(:Undefined)
-      return 0 if @operands.any?(&:zero?)
-      return @operands[0] if @operands.size == 1
+      return :Undefined if @operands.include?(:Undefined) # SPRD-1
+      return 0 if @operands.any?(&:zero?) # SPRD-2
+      return @operands[0] if @operands.size == 1 # SPRD-3
 
+      # SPRD-4
       v = simplify_product_rec(@operands)
       if v.size == 1
         v[0]
@@ -36,13 +37,12 @@ module Symbolic
       end
     end
 
-    # Let L = [u1, u2,...,un] be a non-empty list with n ≥ 2 non-zero ASAEs.
-    # The operator Simplify product rec(L) (for "Simplify product recursive")
-    # returns a list with zero or more operands.
+    # l = [u1, u2,...,un] be a non-empty list with n ≥ 2 non-zero ASAEs.
+    # Returns a list with zero or more operands.
     def simplify_product_rec(l)
-      if l.size == 2 && l.none? { |each| each.is_a?(Product) }
-        if (l[0].is_a?(Integer) || l[0].is_a?(Fraction)) && (l[1].is_a?(Integer) || l[1].is_a?(Fraction))
-          p = simplify_rne(Product(*l))
+      if l.size == 2 && l.none?(&:product?) # SPRDREC-1
+        if l.all?(&:constant?)
+          p = simplify_rational_number_expression(Product(*l))
           if p == 1
             []
           else
@@ -172,6 +172,10 @@ module Symbolic
       return false unless other.is_a?(Product)
 
       @operands == other.operands
+    end
+
+    def product?
+      true
     end
 
     # TODO: 後で実装

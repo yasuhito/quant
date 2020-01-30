@@ -38,7 +38,7 @@ module Symbolic
     end
 
     def simplify_integer_power
-      return simplify_rne(Power.new(base, exponent)) if base.is_a?(Integer) || base.is_a?(Fraction)
+      return simplify_rational_number_expression(Power.new(base, exponent)) if base.is_a?(Integer) || base.is_a?(Fraction)
       return 1 if exponent.zero?
       return base if exponent == 1
 
@@ -90,6 +90,14 @@ module Symbolic
       return false unless other.is_a?(Power)
 
       @operands == other.operands
+    end
+
+    def constant?
+      false
+    end
+
+    def product?
+      false
     end
 
     def zero?
