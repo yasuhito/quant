@@ -7,8 +7,8 @@ module Symbolic
 
     def simplify_rational_number_expression(u)
       v = simplify_rational_number_expression_rec(u)
-      if v == :Undefined
-        :Undefined
+      if v == UNDEFINED
+        UNDEFINED
       else
         simplify_rational_number v
       end
@@ -19,14 +19,14 @@ module Symbolic
         return u
       elsif u.is_a?(Fraction)
         if denominator_fun(u).zero?
-          return :Undefined
+          return UNDEFINED
         else
           return u
         end
       elsif u.operands.size == 1
         v = simplify_rational_number_expression_rec(u.operands[0])
-        if v == :Undefined
-          return :Undefined
+        if v == UNDEFINED
+          return UNDEFINED
         elsif u.is_a?(Sum)
           return v
         else
@@ -36,8 +36,8 @@ module Symbolic
         if u.is_a?(Sum) || u.is_a?(Product)
           v = simplify_rational_number_expression_rec(u.operands[0])
           w = simplify_rational_number_expression_rec(u.operands[1])
-          if v == :Undefined || w == :Undefined
-            return :Undefined
+          if v == UNDEFINED || w == UNDEFINED
+            return UNDEFINED
           else
             return evaluate_sum(v, w) if u.is_a?(Sum)
             return evaluate_product(v, w) if u.is_a?(Product)
@@ -46,8 +46,8 @@ module Symbolic
           end
         elsif u.is_a?(Power)
           v = simplify_rational_number_expression_rec(u.operands[0])
-          if v == :Undefined
-            return :Undefined
+          if v == UNDEFINED
+            return UNDEFINED
           else
             return evaluate_power(v, u.operands[1])
           end

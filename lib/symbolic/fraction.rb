@@ -10,25 +10,25 @@ module Symbolic
     end
 
     def simplify
-      return :Undefined if @operands[1].zero?
+      return UNDEFINED if @operands[1].zero?
 
       self
     end
 
     def base
-      :Undefined
+      UNDEFINED
     end
 
     def exponent
-      :Undefined
+      UNDEFINED
     end
 
     def term
-      :Undefined
+      UNDEFINED
     end
 
     def const
-      :Undefined
+      UNDEFINED
     end
 
     def compare(v)

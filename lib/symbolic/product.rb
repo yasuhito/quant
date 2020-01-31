@@ -1,46 +1,22 @@
 # frozen_string_literal: true
 
-require 'symbolic/rational_number_expression'
-require 'symbolic/refinement/integer'
-require 'symbolic/refinement/symbol'
+require 'symbolic/expression'
 
 module Symbolic
   # シンボリックな積
-  class Product
+  class Product < Expression
     using Symbolic::Refinement
-
-    include RationalNumberExpression
 
     attr_reader :operands
 
-    def initialize(*operands)
-      @operands = operands
-    end
-
     def simplify
-      Product.new(*@operands.map(&:simplify)).simplify_product
-    end
-
-    def simplify_product
-      return :Undefined if @operands.include?(:Undefined) # SPRD-1
-      return 0 if @operands.any?(&:zero?) # SPRD-2
-      return @operands[0] if @operands.size == 1 # SPRD-3
-
-      # SPRD-4
-      v = simplify_product_rec(@operands)
-      if v.size == 1 # SPRD4-1
-        v[0]
-      elsif v.size > 1 # SPRD4-2
-        Product(*v)
-      else # SPRD4-3
-        1
-      end
+      Product.new(*@operands.map(&:simplify))._simplify
     end
 
     # TODO: sum.rb に移動
     def simplify_sum(u)
-      if u.operands.size == 2 && u.operands[0].is_a?(Integer) && u.operands[1].is_a?(Integer)
-        u.operands[0] + u.operands[1]
+      if u.length == 2 && u[0].integer? && u[1].integer?
+        u[0] + u[1]
       else
         raise "Not implemented yet: simplify_sum(#{u})"
       end
@@ -89,14 +65,6 @@ module Symbolic
       end
     end
 
-    def length
-      @operands.length
-    end
-
-    def [](n)
-      @operands[n]
-    end
-
     def ==(other)
       return false unless other.is_a?(Product)
 
@@ -107,9 +75,26 @@ module Symbolic
       true
     end
 
-    # TODO: 後で実装
     def zero?
       false
+    end
+
+    protected
+
+    def _simplify
+      return UNDEFINED if @operands.include?(UNDEFINED) # SPRD-1
+      return 0 if @operands.any?(&:zero?) # SPRD-2
+      return @operands[0] if length == 1 # SPRD-3
+
+      # SPRD-4
+      v = simplify_rec(@operands)
+      if v.size == 1 # SPRD4-1
+        v[0]
+      elsif v.size > 1 # SPRD4-2
+        Product(*v)
+      else # SPRD4-3
+        1
+      end
     end
 
     private
@@ -117,7 +102,7 @@ module Symbolic
     # l = [u1, u2,...,un] be a non-empty list with n ≥ 2 non-zero ASAEs.
     # Returns a list with zero or more operands that satisfy the condition of
     # ASAE-4.
-    def simplify_product_rec(l)
+    def simplify_rec(l)
       if l.size == 2 && l.none?(&:product?) # SPRDREC-1
         if l.all?(&:constant?) # SPRDREC-1-1
           p = simplify_rational_number_expression(Product(*l))
@@ -152,7 +137,7 @@ module Symbolic
           merge_products [l[0]], l[1].operands
         end
       else # SPRDREC-3
-        w = simplify_product_rec(l[1..-1])
+        w = simplify_rec(l[1..-1])
         if l[0].product? # SPRDREC-3-1
           merge_products l[0].operands, w
         else # SPRDREC-3-2
@@ -169,7 +154,7 @@ module Symbolic
       else # MPRD-3
         p1 = p[0]
         q1 = q[0]
-        h = simplify_product_rec([p1, q1])
+        h = simplify_rec([p1, q1])
         if h.empty? # MPRD-3-1
           merge_products p[1..-1], q[1..-1]
         elsif h.size == 1 # MPRD-3-2

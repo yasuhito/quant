@@ -40,11 +40,11 @@ module Symbolic
 
     class SimplificationTest < ActiveSupport::TestCase
       test '((1/0)^2).simplify = Undefined' do
-        assert_equal :Undefined, Power(Fraction(1, 0), 2).simplify
+        assert_equal UNDEFINED, Power(Fraction(1, 0), 2).simplify
       end
 
       test '(2^(1/0)).simplify = Undefined' do
-        assert_equal :Undefined, Power(2, Fraction(1, 0)).simplify
+        assert_equal UNDEFINED, Power(2, Fraction(1, 0)).simplify
       end
 
       test '(0^2).simplify = 1' do
@@ -56,7 +56,7 @@ module Symbolic
       end
 
       test '(0^(-1)).simplify = Undefined' do
-        assert_equal :Undefined, Power(0, -1).simplify
+        assert_equal UNDEFINED, Power(0, -1).simplify
       end
 
       test '(1^x).simplify = 1' do

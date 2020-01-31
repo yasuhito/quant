@@ -9,19 +9,19 @@ module Symbolic
       end
 
       def base
-        :Undefined
+        UNDEFINED
       end
 
       def exponent
-        :Undefined
+        UNDEFINED
       end
 
       def term
-        :Undefined
+        UNDEFINED
       end
 
       def const
-        :Undefined
+        UNDEFINED
       end
 
       def compare(v)

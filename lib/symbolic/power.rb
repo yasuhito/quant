@@ -1,62 +1,14 @@
 # frozen_string_literal: true
 
-require 'symbolic/rational_number_expression'
-require 'symbolic/refinement/integer'
-require 'symbolic/refinement/symbol'
+require 'symbolic/expression'
 
 module Symbolic
   # シンボリックなべき乗
-  class Power
+  class Power < Expression
     using Symbolic::Refinement
 
-    include RationalNumberExpression
-
-    attr_reader :operands
-
-    def initialize(*operands)
-      @operands = operands
-    end
-
     def simplify
-      Power.new(*@operands.map(&:simplify)).simplify_power
-    end
-
-    def simplify_power
-      return :Undefined if base == :Undefined || exponent == :Undefined
-
-      if base.zero?
-        return 1 if exponent.is_a?(Integer) && exponent.positive?
-        return 1 if exponent.is_a?(Fraction) && exponent.positive?
-
-        return :Undefined
-      end
-
-      return 1 if base == 1
-      return simplify_integer_power if exponent.is_a?(Integer)
-
-      self
-    end
-
-    def simplify_integer_power
-      return simplify_rational_number_expression(Power.new(base, exponent)) if base.is_a?(Integer) || base.is_a?(Fraction)
-      return 1 if exponent.zero?
-      return base if exponent == 1
-
-      if base.is_a?(Power)
-        r = base.operands[0]
-        s = base.operands[1]
-        p = Product.new(s, exponent).simplify_product
-
-        if p.is_a?(Integer)
-          Power.new(r, p).simplify_integer_power
-        else
-          Power.new(r, p)
-        end
-      elsif base.is_a?(Product)
-        Product(*(base.operands.map { |each| Power.new(each, exponent).simplify_integer_power })).simplify_product
-      else
-        self
-      end
+      Power.new(*@operands.map(&:simplify))._simplify
     end
 
     def base
@@ -104,10 +56,44 @@ module Symbolic
       false
     end
 
-    private
+    protected
 
-    def [](n)
-      @operands[n]
+    def _simplify
+      return UNDEFINED if base == UNDEFINED || exponent == UNDEFINED
+
+      if base.zero?
+        return 1 if exponent.is_a?(Integer) && exponent.positive?
+        return 1 if exponent.is_a?(Fraction) && exponent.positive?
+
+        return UNDEFINED
+      end
+
+      return 1 if base == 1
+      return simplify_integer if exponent.is_a?(Integer)
+
+      self
+    end
+
+    def simplify_integer
+      return simplify_rational_number_expression(Power.new(base, exponent)) if base.is_a?(Integer) || base.is_a?(Fraction)
+      return 1 if exponent.zero?
+      return base if exponent == 1
+
+      if base.is_a?(Power)
+        r = base.operands[0]
+        s = base.operands[1]
+        p = Product.new(s, exponent).simplify
+
+        if p.is_a?(Integer)
+          Power.new(r, p).simplify_integer
+        else
+          Power.new(r, p)
+        end
+      elsif base.is_a?(Product)
+        Product(*(base.operands.map { |each| Power.new(each, exponent).simplify_integer })).simplify
+      else
+        self
+      end
     end
   end
 end

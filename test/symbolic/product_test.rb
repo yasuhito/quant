@@ -61,7 +61,7 @@ module Symbolic
 
     class SimplificationTest < ActiveSupport::TestCase
       test 'SPRD-1: (1/0)·2 → Undefined·2 → Undefined' do
-        assert_equal :Undefined, Product(Fraction(1, 0), 2).simplify
+        assert_equal UNDEFINED, Product(Fraction(1, 0), 2).simplify
       end
 
       test 'SPRD-2: x·0 → 0' do
