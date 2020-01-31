@@ -75,6 +75,10 @@ module Symbolic
       false
     end
 
+    def diff?
+      false
+    end
+
     def zero?
       false
     end

@@ -21,53 +21,58 @@ module Symbolic
 
     def simplify_rational_number_expression_rec(u)
       if u.integer?
-        return u
+        u
       elsif u.fraction?
-        if denominator_fun(u).zero?
-          return UNDEFINED
+        if u.denominator.zero?
+          UNDEFINED
         else
-          return u
+          u
         end
-      elsif u.operands.size == 1
+      elsif u.length == 1
         v = simplify_rational_number_expression_rec(u.operands[0])
         if v == UNDEFINED
-          return UNDEFINED
+          UNDEFINED
         elsif u.sum?
-          return v
-        else
-          raise "Not implemented yet: simplify_rational_number_expression_rec(#{u})"
+          v
+        elsif u.diff?
+          evaluate_product(-1, v)
         end
-      elsif u.operands.size == 2
-        if u.sum? || u.product?
+      elsif u.length == 2
+        if u.sum? || u.product? || u.diff? || u.quot?
           v = simplify_rational_number_expression_rec(u.operands[0])
           w = simplify_rational_number_expression_rec(u.operands[1])
           if v == UNDEFINED || w == UNDEFINED
-            return UNDEFINED
+            UNDEFINED
           else
-            return evaluate_sum(v, w) if u.sum?
-            return evaluate_product(v, w) if u.is_a?(Product)
-
-            raise "Not implemented yet u=#{u}, v=#{v}, w=#{w}"
+            if u.sum?
+              evaluate_sum v, w
+            elsif u.diff?
+              evaluate_difference v, w
+            elsif u.product?
+              evaluate_product v, w
+            elsif u.quot?
+              evaluate_quotient v, w
+            end
           end
-        elsif u.is_a?(Power)
+        elsif u.power?
           v = simplify_rational_number_expression_rec(u.operands[0])
           if v == UNDEFINED
-            return UNDEFINED
+            UNDEFINED
           else
-            return evaluate_power(v, u.operands[1])
+            evaluate_power(v, u.operands[1])
           end
         end
       end
-
-      raise "Not implemented yet: simplify_rational_number_expression_rec(#{u})"
     end
 
     # TODO: 分数の場合を実装 (p. 38)
     def simplify_rational_number(u)
       if u.is_a?(Integer)
         u
-      elsif u.fraction?
+      elsif u.is_a?(Rational)
         u
+      elsif u.fraction?
+        u.rational
       end
     end
 
@@ -76,12 +81,6 @@ module Symbolic
       return v.operands[0] if v.fraction?
 
       raise "Not implemented yet: numerator_fun(#{v})"
-    end
-
-    def denominator_fun(v)
-      return v.operands[1] if v.fraction?
-
-      raise "Not implemented yet: denominator_fun(#{v})"
     end
 
     def evaluate_power(v, n)
@@ -128,6 +127,19 @@ module Symbolic
         v + w
       else
         raise NotImplementedError
+      end
+    end
+
+    def evaluate_difference(v, w)
+      v.rational - w.rational
+    end
+
+    # TODO: 真面目に実装 (p. 42)
+    def evaluate_quotient(v, w)
+      if w.zero?
+        UNDEFINED
+      else
+        v / w
       end
     end
   end

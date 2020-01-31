@@ -52,11 +52,23 @@ module Symbolic
       false
     end
 
+    def power?
+      true
+    end
+
     def integer?
       false
     end
 
     def fraction?
+      false
+    end
+
+    def diff?
+      false
+    end
+
+    def quot?
       false
     end
 
