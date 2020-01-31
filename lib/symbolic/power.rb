@@ -7,10 +7,6 @@ module Symbolic
   class Power < Expression
     using Symbolic::Refinement
 
-    def simplify
-      Power.new(*@operands.map(&:simplify))._simplify
-    end
-
     def base
       @operands[0]
     end

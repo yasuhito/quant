@@ -20,7 +20,7 @@ module Symbolic
     end
 
     def simplify
-      raise NotImplementedError
+      self.class.new(*@operands.map(&:simplify))._simplify
     end
 
     def base
@@ -49,6 +49,12 @@ module Symbolic
 
     def [](n)
       @operands[n]
+    end
+
+    protected
+
+    def _simplify
+      raise NotImplementedError
     end
   end
 end

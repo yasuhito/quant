@@ -73,6 +73,10 @@ module Symbolic
       false
     end
 
+    def fraction?
+      true
+    end
+
     def zero?
       @operands[0].zero?
     end

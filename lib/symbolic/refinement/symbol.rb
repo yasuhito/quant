@@ -36,6 +36,10 @@ module Symbolic
         false
       end
 
+      def sum?
+        false
+      end
+
       def constant?
         false
       end

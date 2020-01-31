@@ -1,8 +1,13 @@
 # frozen_string_literal: true
 
+require 'symbolic/refinement/integer'
+require 'symbolic/refinement/symbol'
+
 module Symbolic
   # Rational number arithmetic
   module RationalNumberExpression
+    using Symbolic::Refinement
+
     private
 
     def simplify_rational_number_expression(u)
@@ -116,8 +121,14 @@ module Symbolic
     end
 
     def evaluate_sum(v, w)
-      r = v.rational + w.rational
-      Fraction(r.numerator, r.denominator)
+      if v.fraction? && w.fraction?
+        r = v.rational + w.rational
+        Fraction(r.numerator, r.denominator)
+      elsif v.integer? && w.integer?
+        v + w
+      else
+        raise NotImplementedError
+      end
     end
   end
 end

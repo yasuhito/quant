@@ -9,19 +9,6 @@ module Symbolic
 
     attr_reader :operands
 
-    def simplify
-      Product.new(*@operands.map(&:simplify))._simplify
-    end
-
-    # TODO: sum.rb に移動
-    def simplify_sum(u)
-      if u.length == 2 && u[0].integer? && u[1].integer?
-        u[0] + u[1]
-      else
-        raise "Not implemented yet: simplify_sum(#{u})"
-      end
-    end
-
     def base
       self
     end
@@ -75,7 +62,15 @@ module Symbolic
       true
     end
 
+    def sum?
+      false
+    end
+
     def zero?
+      false
+    end
+
+    def constant?
       false
     end
 
@@ -116,7 +111,7 @@ module Symbolic
         elsif l[1] == 1
           [l[0]]
         elsif l[0].base == l[1].base # SPRDREC-1-3
-          s = simplify_sum(Sum(l[0].exponent, l[1].exponent))
+          s = Sum(l[0].exponent, l[1].exponent).simplify
           p = Power(l[0].base, s).simplify
           if p == 1
             []

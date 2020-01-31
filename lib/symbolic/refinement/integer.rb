@@ -42,6 +42,14 @@ module Symbolic
       def product?
         false
       end
+
+      def sum?
+        false
+      end
+
+      def fraction?
+        false
+      end
     end
   end
 end
