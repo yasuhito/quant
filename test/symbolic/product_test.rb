@@ -72,16 +72,32 @@ module Symbolic
         assert_equal 2, Product(2).simplify
       end
 
-      test '(c·2·b·c·a) → 2·a·b·c^2' do
-        assert_equal Product(2, :a, :b, Power(:c, 2)), Product(:c, 2, :b, :c, :a).simplify
+      test 'SPRD-4-1: a^(-1)·b·a → b' do
+        assert_equal :b, Product(Power(:a, -1), :b, :a).simplify
       end
 
-      test '(2·a·c·e)·(3·b·d·e) → 6·a·b·c·d·e^2' do
-        assert_equal Product(6, :a, :b, :c, :d, Power(:e, 2)), Product(Product(2, :a, :c, :e), Product(3, :b, :d, :e)).simplify
+      test 'SPRD-4-2: (c·2·b·c·a) → 2·a·b·c^2' do
+        assert_equal Product(2, :a, :b, Power(:c, 2)),
+                     Product(:c, 2, :b, :c, :a).simplify
       end
 
-      test '(a·b)·b·c → a·b^2·c' do
-        Product(Product(:a, :b), :b, :c).simplify
+      test 'SPRD-4-3: a^(-1)·a → 1' do
+        assert_equal 1, Product(Power(:a, -1), :a).simplify
+      end
+
+      test 'SPRDREC-2: (2·a·c·e)·(3·b·d·e) → 6·a·b·c·d·e^2' do
+        assert_equal Product(6, :a, :b, :c, :d, Power(:e, 2)),
+                     Product(Product(2, :a, :c, :e), Product(3, :b, :d, :e)).simplify
+      end
+
+      test 'SPRDREC-3-1 and SPRDREC-1-4: (a·b)·c·b → a·b^2·c' do
+        assert_equal Product(:a, Power(:b, 2), :c),
+                     Product(Product(:a, :b), :c, :b).simplify
+      end
+
+      test '(a·c·e)·(a·c^(-1)·d·f) → a^2·d·e·f' do
+        assert_equal Product(Power(:a, 2), :d, :e, :f),
+                     Product(Product(:a, :c, :e), Product(:a, Power(:c, -1), :d, :f)).simplify
       end
     end
   end
