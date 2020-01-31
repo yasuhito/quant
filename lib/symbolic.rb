@@ -1,11 +1,7 @@
 # frozen_string_literal: true
 
-require 'symbolic/complex'
-require 'symbolic/e'
-require 'symbolic/float'
-require 'symbolic/numeric'
+require 'symbolic/cos'
 require 'symbolic/pi'
 require 'symbolic/power'
-# require 'symbolic/rational'
-require 'symbolic/sqrt'
+require 'symbolic/product'
 require 'symbolic/sum'

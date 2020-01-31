@@ -1,8 +1,10 @@
 # frozen_string_literal: true
 
+require 'symbolic/expression'
+
 module Symbolic
   # Symbolic fraction computation
-  class Fraction
+  class Fraction < Expression
     attr_reader :operands
 
     def initialize(*operands)
@@ -59,6 +61,14 @@ module Symbolic
       Rational(@operands[0], @operands[1])
     end
 
+    def numerator
+      @operands[0]
+    end
+
+    def denominator
+      @operands[1]
+    end
+
     def ==(other)
       return false unless other.is_a?(Fraction)
 
@@ -70,6 +80,10 @@ module Symbolic
     end
 
     def product?
+      false
+    end
+
+    def integer?
       false
     end
 

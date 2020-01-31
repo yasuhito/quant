@@ -1,11 +1,10 @@
 # frozen_string_literal: true
 
-require 'symbolic/base'
 require 'symbolic/sum'
 
 module Symbolic
   # シンボリックな数
-  class Numeric < Base
+  class Numeric
     def initialize(value)
       @value = value
     end

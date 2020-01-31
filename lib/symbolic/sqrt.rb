@@ -1,12 +1,11 @@
 # frozen_string_literal: true
 
-require 'symbolic/base'
 # require 'symbolic/rational'
 
 # シンボリック計算
 module Symbolic
   # 平方根のシンボリック計算
-  class Sqrt < Base
+  class Sqrt
     attr_reader :value
 
     def initialize(value)

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'symbolic/expression'
+require 'symbolic/power'
 
 module Symbolic
   # シンボリックな積
@@ -18,7 +19,7 @@ module Symbolic
     end
 
     def term
-      if @operands.first.is_a?(Integer) || @operands.first.is_a?(Fraction)
+      if @operands.first.constant?
         Product.new(*@operands[1..-1])
       else
         self
@@ -26,7 +27,7 @@ module Symbolic
     end
 
     def const
-      if @operands.first.is_a?(Integer) || @operands.first.is_a?(Fraction)
+      if @operands.first.constant?
         @operands.first
       else
         1
@@ -63,6 +64,14 @@ module Symbolic
     end
 
     def sum?
+      false
+    end
+
+    def integer?
+      false
+    end
+
+    def fraction?
       false
     end
 

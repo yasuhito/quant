@@ -1,11 +1,10 @@
 # frozen_string_literal: true
 
-require 'symbolic/base'
 require 'symbolic/power'
 
 module Symbolic
   # シンボリックなネイピア数
-  class Napier < Base
+  class Napier
     def **(other)
       Pow(self, other)
     end

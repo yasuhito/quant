@@ -1,12 +1,11 @@
 # frozen_string_literal: true
 
-require 'symbolic/base'
 require 'symbolic/pi'
 require 'symbolic/sqrt'
 
 module Symbolic
   # 三角関数のシンボリック演算
-  class TrigonometricFunction < Base
+  class TrigonometricFunction
     def initialize(theta)
       @theta = theta
     end

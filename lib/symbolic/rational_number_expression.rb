@@ -20,9 +20,9 @@ module Symbolic
     end
 
     def simplify_rational_number_expression_rec(u)
-      if u.is_a?(Integer)
+      if u.integer?
         return u
-      elsif u.is_a?(Fraction)
+      elsif u.fraction?
         if denominator_fun(u).zero?
           return UNDEFINED
         else
@@ -32,19 +32,19 @@ module Symbolic
         v = simplify_rational_number_expression_rec(u.operands[0])
         if v == UNDEFINED
           return UNDEFINED
-        elsif u.is_a?(Sum)
+        elsif u.sum?
           return v
         else
           raise "Not implemented yet: simplify_rational_number_expression_rec(#{u})"
         end
       elsif u.operands.size == 2
-        if u.is_a?(Sum) || u.is_a?(Product)
+        if u.sum? || u.product?
           v = simplify_rational_number_expression_rec(u.operands[0])
           w = simplify_rational_number_expression_rec(u.operands[1])
           if v == UNDEFINED || w == UNDEFINED
             return UNDEFINED
           else
-            return evaluate_sum(v, w) if u.is_a?(Sum)
+            return evaluate_sum(v, w) if u.sum?
             return evaluate_product(v, w) if u.is_a?(Product)
 
             raise "Not implemented yet u=#{u}, v=#{v}, w=#{w}"
@@ -66,20 +66,20 @@ module Symbolic
     def simplify_rational_number(u)
       if u.is_a?(Integer)
         u
-      elsif u.is_a?(Fraction)
+      elsif u.fraction?
         u
       end
     end
 
     def numerator_fun(v)
       return v if v.is_a?(Integer)
-      return v.operands[0] if v.is_a?(Fraction)
+      return v.operands[0] if v.fraction?
 
       raise "Not implemented yet: numerator_fun(#{v})"
     end
 
     def denominator_fun(v)
-      return v.operands[1] if v.is_a?(Fraction)
+      return v.operands[1] if v.fraction?
 
       raise "Not implemented yet: denominator_fun(#{v})"
     end
@@ -99,9 +99,9 @@ module Symbolic
     def evaluate_product(v, w)
       product = if v.is_a?(Integer) && w.is_a?(Integer)
                   v * w
-                elsif v.is_a?(Integer) && w.is_a?(Fraction)
+                elsif v.is_a?(Integer) && w.fraction?
                   v * w.rational
-                elsif v.is_a?(Fraction) && w.is_a?(Integer)
+                elsif v.fraction? && w.is_a?(Integer)
                   v.rational * w
                 else
                   v.rational * w.rational

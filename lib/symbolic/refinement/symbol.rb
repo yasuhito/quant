@@ -26,7 +26,11 @@ module Symbolic
 
       def compare(v)
         if v.is_a?(Symbol)
-          self < v
+          if self == :π
+            -1
+          else
+            self < v
+          end
         else
           !v.compare(self)
         end

@@ -1,10 +1,8 @@
 # frozen_string_literal: true
 
-require 'symbolic/base'
-
 module Symbolic
   # 分数のシンボリック演算
-  class Rational < Base
+  class Rational
     attr_reader :numerator
     attr_reader :denominator
 

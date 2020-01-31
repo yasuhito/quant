@@ -48,6 +48,18 @@ module Symbolic
       false
     end
 
+    def sum?
+      false
+    end
+
+    def integer?
+      false
+    end
+
+    def fraction?
+      false
+    end
+
     def zero?
       false
     end
@@ -71,7 +83,7 @@ module Symbolic
     end
 
     def simplify_integer
-      return simplify_rational_number_expression(Power.new(base, exponent)) if base.is_a?(Integer) || base.is_a?(Fraction)
+      return simplify_rational_number_expression(Power.new(base, exponent)) if base.constant?
       return 1 if exponent.zero?
       return base if exponent == 1
 

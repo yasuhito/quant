@@ -1,10 +1,13 @@
 # frozen_string_literal: true
 
-require 'symbolic/sqrt'
+require 'symbolic/refinement/integer'
+require 'symbolic/refinement/symbol'
 
 module Symbolic
   # コサインのシンボリック演算
   class Cos
+    using Symbolic::Refinement
+
     attr_reader :x
 
     def initialize(x)
@@ -12,24 +15,30 @@ module Symbolic
     end
 
     def simplify
-      if @x.is_a?(Integer) && @x.zero?
-        1
-      elsif @x == Pi
-        0
-      elsif @x.is_a?(Numeric) && @x.negative?
-        Cos(-1 * @x)
-      elsif @x[0] == :* && @x[1].is_a?(Numeric) && @x[1].negative?
-        Cos(([-1, @x[1]] + @x[2..-1]).inject(:*))
-      elsif @x[0] == :* && @x[1].is_a?(Rational) && @x[2] == Pi &&
-            [1, 2, 3, 4, 6].include?(@x[1].denominator) && @x[1].numerator.is_a?(Integer)
-        simplify_kn_pi
-      else
-        self
-      end
+      Cos.new(@x.simplify)._simplify
     end
 
     def ==(other)
       @x == other.x
+    end
+
+    protected
+
+    def _simplify
+      if @x.constant? && @x.zero?
+        1
+      elsif @x == PI
+        0
+      elsif @x.constant? && @x.negative?
+        Cos(Product(-1, @x).simplify)
+      # elsif @x[0] == :* && @x[1].is_a?(Numeric) && @x[1].negative?
+      #   Cos(([-1, @x[1]] + @x[2..-1]).inject(:*))
+      elsif @x.product? && @x.length == 2 && @x[0].fraction? && @x[1] == PI &&
+            [1, 2, 3, 4, 6].include?(@x[0].denominator) && @x[0].numerator.integer?
+        simplify_kn_pi
+      else
+        self
+      end
     end
 
     private
@@ -37,8 +46,8 @@ module Symbolic
     # Simplification of cos(kπ/n)
     # k と n は整数, n = 1, 2, 3, 4, 6
     def simplify_kn_pi
-      k = @x[1].numerator
-      n = @x[1].denominator
+      k = @x[0].numerator
+      n = @x[0].denominator
 
       case n
       when 1
@@ -56,23 +65,23 @@ module Symbolic
       when 3
         case k % 6
         when 1, 5
-          Rational(1, 2)
+          Fraction(1, 2)
         when 2, 4
-          Rational(-1, 2)
+          Product(-1, Fraction(1, 2))
         end
       when 4
         case k % 8
         when 1, 7
-          Rational(1, Sqrt(2))
+          Fraction(1, Power(2, Fraction(1, 2)))
         when 3, 5
-          Rational(-1, Sqrt(2))
+          Product(-1, Fraction(1, Power(2, Fraction(1, 2))))
         end
       when 6
         case k % 12
         when 1, 11
-          Rational(Sqrt(3), 2)
+          Fraction(Power(3, Fraction(1, 2)), 2)
         when 5, 7
-          Rational(-Sqrt(3), 2)
+          Product(-1, Fraction(Power(3, Fraction(1, 2)), 2))
         end
       end
     end
@@ -80,5 +89,5 @@ module Symbolic
 end
 
 def Cos(x) # rubocop:disable Naming/MethodName
-  Symbolic::Cos.new(x).simplify
+  Symbolic::Cos.new(x)
 end

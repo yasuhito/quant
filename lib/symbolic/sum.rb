@@ -49,6 +49,14 @@ module Symbolic
       true
     end
 
+    def integer?
+      false
+    end
+
+    def fraction?
+      false
+    end
+
     def ==(other)
       other.is_a?(Sum) && @operands == other.operands
     end
