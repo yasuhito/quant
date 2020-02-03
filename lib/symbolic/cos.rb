@@ -1,28 +1,11 @@
 # frozen_string_literal: true
 
-require 'symbolic/refinement/integer'
-require 'symbolic/refinement/symbol'
+require 'symbolic/trigonometric_function'
 
 module Symbolic
   # コサインのシンボリック演算
-  class Cos
+  class Cos < TrigonometricFunction
     using Symbolic::Refinement
-
-    attr_reader :x
-
-    def initialize(x)
-      @x = x
-    end
-
-    def simplify
-      Cos.new(@x.simplify)._simplify
-    end
-
-    def ==(other)
-      return false unless other.is_a?(Cos)
-
-      @x == other.x
-    end
 
     protected
 
@@ -35,7 +18,7 @@ module Symbolic
         Cos(Product(-1, @x).simplify)
       elsif @x.product? && @x[0].integer? && @x[0].negative?
         Cos(Product(-1, @x[0], *@x.operands[1..-1]).simplify).simplify
-      elsif @x.product? && @x.length == 2 && @x[0].fraction? && @x[1] == PI &&
+      elsif @x.product? && @x.length == 2 && @x[0].constant? && @x[1] == PI &&
             [1, 2, 3, 4, 6].include?(@x[0].denominator) && @x[0].numerator.integer?
         simplify_kn_pi
       else

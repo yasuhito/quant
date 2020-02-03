@@ -98,6 +98,10 @@ module Symbolic
       assert_equal 1, Cos(Product(Fraction(2, 1), PI)).simplify
     end
 
+    test 'Cos(2π) → 1' do
+      assert_equal 1, Cos(Product(2, PI)).simplify
+    end
+
     test 'Cos(-π/6) → √3/2' do
       assert_equal Fraction(Power(3, Fraction(1, 2)), 2),
                    Cos(Product(-1, Product(Fraction(1, 6), PI))).simplify

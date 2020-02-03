@@ -1,51 +1,14 @@
 # frozen_string_literal: true
 
-require 'symbolic/refinement/integer'
-require 'symbolic/refinement/symbol'
+require 'symbolic/trigonometric_function'
 
 module Symbolic
   # サインのシンボリック演算
-  class Sin
+  class Sin < TrigonometricFunction
     using Symbolic::Refinement
-
-    attr_reader :x
-
-    def initialize(x)
-      @x = x
-    end
-
-    def simplify
-      Sin.new(@x.simplify)._simplify
-    end
 
     def -@
       Product(-1, self)
-    end
-
-    def ==(other)
-      return false unless other.is_a?(Sin)
-
-      @x == other.x
-    end
-
-    def zero?
-      false
-    end
-
-    def product?
-      false
-    end
-
-    def constant?
-      false
-    end
-
-    def base
-      UNDEFINED
-    end
-
-    def exponent
-      UNDEFINED
     end
 
     # FIXME
@@ -64,7 +27,7 @@ module Symbolic
         -Sin(-1 * @x)
       elsif @x.product? && @x[0].integer? && @x[0].negative?
         -Sin(Product(-1, @x[0], *@x.operands[1..-1]).simplify).simplify
-      elsif @x.product? && @x.length == 2 && @x[0].fraction? && @x[1] == PI &&
+      elsif @x.product? && @x.length == 2 && @x[0].constant? && @x[1] == PI &&
             [1, 2, 3, 4, 6].include?(@x[0].denominator) && @x[0].numerator.integer?
         simplify_kn_pi
       else

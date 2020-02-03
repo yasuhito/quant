@@ -100,7 +100,6 @@ module Symbolic
     end
 
     test 'Sin(2π) → 0' do
-      skip 'Integer#denominator を実装'
       assert_equal 0, Sin(Product(2, PI)).simplify
     end
 
@@ -140,6 +139,10 @@ module Symbolic
 
     test 'Sin(-π/1) → 0' do
       assert_equal 0, Sin(Product(-1, Product(Fraction(1, 1), PI))).simplify
+    end
+
+    test 'Sin(-π) → 0' do
+      assert_equal 0, Sin(Product(-1, Product(-1, PI))).simplify
     end
   end
 end
