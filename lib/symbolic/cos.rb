@@ -72,7 +72,7 @@ module Symbolic
       when 4
         case k % 8
         when 1, 7
-          Fraction(1, Power(2, Fraction(1, 2))).simplify
+          Fraction(1, Power(2, Fraction(1, 2)))
         when 3, 5
           Product(-1, Fraction(1, Power(2, Fraction(1, 2)))).simplify
         end
