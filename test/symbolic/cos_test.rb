@@ -45,12 +45,11 @@ module Symbolic
     end
 
     test 'Cos(2π/3) → -1/2' do
-      assert_equal Product(-1, Fraction(1, 2)),
-                   Cos(Product(Fraction(2, 3), PI)).simplify
+      assert_equal Fraction(-1, 2), Cos(Product(Fraction(2, 3), PI)).simplify
     end
 
     test 'Cos(3π/4) → -1/√2' do
-      assert_equal Product(-1, Fraction(1, Power(2, Fraction(1, 2)))),
+      assert_equal Fraction(-1, Power(2, Fraction(1, 2))),
                    Cos(Product(Fraction(3, 4), PI)).simplify
     end
 
@@ -69,13 +68,12 @@ module Symbolic
     end
 
     test 'Cos(5π/4) → -1/√2' do
-      assert_equal Product(-1, Fraction(1, Power(2, Fraction(1, 2)))),
+      assert_equal Fraction(-1, Power(2, Fraction(1, 2))),
                    Cos(Product(Fraction(5, 4), PI)).simplify
     end
 
     test 'Cos(4π/3) → -1/2' do
-      assert_equal Product(-1, Fraction(1, 2)),
-                   Cos(Product(Fraction(4, 3), PI)).simplify
+      assert_equal Fraction(-1, 2), Cos(Product(Fraction(4, 3), PI)).simplify
     end
 
     test 'Cos(3π/2) → 0' do
@@ -100,10 +98,10 @@ module Symbolic
       assert_equal 1, Cos(Product(Fraction(2, 1), PI)).simplify
     end
 
-    # test 'Cos(-π/6) → √3/2' do
-    #   assert_equal Fraction(Power(3, Fraction(1, 2)), 2),
-    #                Cos(Product(-1, Product(Fraction(1, 6), PI))).simplify
-    # end
+    test 'Cos(-π/6) → √3/2' do
+      assert_equal Fraction(Power(3, Fraction(1, 2)), 2),
+                   Cos(Product(-1, Product(Fraction(1, 6), PI))).simplify
+    end
 
     # test 'Cos(-π/4) → 1/√2' do
     #   cos = Cos([:*, Fraction(-1, 4), Pi])

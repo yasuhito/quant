@@ -11,12 +11,6 @@ module Symbolic
       @operands = operands
     end
 
-    def simplify
-      return UNDEFINED if @operands[1].zero?
-
-      self
-    end
-
     def base
       UNDEFINED
     end
@@ -58,7 +52,7 @@ module Symbolic
     end
 
     def rational
-      Rational(@operands[0], @operands[1])
+      Rational @operands[0], @operands[1]
     end
 
     def numerator
@@ -93,6 +87,14 @@ module Symbolic
 
     def zero?
       @operands[0].zero?
+    end
+
+    protected
+
+    def _simplify
+      return UNDEFINED if @operands[1].zero?
+
+      self
     end
   end
 end

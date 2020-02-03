@@ -23,7 +23,7 @@ module Symbolic
       if u.integer?
         u
       elsif u.fraction?
-        if u.denominator.zero?
+        if denominator_fun(u).zero?
           UNDEFINED
         else
           u
@@ -58,65 +58,106 @@ module Symbolic
           v = simplify_rational_number_expression_rec(u.operands[0])
           if v == UNDEFINED
             UNDEFINED
-          else
+          elsif u.operands[1].is_a?(Integer)
             evaluate_power(v, u.operands[1])
+          else
+            Power(v, u.operands[1])
           end
         end
       end
     end
 
-    # TODO: 分数の場合を実装 (p. 38)
     def simplify_rational_number(u)
       if u.is_a?(Integer)
         u
-      elsif u.is_a?(Rational)
+      elsif u.is_a?(Fraction) && u.operands.all?(&:integer?)
+        n = u.operands[0]
+        d = u.operands[1]
+        if irem(n, d).zero?
+          iquot(n, d)
+        else
+          g = integer_gcd(n, d)
+          if d.positive?
+            Fraction(iquot(n, g), iquot(d, g))
+          else
+            Fraction(iquot(-n, g), iquot(-d, g))
+          end
+        end
+      else
         u
-      elsif u.fraction?
-        u.rational
       end
+    end
+
+    def integer_gcd(a, b)
+      a.gcd b
+    end
+
+    def iquot(a, b)
+      r = Rational(a, b)
+      if r.denominator == 1
+        r.numerator
+      else
+        r
+      end
+    end
+
+    def irem(a, b)
+      a % b
     end
 
     def numerator_fun(v)
       return v if v.is_a?(Integer)
-      return v.operands[0] if v.fraction?
+      return v.numerator if v.is_a?(Rational)
 
-      raise "Not implemented yet: numerator_fun(#{v})"
-    end
-
-    def evaluate_power(v, n)
-      unless numerator_fun(v).zero?
-        if n.positive?
-          s = evaluate_power(v, n - 1)
-          evaluate_product(s, v)
-        elsif n.zero?
-          1
-        end
-      end
-    end
-
-    # v, w are both constants
-    def evaluate_product(v, w)
-      product = if v.is_a?(Integer) && w.is_a?(Integer)
-                  v * w
-                elsif v.is_a?(Integer) && w.fraction?
-                  v * w.rational
-                elsif v.fraction? && w.is_a?(Integer)
-                  v.rational * w
-                else
-                  v.rational * w.rational
-                end
-
-      if product.is_a?(Integer)
-        return product
-      elsif product.is_a?(Rational)
-        if product.denominator == 1
-          return product.numerator
+      if v.fraction?
+        if v.operands.all?(&:integer?)
+          return v.rational.numerator
         else
-          return product
+          return v.numerator
         end
       end
 
-      raise "Not implemented yet: evaluate_product(#{v}, #{w})"
+      raise NotImplementedError, "numerator_fun(#{v})"
+    end
+
+    def denominator_fun(v)
+      return 1 if v.is_a?(Integer)
+      return v.denominator if v.is_a?(Rational)
+
+      if v.fraction?
+        if v.operands.all?(&:integer?)
+          return v.rational.denominator
+        else
+          return v.denominator
+        end
+      end
+
+      raise NotImplementedError, "denominator_fun(#{v})"
+    end
+
+    # Returns v * w
+    # (v, w are both constants)
+    def evaluate_product(v, w)
+      if v.is_a?(Integer) && w.is_a?(Integer)
+        v * w
+      elsif v.is_a?(Integer) && w.fraction?
+        if denominator_fun(w) == 1
+          numerator_fun(v) * numerator_fun(w)
+        else
+          Fraction(numerator_fun(v) * numerator_fun(w), denominator_fun(w))
+        end
+      elsif v.is_a?(Fraction) && w.is_a?(Integer)
+        p = v.rational * w
+        if denominator_fun(p) == 1
+          numerator_fun(p)
+        else
+          p
+        end
+      elsif v.is_a?(Rational) && w.is_a?(Fraction)
+        v * w.rational
+      else
+        raise NotImplementedError, "evaluate_product(#{v.inspect}, #{w.inspect})"
+      end
     end
 
     def evaluate_sum(v, w)
@@ -134,12 +175,30 @@ module Symbolic
       v.rational - w.rational
     end
 
-    # TODO: 真面目に実装 (p. 42)
+    # evaluate v/w
     def evaluate_quotient(v, w)
-      if w.zero?
+      if numerator_fun(w).zero?
         UNDEFINED
       else
-        v / w
+        Fraction(numerator_fun(v) * denominator_fun(w),
+                 numerator_fun(w) * denominator_fun(v))
+      end
+    end
+
+    def evaluate_power(v, n)
+      if numerator_fun(v) != 0
+        if n.positive?
+          s = evaluate_power(v, n - 1)
+          evaluate_product s, v
+        elsif n.zero?
+          1
+        elsif n == -1
+          raise NotImplementedError
+        elsif n < -1
+          raise NotImplementedError
+        end
+      elsif numerator_fun(v).zero?
+        raise NotImplementedError
       end
     end
   end

@@ -67,14 +67,14 @@ module Symbolic
         when 1, 5
           Fraction(1, 2)
         when 2, 4
-          Product(-1, Fraction(1, 2))
+          Product(-1, Fraction(1, 2)).simplify
         end
       when 4
         case k % 8
         when 1, 7
-          Fraction(1, Power(2, Fraction(1, 2)))
+          Fraction(1, Power(2, Fraction(1, 2))).simplify
         when 3, 5
-          Product(-1, Fraction(1, Power(2, Fraction(1, 2))))
+          Product(-1, Fraction(1, Power(2, Fraction(1, 2)))).simplify
         end
       when 6
         case k % 12
