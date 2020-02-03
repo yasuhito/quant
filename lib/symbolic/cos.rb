@@ -28,11 +28,11 @@ module Symbolic
       if @x.constant? && @x.zero?
         1
       elsif @x == PI
-        0
+        -1
       elsif @x.constant? && @x.negative?
         Cos(Product(-1, @x).simplify)
-      # elsif @x.product? && @x[0].integer? && @x[0].negative?
-      #   Cos(([-1, @x[1]] + @x[2..-1]).inject(:*))
+      elsif @x.product? && @x[0].integer? && @x[0].negative?
+        Cos(Product(-1, @x[0], *@x.operands[1..-1]).simplify).simplify
       elsif @x.product? && @x.length == 2 && @x[0].fraction? && @x[1] == PI &&
             [1, 2, 3, 4, 6].include?(@x[0].denominator) && @x[0].numerator.integer?
         simplify_kn_pi

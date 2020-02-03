@@ -18,10 +18,6 @@ module Symbolic
       assert_equal 1, Cos(0).simplify
     end
 
-    test 'Cos(π) → 0' do
-      assert_equal 0, Cos(PI).simplify
-    end
-
     test 'Cos(0π/1) → 1' do
       assert_equal 1, Cos(Product(Fraction(0, 1), PI)).simplify
     end
@@ -60,6 +56,10 @@ module Symbolic
 
     test 'Cos(1π/1) → -1' do
       assert_equal(-1, Cos(Product(Fraction(1, 1), PI)).simplify)
+    end
+
+    test 'Cos(π) → -1' do
+      assert_equal(-1, Cos(PI).simplify)
     end
 
     test 'Cos(7π/6) → -√3/2' do
@@ -134,6 +134,10 @@ module Symbolic
 
     test 'Cos(-π/1) → -1' do
       assert_equal(-1, Cos(Product(Fraction(-1, 1), PI)).simplify)
+    end
+
+    test 'Cos(-π) → -1' do
+      assert_equal(-1, Cos(Product(-1, PI)).simplify)
     end
   end
 end
