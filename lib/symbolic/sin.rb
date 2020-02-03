@@ -1,10 +1,13 @@
 # frozen_string_literal: true
 
-require 'symbolic/sqrt'
+require 'symbolic/refinement/integer'
+require 'symbolic/refinement/symbol'
 
 module Symbolic
   # サインのシンボリック演算
   class Sin
+    using Symbolic::Refinement
+
     attr_reader :x
 
     def initialize(x)
@@ -12,28 +15,61 @@ module Symbolic
     end
 
     def simplify
-      if @x.is_a?(Integer) && @x.zero?
+      Sin.new(@x.simplify)._simplify
+    end
+
+    def -@
+      Product(-1, self)
+    end
+
+    def ==(other)
+      return false unless other.is_a?(Sin)
+
+      @x == other.x
+    end
+
+    def zero?
+      false
+    end
+
+    def product?
+      false
+    end
+
+    def constant?
+      false
+    end
+
+    def base
+      UNDEFINED
+    end
+
+    def exponent
+      UNDEFINED
+    end
+
+    # FIXME
+    def compare(_v)
+      false
+    end
+
+    protected
+
+    def _simplify
+      if @x.zero?
         0
-      elsif @x == Pi
+      elsif @x == PI
         0
-      elsif @x.is_a?(Numeric) && @x.negative?
-        [:*, -1, Sin(-1 * @x)]
-      elsif @x[0] == :* && @x[1].is_a?(Numeric) && @x[1].negative?
-        -Sin(([-1, @x[1]] + @x[2..-1]).inject(:*))
-      elsif @x[0] == :* && @x[1].is_a?(Rational) && @x[2] == Pi &&
-            [1, 2, 3, 4, 6].include?(@x[1].denominator) && @x[1].numerator.is_a?(Integer)
+      elsif @x.constant? && @x.negative?
+        -Sin(-1 * @x)
+      elsif @x.product? && @x[0].integer? && @x[0].negative?
+        -Sin(Product(-1, @x[0], *@x.operands[1..-1]).simplify).simplify
+      elsif @x.product? && @x.length == 2 && @x[0].fraction? && @x[1] == PI &&
+            [1, 2, 3, 4, 6].include?(@x[0].denominator) && @x[0].numerator.integer?
         simplify_kn_pi
       else
         self
       end
-    end
-
-    def -@
-      [:*, -1, self]
-    end
-
-    def ==(other)
-      @x == other.x
     end
 
     private
@@ -41,8 +77,8 @@ module Symbolic
     # Simplification of sin(kπ/n)
     # k と n は整数, n = 1, 2, 3, 4, 6
     def simplify_kn_pi
-      k = @x[1].numerator
-      n = @x[1].denominator
+      k = @x[0].numerator
+      n = @x[0].denominator
 
       case n
       when 1
@@ -57,23 +93,23 @@ module Symbolic
       when 3
         case k % 6
         when 1, 2
-          Rational(Sqrt(3), 2)
+          Fraction(Power(3, Fraction(1, 2)), 2)
         when 4, 5
-          Rational(-Sqrt(3), 2)
+          Product(-1, Fraction(Power(3, Fraction(1, 2)), 2))
         end
       when 4
         case k % 8
         when 1, 3
-          Rational(1, Sqrt(2))
+          Fraction(1, Power(2, Fraction(1, 2)))
         when 5, 7
-          Rational(-1, Sqrt(2))
+          Fraction(-1, Power(2, Fraction(1, 2)))
         end
       when 6
         case k % 12
         when 1, 5
-          Rational(1, 2)
+          Fraction(1, 2)
         when 7, 11
-          Rational(-1, 2)
+          Fraction(-1, 2)
         end
       end
     end
@@ -81,5 +117,5 @@ module Symbolic
 end
 
 def Sin(x) # rubocop:disable Naming/MethodName
-  Symbolic::Sin.new(x).simplify
+  Symbolic::Sin.new(x)
 end

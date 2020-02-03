@@ -19,13 +19,15 @@ module Symbolic
     end
 
     def ==(other)
+      return false unless other.is_a?(Cos)
+
       @x == other.x
     end
 
     protected
 
     def _simplify
-      if @x.constant? && @x.zero?
+      if @x.zero?
         1
       elsif @x == PI
         -1
