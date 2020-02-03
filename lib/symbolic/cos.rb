@@ -31,7 +31,7 @@ module Symbolic
         0
       elsif @x.constant? && @x.negative?
         Cos(Product(-1, @x).simplify)
-      # elsif @x[0] == :* && @x[1].is_a?(Numeric) && @x[1].negative?
+      # elsif @x.product? && @x[0].integer? && @x[0].negative?
       #   Cos(([-1, @x[1]] + @x[2..-1]).inject(:*))
       elsif @x.product? && @x.length == 2 && @x[0].fraction? && @x[1] == PI &&
             [1, 2, 3, 4, 6].include?(@x[0].denominator) && @x[0].numerator.integer?
