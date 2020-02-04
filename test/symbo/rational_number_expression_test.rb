@@ -14,7 +14,7 @@ module Symbo
     end
 
     test '(4/2)^3 → 8' do
-      assert_equal 8, Power(Fraction(4, 2), 3).evaluate.simplify_rational_number
+      assert_equal 8, ((4/2)**3).evaluate.simplify_rational_number
     end
 
     test '1/(2/4 - 1/2) → Undefined' do

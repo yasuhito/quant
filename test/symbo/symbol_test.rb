@@ -38,7 +38,7 @@ module Symbo
     end
 
     test 'x.compare(x^2) = true' do
-      assert :x.compare(Power(:x, 2))
+      assert :x.compare(:x**2)
     end
   end
 end

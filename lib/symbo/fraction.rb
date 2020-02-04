@@ -15,6 +15,10 @@ module Symbo
       Product self, other
     end
 
+    def **(other)
+      Power self, other
+    end
+
     def base
       UNDEFINED
     end
