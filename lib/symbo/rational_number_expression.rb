@@ -23,7 +23,7 @@ module Symbo
       if u.integer?
         u
       elsif u.fraction?
-        if denominator_fun(u).zero?
+        if u.denominator.zero?
           UNDEFINED
         else
           u
@@ -105,51 +105,21 @@ module Symbo
       a % b
     end
 
-    def numerator_fun(v)
-      return v if v.is_a?(Integer)
-      return v.numerator if v.is_a?(Rational)
-
-      if v.fraction?
-        if v.operands.all?(&:integer?)
-          return v.rational.numerator
-        else
-          return v.numerator
-        end
-      end
-
-      raise NotImplementedError, "numerator_fun(#{v})"
-    end
-
-    def denominator_fun(v)
-      return 1 if v.is_a?(Integer)
-      return v.denominator if v.is_a?(Rational)
-
-      if v.fraction?
-        if v.operands.all?(&:integer?)
-          return v.rational.denominator
-        else
-          return v.denominator
-        end
-      end
-
-      raise NotImplementedError, "denominator_fun(#{v})"
-    end
-
     # Returns v * w
     # (v, w are both constants)
     def evaluate_product(v, w)
       if v.is_a?(Integer) && w.is_a?(Integer)
         v * w
       elsif v.is_a?(Integer) && w.fraction?
-        if denominator_fun(w) == 1
-          numerator_fun(v) * numerator_fun(w)
+        if w.denominator == 1
+          v.numerator * w.numerator
         else
-          Fraction(numerator_fun(v) * numerator_fun(w), denominator_fun(w))
+          Fraction v.numerator * w.numerator, w.denominator
         end
       elsif v.is_a?(Fraction) && w.is_a?(Integer)
         p = v.rational * w
-        if denominator_fun(p) == 1
-          numerator_fun(p)
+        if p.denominator == 1
+          p.numerator
         else
           p
         end
@@ -177,16 +147,15 @@ module Symbo
 
     # evaluate v/w
     def evaluate_quotient(v, w)
-      if numerator_fun(w).zero?
+      if w.numerator.zero?
         UNDEFINED
       else
-        Fraction(numerator_fun(v) * denominator_fun(w),
-                 numerator_fun(w) * denominator_fun(v))
+        Fraction v.numerator * w.denominator, w.numerator * v.denominator
       end
     end
 
     def evaluate_power(v, n)
-      if numerator_fun(v) != 0
+      if v.numerator != 0
         if n.positive?
           s = evaluate_power(v, n - 1)
           evaluate_product s, v
@@ -197,7 +166,7 @@ module Symbo
         elsif n < -1
           raise NotImplementedError
         end
-      elsif numerator_fun(v).zero?
+      elsif v.numerator.zero?
         raise NotImplementedError
       end
     end

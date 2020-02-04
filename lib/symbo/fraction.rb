@@ -51,11 +51,19 @@ module Symbo
     end
 
     def numerator
-      @operands[0]
+      if @operands.all?(&:integer?)
+        rational.numerator
+      else
+        @operands[0]
+      end
     end
 
     def denominator
-      @operands[1]
+      if @operands.all?(&:integer?)
+        rational.denominator
+      else
+        @operands[1]
+      end
     end
 
     def ==(other)

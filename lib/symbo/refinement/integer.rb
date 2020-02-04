@@ -54,6 +54,14 @@ module Symbo
       def fraction?
         false
       end
+
+      def numerator
+        self
+      end
+
+      def denominator
+        1
+      end
     end
   end
 end
