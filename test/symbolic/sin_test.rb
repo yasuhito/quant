@@ -97,35 +97,35 @@ module Symbolic
     end
 
     test 'Sin(-π/6) → √3/2' do
-      assert_equal (-1/2), Sin(Product(-1, (1/6)*PI)).simplify
+      assert_equal (-1/2), Sin((-1/6)*PI).simplify
     end
 
     test 'Sin(-π/4) → -1/√2' do
-      assert_equal (-1/√(2)), Sin(Product(-1, (1/4)*PI)).simplify
+      assert_equal (-1/√(2)), Sin((-1/4)*PI).simplify
     end
 
     test 'Sin(-π/3) → -√3/2' do
-      assert_equal Product(-1, √(3)/2), Sin(Product(-1, (1/3)*PI)).simplify
+      assert_equal Product(-1, √(3)/2), Sin((-1/3)*PI).simplify
     end
 
     test 'Sin(-π/2) → -1' do
-      assert_equal(-1, Sin(Product(-1, (1/2)*PI)).simplify)
+      assert_equal(-1, Sin((-1/2)*PI).simplify)
     end
 
     test 'Sin(-2π/3) → -√3/2' do
-      assert_equal Product(-1, √(3)/2), Sin(Product(-1, (2/3)*PI)).simplify
+      assert_equal Product(-1, √(3)/2), Sin((-2/3)*PI).simplify
     end
 
     test 'Sin(-3π/4) → -1/√2' do
-      assert_equal (-1/√(2)), Sin(Product(-1, (3/4)*PI)).simplify
+      assert_equal (-1/√(2)), Sin((-3/4)*PI).simplify
     end
 
     test 'Sin(-5π/6) → -1/2' do
-      assert_equal (-1/2), Sin(Product(-1, (5/6)*PI)).simplify
+      assert_equal (-1/2), Sin((-5/6)*PI).simplify
     end
 
     test 'Sin(-π/1) → 0' do
-      assert_equal 0, Sin(Product(-1, (1/1)*PI)).simplify
+      assert_equal 0, Sin((-1/1)*PI).simplify
     end
 
     test 'Sin(-π) → 0' do
