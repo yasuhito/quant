@@ -49,16 +49,16 @@ module Symbolic
       when 3
         case k % 6
         when 1, 5
-          Fraction(1, 2)
+          1 / 2
         when 2, 4
-          Product(-1, Fraction(1, 2)).simplify
+          -1 / 2
         end
       when 4
         case k % 8
         when 1, 7
-          Fraction(1, Sqrt(2))
+          1 / Sqrt(2)
         when 3, 5
-          Product(-1, Fraction(1, Sqrt(2))).simplify
+          -1 / Sqrt(2)
         end
       when 6
         case k % 12

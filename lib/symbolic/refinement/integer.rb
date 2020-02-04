@@ -4,6 +4,10 @@ module Symbolic
   # Integer refinements
   module Refinement
     refine Integer do
+      def /(other)
+        Fraction self, other
+      end
+
       def simplify
         self
       end
