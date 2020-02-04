@@ -129,7 +129,7 @@ module Symbolic
     end
 
     test 'Cos(-π) → -1' do
-      assert_equal(-1, Cos(Product(-1, PI)).simplify)
+      assert_equal(-1, Cos(-PI).simplify)
     end
   end
 end

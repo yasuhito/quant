@@ -4,6 +4,10 @@ module Symbolic
   # Symbol refinements
   module Refinement
     refine Symbol do
+      def -@
+        Product(-1, self)
+      end
+
       def simplify
         self
       end

@@ -129,7 +129,7 @@ module Symbolic
     end
 
     test 'Sin(-π) → 0' do
-      assert_equal 0, Sin(Product(-1, PI)).simplify
+      assert_equal 0, Sin(-PI).simplify
     end
   end
 end
