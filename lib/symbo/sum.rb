@@ -8,7 +8,7 @@ require 'symbo/product'
 module Symbo
   # シンボリックな和
   class Sum < Expression
-    using Symbo::Refinement
+    using Symbo
 
     def base
       self
@@ -59,6 +59,22 @@ module Symbo
 
     def ==(other)
       other.is_a?(Sum) && @operands == other.operands
+    end
+
+    def evaluate
+      v = simplify_rational_number_expression_rec(@operands[0])
+      w = simplify_rational_number_expression_rec(@operands[1])
+
+      if v == UNDEFINED || w == UNDEFINED
+        UNDEFINED
+      elsif v.fraction? && w.fraction?
+        r = v.rational + w.rational
+        Fraction r.numerator, r.denominator
+      elsif v.integer? && w.integer?
+        v + w
+      else
+        raise NotImplementedError
+      end
     end
 
     protected

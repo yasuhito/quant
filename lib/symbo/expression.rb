@@ -1,15 +1,15 @@
 # frozen_string_literal: true
 
 require 'symbo/rational_number_expression'
-require 'symbo/refinement/integer'
-require 'symbo/refinement/symbol'
+require 'symbo/integer'
+require 'symbo/symbol'
 
 module Symbo
   UNDEFINED = :undefined
 
   # General expression interface
   class Expression
-    using Symbo::Refinement
+    using Symbo
 
     include RationalNumberExpression
 

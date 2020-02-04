@@ -2,11 +2,11 @@
 
 require 'test_helper'
 
-require 'symbo/refinement/integer'
+require 'symbo/integer'
 
 module Symbo
   class IntegerTest < ActiveSupport::TestCase
-    using Symbo::Refinement
+    using Symbo
 
     test '#base = Undefined' do
       assert_equal UNDEFINED, 1.base

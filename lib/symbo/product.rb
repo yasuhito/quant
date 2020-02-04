@@ -6,7 +6,7 @@ require 'symbo/power'
 module Symbo
   # シンボリックな積
   class Product < Expression
-    using Symbo::Refinement
+    using Symbo
 
     attr_reader :operands
 
@@ -85,6 +85,34 @@ module Symbo
 
     def constant?
       false
+    end
+
+    def evaluate
+      v = simplify_rational_number_expression_rec(@operands[0])
+      w = simplify_rational_number_expression_rec(@operands[1])
+
+      if v == UNDEFINED || w == UNDEFINED
+        UNDEFINED
+      elsif v.is_a?(Integer) && w.is_a?(Integer)
+        v * w
+      elsif v.is_a?(Integer) && w.fraction?
+        if w.denominator == 1
+          v.numerator * w.numerator
+        else
+          Fraction v.numerator * w.numerator, w.denominator
+        end
+      elsif v.is_a?(Fraction) && w.is_a?(Integer)
+        p = v.rational * w
+        if p.denominator == 1
+          p.numerator
+        else
+          p
+        end
+      elsif v.is_a?(Rational) && w.is_a?(Fraction)
+        v * w.rational
+      else
+        raise NotImplementedError, "evaluate_product(#{v.inspect}, #{w.inspect})"
+      end
     end
 
     protected

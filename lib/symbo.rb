@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require 'symbo/integer'
+require 'symbo/symbol'
+
 require 'symbo/cos'
 require 'symbo/pi'
 require 'symbo/power'

@@ -5,7 +5,7 @@ require 'symbo/expression'
 module Symbo
   # シンボリックなべき乗
   class Power < Expression
-    using Symbo::Refinement
+    using Symbo
 
     def /(other)
       Fraction self, other

@@ -6,7 +6,7 @@ require 'symbo'
 
 module Symbo
   class SinTest < ActiveSupport::TestCase
-    using Symbo::Refinement
+    using Symbo
 
     test 'Sin(-1) → -Sin(1)' do
       assert_equal(-Sin(1), Sin(-1).simplify)

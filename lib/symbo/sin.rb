@@ -5,7 +5,7 @@ require 'symbo/trigonometric_function'
 module Symbo
   # サインのシンボリック演算
   class Sin < TrigonometricFunction
-    using Symbo::Refinement
+    using Symbo
 
     def -@
       Product(-1, self)

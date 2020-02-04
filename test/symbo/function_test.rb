@@ -3,12 +3,12 @@
 require 'test_helper'
 
 require 'symbo/function'
-require 'symbo/refinement/integer'
-require 'symbo/refinement/symbol'
+require 'symbo/integer'
+require 'symbo/symbol'
 
 module Symbo
   class FunctionTest < ActiveSupport::TestCase
-    using Symbo::Refinement
+    using Symbo
 
     test 'f(x).base = f(x)' do
       assert_equal Function(:f, :x), Function(:f, :x).base

@@ -5,7 +5,7 @@ require 'symbo/trigonometric_function'
 module Symbo
   # Symbo cos(x)
   class Cos < TrigonometricFunction
-    using Symbo::Refinement
+    using Symbo
 
     protected
 

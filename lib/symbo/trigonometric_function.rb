@@ -1,13 +1,9 @@
 # frozen_string_literal: true
 
-require 'symbo/expression'
-require 'symbo/refinement/integer'
-require 'symbo/refinement/symbol'
-
 module Symbo
   # 三角関数のシンボリック演算
   class TrigonometricFunction
-    using Symbo::Refinement
+    using Symbo
 
     attr_reader :x
 

@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
-require 'symbo/refinement/integer'
-require 'symbo/refinement/symbol'
+require 'symbo/integer'
+require 'symbo/symbol'
 
 module Symbo
   # シンボリックな関数
   class Function
-    using Symbo::Refinement
+    using Symbo
 
     attr_reader :name
     attr_reader :operands

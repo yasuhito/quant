@@ -3,11 +3,11 @@
 require 'test_helper'
 
 require 'symbo/product'
-require 'symbo/refinement/symbol'
+require 'symbo/symbol'
 
 module Symbo
   class SymbolTest < ActiveSupport::TestCase
-    using Symbo::Refinement
+    using Symbo
 
     test 'x.base = x' do
       assert_equal :x, :x.base

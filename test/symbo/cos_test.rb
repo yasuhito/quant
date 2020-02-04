@@ -6,7 +6,7 @@ require 'symbo'
 
 module Symbo
   class CosTest < ActiveSupport::TestCase
-    using Symbo::Refinement
+    using Symbo
 
     test 'Cos(-1) → Cos(1)' do
       assert_equal Cos(1), Cos(-1).simplify

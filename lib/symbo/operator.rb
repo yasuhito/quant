@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
 require 'symbo/fraction'
-require 'symbo/refinement/integer'
-require 'symbo/refinement/symbol'
+require 'symbo/integer'
+require 'symbo/symbol'
 
 # Symbo Algebra
 module Symbo
-  using Symbo::Refinement
+  using Symbo
 
   UNDEFINED = :Undefined
 
