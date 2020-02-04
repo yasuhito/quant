@@ -62,6 +62,14 @@ module Symbo
       def denominator
         1
       end
+
+      def evaluate
+        self
+      end
+
+      def simplify_rational_number
+        self
+      end
     end
   end
 end

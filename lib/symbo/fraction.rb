@@ -92,12 +92,50 @@ module Symbo
       @operands[0].zero?
     end
 
+    def evaluate
+      if denominator.zero?
+        UNDEFINED
+      else
+        self
+      end
+    end
+
+    def simplify_rational_number
+      if @operands.all?(&:integer?)
+        n = @operands[0]
+        d = @operands[1]
+        if (n % d).zero?
+          iquot n, d
+        else
+          g = n.gcd(d)
+          if d.positive?
+            Fraction iquot(n, g), iquot(d, g)
+          else
+            Fraction iquot(-n, g), iquot(-d, g)
+          end
+        end
+      else
+        self
+      end
+    end
+
     protected
 
     def _simplify
       return UNDEFINED if @operands[1].zero?
 
       self
+    end
+
+    private
+
+    def iquot(a, b)
+      r = Rational(a, b)
+      if r.denominator == 1
+        r.numerator
+      else
+        r
+      end
     end
   end
 end

@@ -11,23 +11,14 @@ module Symbo
     private
 
     def simplify_rational_number_expression(u)
-      v = simplify_rational_number_expression_rec(u)
-      if v == UNDEFINED
-        UNDEFINED
-      else
-        simplify_rational_number v
-      end
+      simplify_rational_number_expression_rec(u).simplify_rational_number
     end
 
     def simplify_rational_number_expression_rec(u)
       if u.integer?
-        u
+        u.evaluate
       elsif u.fraction?
-        if u.denominator.zero?
-          UNDEFINED
-        else
-          u
-        end
+        u.evaluate
       elsif u.length == 1
         v = simplify_rational_number_expression_rec(u.operands[0])
         if v == UNDEFINED
@@ -65,44 +56,6 @@ module Symbo
           end
         end
       end
-    end
-
-    def simplify_rational_number(u)
-      if u.is_a?(Integer)
-        u
-      elsif u.is_a?(Fraction) && u.operands.all?(&:integer?)
-        n = u.operands[0]
-        d = u.operands[1]
-        if irem(n, d).zero?
-          iquot(n, d)
-        else
-          g = integer_gcd(n, d)
-          if d.positive?
-            Fraction(iquot(n, g), iquot(d, g))
-          else
-            Fraction(iquot(-n, g), iquot(-d, g))
-          end
-        end
-      else
-        u
-      end
-    end
-
-    def integer_gcd(a, b)
-      a.gcd b
-    end
-
-    def iquot(a, b)
-      r = Rational(a, b)
-      if r.denominator == 1
-        r.numerator
-      else
-        r
-      end
-    end
-
-    def irem(a, b)
-      a % b
     end
 
     # Returns v * w

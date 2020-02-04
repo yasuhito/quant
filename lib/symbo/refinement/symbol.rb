@@ -55,6 +55,12 @@ module Symbo
       def zero?
         false
       end
+
+      def simplify_rational_number
+        raise unless self == UNDEFINED
+
+        UNDEFINED
+      end
     end
   end
 end
