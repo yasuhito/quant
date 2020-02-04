@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-require 'symbolic'
+require 'symbo'
 
 # 量子ゲート
 class Gate
-  using Symbolic
+  using Symbo
 
   def apply(qubits, target)
     qubits.dup.tap do |qs|

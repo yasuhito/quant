@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'symbolic/e'
+require 'symbo/e'
 
 # R1 rotation gate
 class R1 < Gate
@@ -10,6 +10,6 @@ class R1 < Gate
 
   def matrix
     Matrix[[1, 0],
-           [0, Symbolic::E**(1i * @theta)]]
+           [0, Symbo::E**(1i * @theta)]]
   end
 end

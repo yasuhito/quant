@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'gate'
-require 'symbolic/division'
+require 'symbo/division'
 
 # X rotation gate
 class Rx < Gate

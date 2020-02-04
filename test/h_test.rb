@@ -4,7 +4,7 @@ require 'test_helper'
 require 'circuit'
 
 class HTest < ActiveSupport::TestCase
-  # include Symbolic
+  # include Symbo
 
   # test 'H|0> = |+>' do
   #   circuit = Circuit.new(1)

@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
 require 'matrix'
-require 'symbolic'
+require 'symbo'
 
 # 量子ビット
 class Qubit
-  include Symbolic
-  using Symbolic
+  include Symbo
+  using Symbo
   def self.[](*state_or_value)
     if state_or_value.length == 2
       new(*state_or_value)

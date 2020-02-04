@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'gate'
-require 'symbolic/e'
+require 'symbo/e'
 
 # Z rotation gate
 class Rz < Gate
@@ -10,7 +10,7 @@ class Rz < Gate
   end
 
   def matrix
-    Matrix[[Symbolic::E**(-1i * @theta / 2), 0],
-           [0, Symbolic::E**(-1i * @theta / 2)]]
+    Matrix[[Symbo::E**(-1i * @theta / 2), 0],
+           [0, Symbo::E**(-1i * @theta / 2)]]
   end
 end

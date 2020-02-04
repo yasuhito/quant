@@ -4,7 +4,7 @@ require 'gate'
 
 # Hadamard gate
 class H < Gate
-  using Symbolic
+  using Symbo
 
   private
 
