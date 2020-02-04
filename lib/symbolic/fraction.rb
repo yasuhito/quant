@@ -11,6 +11,10 @@ module Symbolic
       @operands = operands
     end
 
+    def *(other)
+      Product self, other
+    end
+
     def base
       UNDEFINED
     end
@@ -40,15 +44,6 @@ module Symbolic
 
     def positive?
       Rational(@operands[0], @operands[1]).positive?
-    end
-
-    def *(other)
-      case other
-      when Integer
-        Rational(@operands[0], @operands[1]) * other
-      else
-        raise 'Not implemented yet'
-      end
     end
 
     def rational
