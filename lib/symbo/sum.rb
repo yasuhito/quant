@@ -63,17 +63,26 @@ module Symbo
 
     def evaluate
       v = simplify_rational_number_expression_rec(@operands[0])
-      w = simplify_rational_number_expression_rec(@operands[1])
 
-      if v == UNDEFINED || w == UNDEFINED
-        UNDEFINED
-      elsif v.fraction? && w.fraction?
-        r = v.rational + w.rational
-        Fraction r.numerator, r.denominator
-      elsif v.integer? && w.integer?
-        v + w
-      else
-        raise NotImplementedError
+      if length == 1
+        if v == UNDEFINED
+          UNDEFINED
+        else
+          v
+        end
+      elsif length == 2
+        w = simplify_rational_number_expression_rec(@operands[1])
+
+        if v == UNDEFINED || w == UNDEFINED
+          UNDEFINED
+        elsif v.fraction? && w.fraction?
+          r = v.rational + w.rational
+          Fraction r.numerator, r.denominator
+        elsif v.integer? && w.integer?
+          v + w
+        else
+          raise NotImplementedError
+        end
       end
     end
 

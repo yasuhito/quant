@@ -12,19 +12,10 @@ module Symbo
     end
 
     def simplify_rational_number_expression_rec(u)
-      if u.integer?
-        u.evaluate
-      elsif u.fraction?
+      if u.integer? || u.fraction?
         u.evaluate
       elsif u.length == 1
-        v = simplify_rational_number_expression_rec(u.operands[0])
-        if v == UNDEFINED
-          UNDEFINED
-        elsif u.sum?
-          v
-        elsif u.diff?
-          evaluate_product(-1, v)
-        end
+        u.evaluate
       elsif u.length == 2
         if u.sum? || u.product? || u.diff? || u.quot?
           u.evaluate

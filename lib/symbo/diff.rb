@@ -27,12 +27,21 @@ module Symbo
 
     def evaluate
       v = simplify_rational_number_expression_rec(@operands[0])
-      w = simplify_rational_number_expression_rec(@operands[1])
 
-      if v == UNDEFINED || w == UNDEFINED
-        UNDEFINED
-      else
-        v.rational - w.rational
+      if length == 1
+        if v == UNDEFINED
+          UNDEFINED
+        else
+          Product(-1, v).evaluate
+        end
+      elsif length == 2
+        w = simplify_rational_number_expression_rec(@operands[1])
+
+        if v == UNDEFINED || w == UNDEFINED
+          UNDEFINED
+        else
+          v.rational - w.rational
+        end
       end
     end
   end
