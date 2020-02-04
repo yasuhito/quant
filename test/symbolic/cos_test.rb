@@ -97,31 +97,31 @@ module Symbolic
     end
 
     test 'Cos(-π/6) → √3/2' do
-      assert_equal √(3)/2, Cos(Product(-1, (1/6) * PI)).simplify
+      assert_equal √(3)/2, Cos((-1/6) * PI).simplify
     end
 
     test 'Cos(-π/4) → 1/√2' do
-      assert_equal 1/√(2), Cos(Product(-1, (1/4) * PI)).simplify
+      assert_equal 1/√(2), Cos((-1/4) * PI).simplify
     end
 
     test 'Cos(-π/3) → 1/2' do
-      assert_equal 1/2, Cos(Product(-1, (1/3) * PI)).simplify
+      assert_equal 1/2, Cos((-1/3) * PI).simplify
     end
 
     test 'Cos(-π/2) → 0' do
-      assert_equal 0, Cos(Product(-1, (1/2) * PI)).simplify
+      assert_equal 0, Cos((-1/2) * PI).simplify
     end
 
     test 'Cos(-2π/3) → -1/2' do
-      assert_equal (-1/2), Cos(Product(-1, (2/3) * PI)).simplify
+      assert_equal (-1/2), Cos((-2/3) * PI).simplify
     end
 
     test 'Cos(-3π/4) → -1/√2' do
-      assert_equal (-1/√(2)), Cos(Product(-1, (3/4) * PI)).simplify
+      assert_equal (-1/√(2)), Cos((-3/4) * PI).simplify
     end
 
     test 'Cos(-5π/6) → -√3/2' do
-      assert_equal Product(-1, √(3)/2), Cos(Product(-1, (5/6) * PI)).simplify
+      assert_equal Product(-1, √(3)/2), Cos((-5/6) * PI).simplify
     end
 
     test 'Cos(-π/1) → -1' do

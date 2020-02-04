@@ -65,7 +65,7 @@ module Symbolic
         when 1, 11
           √(3)/2
         when 5, 7
-          Product(-1, Fraction(√(3), 2))
+          Product(-1, √(3)/2)
         end
       end
     end
