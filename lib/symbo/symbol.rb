@@ -1,10 +1,15 @@
 # frozen_string_literal: true
 
+# Symbolic computation
 module Symbo
   # Symbol refinements
   refine Symbol do
     def -@
       Product(-1, self)
+    end
+
+    def **(other)
+      Power self, other
     end
 
     def simplify

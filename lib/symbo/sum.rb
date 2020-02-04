@@ -62,7 +62,7 @@ module Symbo
     end
 
     def evaluate
-      v = simplify_rational_number_expression_rec(@operands[0])
+      v = @operands[0].evaluate
 
       if length == 1
         if v == UNDEFINED
@@ -71,7 +71,7 @@ module Symbo
           v
         end
       elsif length == 2
-        w = simplify_rational_number_expression_rec(@operands[1])
+        w = @operands[1].evaluate
 
         if v == UNDEFINED || w == UNDEFINED
           UNDEFINED
@@ -107,7 +107,7 @@ module Symbo
     def simplify_rec(l)
       if l.size == 2 && l.none?(&:sum?)
         if l.all?(&:constant?)
-          p = simplify_rational_number_expression(Sum(*l))
+          p = Sum(*l).evaluate.simplify_rational_number
           if p.zero?
             []
           else

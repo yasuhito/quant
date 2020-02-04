@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require 'symbo/rational_number_expression'
 require 'symbo/integer'
 require 'symbo/symbol'
 
@@ -10,8 +9,6 @@ module Symbo
   # General expression interface
   class Expression
     using Symbo
-
-    include RationalNumberExpression
 
     attr_reader :operands
 

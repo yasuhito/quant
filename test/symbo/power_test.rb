@@ -2,9 +2,7 @@
 
 require 'test_helper'
 
-require 'symbo/fraction'
-require 'symbo/power'
-require 'symbo/sum'
+require 'symbo'
 
 module Symbo
   class PowerTest

@@ -88,8 +88,8 @@ module Symbo
     end
 
     def evaluate
-      v = simplify_rational_number_expression_rec(@operands[0])
-      w = simplify_rational_number_expression_rec(@operands[1])
+      v = @operands[0].evaluate
+      w = @operands[1].evaluate
 
       if v == UNDEFINED || w == UNDEFINED
         UNDEFINED
@@ -141,7 +141,7 @@ module Symbo
     def simplify_rec(l)
       if l.size == 2 && l.none?(&:product?) # SPRDREC-1
         if l.all?(&:constant?) # SPRDREC-1-1
-          p = simplify_rational_number_expression(Product(*l))
+          p = Product(*l).evaluate.simplify_rational_number
           if p == 1
             []
           else

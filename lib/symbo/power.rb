@@ -80,6 +80,34 @@ module Symbo
       false
     end
 
+    def evaluate
+      v = @operands[0].evaluate
+
+      if v == UNDEFINED
+        UNDEFINED
+      else
+        n = @operands[1]
+        if n.is_a?(Integer)
+          if v.numerator != 0
+            if n.positive?
+              s = Power(v, n - 1).evaluate
+              Product(s, v).evaluate
+            elsif n.zero?
+              1
+            elsif n == -1
+              raise NotImplementedError
+            elsif n < -1
+              raise NotImplementedError
+            end
+          elsif v.numerator.zero?
+            raise NotImplementedError
+          end
+        else
+          Power(v, n)
+        end
+      end
+    end
+
     protected
 
     def _simplify
@@ -99,7 +127,7 @@ module Symbo
     end
 
     def simplify_integer
-      return simplify_rational_number_expression(Power.new(base, exponent)) if base.constant?
+      return Power.new(base, exponent).evaluate.simplify_rational_number if base.constant?
       return 1 if exponent.zero?
       return base if exponent == 1
 

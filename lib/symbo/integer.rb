@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Symbolic computation
 module Symbo
   # Integer refinements
   refine Integer do

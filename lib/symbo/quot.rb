@@ -5,6 +5,8 @@ require 'symbo/expression'
 module Symbo
   # Symbolic quotient
   class Quot < Expression
+    using Symbo
+
     def integer?
       false
     end
@@ -30,8 +32,8 @@ module Symbo
     end
 
     def evaluate
-      v = simplify_rational_number_expression_rec(@operands[0])
-      w = simplify_rational_number_expression_rec(@operands[1])
+      v = @operands[0].evaluate
+      w = @operands[1].evaluate
 
       if v == UNDEFINED || w == UNDEFINED
         UNDEFINED
