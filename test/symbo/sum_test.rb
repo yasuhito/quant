@@ -2,9 +2,7 @@
 
 require 'test_helper'
 
-require 'symbo/fraction'
-require 'symbo/power'
-require 'symbo/sum'
+require 'symbo'
 
 module Symbo
   class SumTest
@@ -43,8 +41,10 @@ module Symbo
     end
 
     class SimplificationTest < ActiveSupport::TestCase
+      using Symbo
+
       test '1/0 + 2 → Undefined + 2 → Undefined' do
-        assert_equal UNDEFINED, Sum(Fraction(1, 0), 2).simplify
+        assert_equal UNDEFINED, Sum(1/0, 2).simplify
       end
 
       test '+2 → 2' do

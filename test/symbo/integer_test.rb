@@ -2,7 +2,7 @@
 
 require 'test_helper'
 
-require 'symbo/integer'
+require 'symbo'
 
 module Symbo
   class IntegerTest < ActiveSupport::TestCase
@@ -25,7 +25,7 @@ module Symbo
     end
 
     test '2#compare(5/2) = true' do
-      assert 2.compare(Fraction(5, 2))
+      assert 2.compare(5/2)
     end
   end
 end
