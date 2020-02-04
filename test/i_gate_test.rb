@@ -5,6 +5,8 @@ require 'test_helper'
 require 'circuit'
 
 class IGateTest < ActiveSupport::TestCase
+  using Symbo
+
   test 'I|0> = |0>' do
     circuit = Circuit.new(1)
 

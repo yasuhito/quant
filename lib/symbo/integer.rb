@@ -4,6 +4,12 @@
 module Symbo
   # Integer refinements
   refine Integer do
+    alias_method :mult, :*
+
+    def *(other)
+      Product self, other
+    end
+
     def /(other)
       Fraction self, other
     end

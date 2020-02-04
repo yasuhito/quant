@@ -94,10 +94,10 @@ module Symbo
       if v == UNDEFINED || w == UNDEFINED
         UNDEFINED
       elsif v.is_a?(Integer) && w.is_a?(Integer)
-        v * w
+        v.mult w
       elsif v.is_a?(Integer) && w.fraction?
         if w.denominator == 1
-          v.numerator * w.numerator
+          v.numerator.mult w.numerator
         else
           Fraction v.numerator * w.numerator, w.denominator
         end

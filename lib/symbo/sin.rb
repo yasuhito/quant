@@ -24,7 +24,7 @@ module Symbo
       elsif @x == PI
         0
       elsif @x.constant? && @x.negative?
-        -Sin(-1 * @x)
+        -Sin(-1.mult(@x))
       elsif @x.product? && @x[0].integer? && @x[0].negative?
         -Sin(Product(-1, @x[0], *@x.operands[1..-1]).simplify).simplify
       elsif @x.product? && @x.length == 2 && @x[0].constant? && @x[1] == PI &&
