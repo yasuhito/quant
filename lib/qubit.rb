@@ -5,8 +5,8 @@ require 'symbo'
 
 # 量子ビット
 class Qubit
-  include Symbo
   using Symbo
+
   def self.[](*state_or_value)
     if state_or_value.length == 2
       new(*state_or_value)
@@ -78,9 +78,9 @@ class Qubit
       '0'
     elsif @state == [0, 1]
       '1'
-    elsif @state == [1 / sqrt(2), 1 / sqrt(2)]
+    elsif @state == [1 / Sqrt(2), 1 / Sqrt(2)]
       '+'
-    elsif @state == [1 / sqrt(2), -1 / sqrt(2)]
+    elsif @state == [1 / Sqrt(2), -1 / Sqrt(2)]
       '-'
     end
   end
