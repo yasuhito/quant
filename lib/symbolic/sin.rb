@@ -56,16 +56,16 @@ module Symbolic
       when 3
         case k % 6
         when 1, 2
-          Fraction(Power(3, Fraction(1, 2)), 2)
+          Fraction(Sqrt(3), 2)
         when 4, 5
-          Product(-1, Fraction(Power(3, Fraction(1, 2)), 2))
+          Product(-1, Fraction(Sqrt(3), 2))
         end
       when 4
         case k % 8
         when 1, 3
-          Fraction(1, Power(2, Fraction(1, 2)))
+          Fraction(1, Sqrt(2))
         when 5, 7
-          Fraction(-1, Power(2, Fraction(1, 2)))
+          Fraction(-1, Sqrt(2))
         end
       when 6
         case k % 12

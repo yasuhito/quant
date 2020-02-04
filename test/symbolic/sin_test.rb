@@ -2,8 +2,7 @@
 
 require 'test_helper'
 
-require 'symbolic/pi'
-require 'symbolic/sin'
+require 'symbolic'
 
 module Symbolic
   class SinTest < ActiveSupport::TestCase
@@ -28,13 +27,11 @@ module Symbolic
     end
 
     test 'Sin(π/4) → 1/√2' do
-      assert_equal Fraction(1, Power(2, Fraction(1, 2))),
-                   Sin(Product(Fraction(1, 4), PI)).simplify
+      assert_equal Fraction(1, Sqrt(2)), Sin(Product(Fraction(1, 4), PI)).simplify
     end
 
     test 'Sin(π/3) → √3/2' do
-      assert_equal Fraction(Power(3, Fraction(1, 2)), 2),
-                   Sin(Product(Fraction(1, 3), PI)).simplify
+      assert_equal Fraction(Sqrt(3), 2), Sin(Product(Fraction(1, 3), PI)).simplify
     end
 
     test 'Sin(π/2) → 1' do
@@ -42,13 +39,11 @@ module Symbolic
     end
 
     test 'Sin(2π/3) → √3/2' do
-      assert_equal Fraction(Power(3, Fraction(1, 2)), 2),
-                   Sin(Product(Fraction(2, 3), PI)).simplify
+      assert_equal Fraction(Sqrt(3), 2), Sin(Product(Fraction(2, 3), PI)).simplify
     end
 
     test 'Sin(3π/4) → 1/√2' do
-      assert_equal Fraction(1, Power(2, Fraction(1, 2))),
-                   Sin(Product(Fraction(3, 4), PI)).simplify
+      assert_equal Fraction(1, Sqrt(2)), Sin(Product(Fraction(3, 4), PI)).simplify
     end
 
     test 'Sin(5π/6) → 1/2' do
@@ -68,13 +63,11 @@ module Symbolic
     end
 
     test 'Sin(5π/4) → -1/√2' do
-      assert_equal Fraction(-1, Power(2, Fraction(1, 2))),
-                   Sin(Product(Fraction(5, 4), PI)).simplify
+      assert_equal Fraction(-1, Sqrt(2)), Sin(Product(Fraction(5, 4), PI)).simplify
     end
 
     test 'Sin(4π/3) → -√3/2' do
-      assert_equal Product(-1, Fraction(Power(3, Fraction(1, 2)), 2)),
-                   Sin(Product(Fraction(4, 3), PI)).simplify
+      assert_equal Product(-1, Fraction(Sqrt(3), 2)), Sin(Product(Fraction(4, 3), PI)).simplify
     end
 
     test 'Sin(3π/2) → -1' do
@@ -82,13 +75,11 @@ module Symbolic
     end
 
     test 'Sin(5π/3) → -√3/2' do
-      assert_equal Product(-1, Fraction(Power(3, Fraction(1, 2)), 2)),
-                   Sin(Product(Fraction(5, 3), PI)).simplify
+      assert_equal Product(-1, Fraction(Sqrt(3), 2)), Sin(Product(Fraction(5, 3), PI)).simplify
     end
 
     test 'Sin(7π/4) → -1/√2' do
-      assert_equal Fraction(-1, Power(2, Fraction(1, 2))),
-                   Sin(Product(Fraction(7, 4), PI)).simplify
+      assert_equal Fraction(-1, Sqrt(2)), Sin(Product(Fraction(7, 4), PI)).simplify
     end
 
     test 'Sin(11π/6) → -1/2' do
@@ -104,18 +95,15 @@ module Symbolic
     end
 
     test 'Sin(-π/6) → √3/2' do
-      assert_equal Fraction(-1, 2),
-                   Sin(Product(-1, Product(Fraction(1, 6), PI))).simplify
+      assert_equal Fraction(-1, 2), Sin(Product(-1, Product(Fraction(1, 6), PI))).simplify
     end
 
     test 'Sin(-π/4) → -1/√2' do
-      assert_equal Fraction(-1, Power(2, Fraction(1, 2))),
-                   Sin(Product(-1, Product(Fraction(1, 4), PI))).simplify
+      assert_equal Fraction(-1, Sqrt(2)), Sin(Product(-1, Product(Fraction(1, 4), PI))).simplify
     end
 
     test 'Sin(-π/3) → -√3/2' do
-      assert_equal Product(-1, Fraction(Power(3, Fraction(1, 2)), 2)),
-                   Sin(Product(-1, Product(Fraction(1, 3), PI))).simplify
+      assert_equal Product(-1, Fraction(Sqrt(3), 2)), Sin(Product(-1, Product(Fraction(1, 3), PI))).simplify
     end
 
     test 'Sin(-π/2) → -1' do
@@ -123,18 +111,15 @@ module Symbolic
     end
 
     test 'Sin(-2π/3) → -√3/2' do
-      assert_equal Product(-1, Fraction(Power(3, Fraction(1, 2)), 2)),
-                   Sin(Product(-1, Product(Fraction(2, 3), PI))).simplify
+      assert_equal Product(-1, Fraction(Sqrt(3), 2)), Sin(Product(-1, Product(Fraction(2, 3), PI))).simplify
     end
 
     test 'Sin(-3π/4) → -1/√2' do
-      assert_equal Fraction(-1, Power(2, Fraction(1, 2))),
-                   Sin(Product(-1, Product(Fraction(3, 4), PI))).simplify
+      assert_equal Fraction(-1, Sqrt(2)), Sin(Product(-1, Product(Fraction(3, 4), PI))).simplify
     end
 
     test 'Sin(-5π/6) → -1/2' do
-      assert_equal Fraction(-1, 2),
-                   Sin(Product(-1, Product(Fraction(5, 6), PI))).simplify
+      assert_equal Fraction(-1, 2), Sin(Product(-1, Product(Fraction(5, 6), PI))).simplify
     end
 
     test 'Sin(-π/1) → 0' do
