@@ -56,16 +56,16 @@ module Symbolic
       when 4
         case k % 8
         when 1, 7
-          1/Sqrt(2)
+          1/√(2)
         when 3, 5
-          -1/Sqrt(2)
+          -1/√(2)
         end
       when 6
         case k % 12
         when 1, 11
-          Fraction(Sqrt(3), 2)
+          √(3)/2
         when 5, 7
-          Product(-1, Fraction(Sqrt(3), 2))
+          Product(-1, Fraction(√(3), 2))
         end
       end
     end

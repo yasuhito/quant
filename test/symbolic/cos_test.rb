@@ -25,11 +25,11 @@ module Symbolic
     end
 
     test 'Cos(π/6) → √3/2' do
-      assert_equal Sqrt(3)/2, Cos((1/6) * PI).simplify
+      assert_equal √(3)/2, Cos((1/6) * PI).simplify
     end
 
     test 'Cos(π/4) → 1/√2' do
-      assert_equal 1/Sqrt(2), Cos((1/4) * PI).simplify
+      assert_equal 1/√(2), Cos((1/4) * PI).simplify
     end
 
     test 'Cos(π/3) → 1/2' do
@@ -45,11 +45,11 @@ module Symbolic
     end
 
     test 'Cos(3π/4) → -1/√2' do
-      assert_equal (-1/Sqrt(2)), Cos((3/4) * PI).simplify
+      assert_equal (-1/√(2)), Cos((3/4) * PI).simplify
     end
 
     test 'Cos(5π/6) → -√3/2' do
-      assert_equal Product(-1, Sqrt(3)/2), Cos((5/6) * PI).simplify
+      assert_equal Product(-1, √(3)/2), Cos((5/6) * PI).simplify
     end
 
     test 'Cos(1π/1) → -1' do
@@ -61,11 +61,11 @@ module Symbolic
     end
 
     test 'Cos(7π/6) → -√3/2' do
-      assert_equal Product(-1, Sqrt(3)/2), Cos((7/6) * PI).simplify
+      assert_equal Product(-1, √(3)/2), Cos((7/6) * PI).simplify
     end
 
     test 'Cos(5π/4) → -1/√2' do
-      assert_equal (-1/Sqrt(2)), Cos((5/4) * PI).simplify
+      assert_equal (-1/√(2)), Cos((5/4) * PI).simplify
     end
 
     test 'Cos(4π/3) → -1/2' do
@@ -81,11 +81,11 @@ module Symbolic
     end
 
     test 'Cos(7π/4) → 1/√2' do
-      assert_equal 1/Sqrt(2), Cos((7/4) * PI).simplify
+      assert_equal 1/√(2), Cos((7/4) * PI).simplify
     end
 
     test 'Cos(11π/6) → √3/2' do
-      assert_equal Sqrt(3)/2, Cos((11/6) * PI).simplify
+      assert_equal √(3)/2, Cos((11/6) * PI).simplify
     end
 
     test 'Cos(2π/1) → 1' do
@@ -97,11 +97,11 @@ module Symbolic
     end
 
     test 'Cos(-π/6) → √3/2' do
-      assert_equal Sqrt(3)/2, Cos(Product(-1, (1/6) * PI)).simplify
+      assert_equal √(3)/2, Cos(Product(-1, (1/6) * PI)).simplify
     end
 
     test 'Cos(-π/4) → 1/√2' do
-      assert_equal 1/Sqrt(2), Cos(Product(-1, (1/4) * PI)).simplify
+      assert_equal 1/√(2), Cos(Product(-1, (1/4) * PI)).simplify
     end
 
     test 'Cos(-π/3) → 1/2' do
@@ -117,11 +117,11 @@ module Symbolic
     end
 
     test 'Cos(-3π/4) → -1/√2' do
-      assert_equal (-1/Sqrt(2)), Cos(Product(-1, (3/4) * PI)).simplify
+      assert_equal (-1/√(2)), Cos(Product(-1, (3/4) * PI)).simplify
     end
 
     test 'Cos(-5π/6) → -√3/2' do
-      assert_equal Product(-1, Sqrt(3)/2), Cos(Product(-1, (5/6) * PI)).simplify
+      assert_equal Product(-1, √(3)/2), Cos(Product(-1, (5/6) * PI)).simplify
     end
 
     test 'Cos(-π/1) → -1' do

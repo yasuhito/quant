@@ -36,3 +36,6 @@ Metrics/PerceivedComplexity:
 # メソッドのパラメータに x のような短い名前を使う
 Naming/MethodParameterName:
   Enabled: false
+
+Naming/AsciiIdentifiers:
+  Enabled: false
