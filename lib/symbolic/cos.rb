@@ -3,7 +3,7 @@
 require 'symbolic/trigonometric_function'
 
 module Symbolic
-  # コサインのシンボリック演算
+  # Symbolic cos(x)
   class Cos < TrigonometricFunction
     using Symbolic::Refinement
 
@@ -29,7 +29,6 @@ module Symbolic
     private
 
     # Simplification of cos(kπ/n)
-    # k と n は整数, n = 1, 2, 3, 4, 6
     def simplify_kn_pi
       k = @x[0].numerator
       n = @x[0].denominator
@@ -57,16 +56,16 @@ module Symbolic
       when 4
         case k % 8
         when 1, 7
-          Fraction(1, Power(2, Fraction(1, 2)))
+          Fraction(1, Sqrt(2))
         when 3, 5
-          Product(-1, Fraction(1, Power(2, Fraction(1, 2)))).simplify
+          Product(-1, Fraction(1, Sqrt(2))).simplify
         end
       when 6
         case k % 12
         when 1, 11
-          Fraction(Power(3, Fraction(1, 2)), 2)
+          Fraction(Sqrt(3), 2)
         when 5, 7
-          Product(-1, Fraction(Power(3, Fraction(1, 2)), 2))
+          Product(-1, Fraction(Sqrt(3), 2))
         end
       end
     end
