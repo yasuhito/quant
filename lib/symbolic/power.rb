@@ -7,6 +7,10 @@ module Symbolic
   class Power < Expression
     using Symbolic::Refinement
 
+    def /(other)
+      Fraction self, other
+    end
+
     def base
       @operands[0]
     end
