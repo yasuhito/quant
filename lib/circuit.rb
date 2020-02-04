@@ -17,6 +17,8 @@ require 'z_gate'
 
 # 量子回路
 class Circuit
+  using Symbo
+
   def initialize(*qubits)
     @qubits = if qubits.first.is_a?(Qubit)
                 qubits
