@@ -44,66 +44,26 @@ module Symbo
       @operands == other.operands
     end
 
-    def constant?
-      false
-    end
-
-    def product?
-      false
-    end
-
-    def sum?
-      false
-    end
-
-    def power?
-      true
-    end
-
-    def integer?
-      false
-    end
-
-    def fraction?
-      false
-    end
-
-    def diff?
-      false
-    end
-
-    def quot?
-      false
-    end
-
-    def zero?
-      false
-    end
-
     def evaluate
-      v = @operands[0].evaluate
+      v = base.evaluate
+      n = exponent
 
-      if v == UNDEFINED
-        UNDEFINED
-      else
-        n = @operands[1]
-        if n.is_a?(Integer)
-          if v.numerator != 0
-            if n.positive?
-              s = Power(v, n - 1).evaluate
-              Product(s, v).evaluate
-            elsif n.zero?
-              1
-            elsif n == -1
-              raise NotImplementedError
-            elsif n < -1
-              raise NotImplementedError
-            end
-          elsif v.numerator.zero?
-            raise NotImplementedError
-          end
-        else
-          Power(v, n)
+      if v.numerator != 0
+        if n.positive?
+          s = Power(v, n - 1).evaluate
+          Product(s, v).evaluate
+        elsif n.zero?
+          1
+        elsif n == -1
+          raise NotImplementedError
+        elsif n < -1
+          raise NotImplementedError
+        end
+      elsif v.numerator.zero?
+        if n >= 1
+          0
+        elsif n <= 0
+          UNDEFINED
         end
       end
     end

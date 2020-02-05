@@ -48,6 +48,22 @@ module Symbo
       @operands[n]
     end
 
+    def constant?
+      false
+    end
+
+    def product?
+      false
+    end
+
+    def integer?
+      false
+    end
+
+    def zero?
+      false
+    end
+
     protected
 
     def _simplify
