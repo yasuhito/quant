@@ -2,7 +2,7 @@
 
 require 'cnot_gate'
 require 'h'
-require 'id_gate'
+require 'i_gate'
 require 'qubit'
 require 'r1'
 require 'rx'
@@ -30,7 +30,7 @@ class Circuit
   end
 
   def i(target)
-    self.class.new IdGate.new.apply(@qubits, target)
+    self.class.new IGate.new.apply(@qubits, target)
   end
 
   def x(target)
