@@ -7,41 +7,26 @@ module Symbo
   class Quot < Expression
     using Symbo
 
-    def integer?
-      false
-    end
-
-    def fraction?
-      false
-    end
-
-    def sum?
-      false
-    end
-
-    def product?
-      false
-    end
-
-    def diff?
-      false
-    end
-
-    def quot?
-      true
-    end
-
     def evaluate
-      v = @operands[0].evaluate
-      w = @operands[1].evaluate
-
-      if v == UNDEFINED || w == UNDEFINED
-        UNDEFINED
-      elsif w.numerator.zero?
+      if w.numerator.zero?
         UNDEFINED
       else
-        Fraction v.numerator * w.denominator, w.numerator * v.denominator
+        # v = vn/vd, w = wn/wd とすると
+        # v/w = Quot(vn/vd, wn/wd).evaluate = vn·wd / wn·vd
+        Fraction v.numerator.mult(w.denominator), w.numerator.mult(v.denominator)
       end
+    end
+
+    private
+
+    # an integer or a fraction with non-zero denominator
+    def v
+      @v ||= @operands[0].evaluate
+    end
+
+    # an integer or a fraction with non-zero denominator
+    def w
+      @w ||= @operands[1].evaluate
     end
   end
 end
