@@ -7,10 +7,6 @@ module Symbo
   class Fraction < Expression
     attr_reader :operands
 
-    def **(other)
-      Power self, other
-    end
-
     def base
       UNDEFINED
     end
