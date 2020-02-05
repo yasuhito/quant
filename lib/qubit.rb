@@ -35,7 +35,7 @@ class Qubit
     if other.is_a?(Qubit)
       (bra * other.ket.t)[0, 0]
     else
-      @state.map { |each| (each * other).simplify }
+      @state.map { |each| Product(each, other).simplify }
     end
   end
 

@@ -87,13 +87,14 @@ module Symbo
       false
     end
 
+    # v * w
     def evaluate
       v = @operands[0].evaluate
       w = @operands[1].evaluate
 
       if v == UNDEFINED || w == UNDEFINED
         UNDEFINED
-      elsif v.is_a?(Integer) && w.is_a?(Integer)
+      elsif v.is_a?(Integer) && (w.is_a?(Integer) || w.is_a?(Complex))
         v.mult w
       elsif v.is_a?(Integer) && w.fraction?
         if w.denominator == 1
@@ -101,15 +102,17 @@ module Symbo
         else
           Fraction v.numerator.mult(w.numerator), w.denominator
         end
-      elsif v.is_a?(Fraction) && w.is_a?(Integer)
-        p = v.rational * w
-        if p.denominator == 1
-          p.numerator
+      elsif v.is_a?(Fraction) && (w.is_a?(Integer) || w.is_a?(Complex))
+        if v.numerator.integer? && v.denominator.integer?
+          p = v.rational * w
+          if p.denominator == 1
+            p.numerator
+          else
+            p
+          end
         else
-          p
+          Fraction (v.numerator * w).simplify, v.denominator
         end
-      elsif v.is_a?(Rational) && w.is_a?(Fraction)
-        v * w.rational
       else
         raise NotImplementedError, "evaluate_product(#{v.inspect}, #{w.inspect})"
       end
