@@ -2,6 +2,9 @@
 Style/AsciiComments:
   Enabled: false
 
+Style/Documentation:
+  Enabled: false
+
 # 行の文字数を制限しない
 Layout/LineLength:
   Enabled: false

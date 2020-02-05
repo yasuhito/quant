@@ -10,6 +10,10 @@ module Symbo
   class Sum < Expression
     using Symbo
 
+    def +(other)
+      Sum self, other
+    end
+
     def base
       self
     end
@@ -57,6 +61,10 @@ module Symbo
       false
     end
 
+    def zero?
+      false
+    end
+
     def ==(other)
       other.is_a?(Sum) && @operands == other.operands
     end
@@ -80,10 +88,26 @@ module Symbo
           Fraction r.numerator, r.denominator
         elsif v.integer? && w.integer?
           v + w
+        elsif v.integer? && w.fraction?
+          if v.zero?
+            w
+          else
+            Sum v, w
+          end
+        elsif v.fraction? && w.integer?
+          if w.zero?
+            v
+          else
+            Sum v, w
+          end
         else
-          raise NotImplementedError
+          raise NotImplementedError, "evaluate(#{v}, #{w.inspect})"
         end
       end
+    end
+
+    def simplify_rational_number
+      self
     end
 
     protected

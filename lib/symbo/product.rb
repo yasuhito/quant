@@ -99,7 +99,7 @@ module Symbo
         if w.denominator == 1
           v.numerator.mult w.numerator
         else
-          Fraction v.numerator * w.numerator, w.denominator
+          Fraction v.numerator.mult(w.numerator), w.denominator
         end
       elsif v.is_a?(Fraction) && w.is_a?(Integer)
         p = v.rational * w

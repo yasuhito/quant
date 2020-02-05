@@ -15,13 +15,13 @@ class Qubit
     elsif state_or_value == [1]
       new 0, 1
     elsif state_or_value == ['+']
-      new 1 / Sqrt(2), 1 / Sqrt(2)
+      new Fraction(1, Sqrt(2)), Fraction(1, Sqrt(2))
     elsif state_or_value == ['-']
-      new 1 / Sqrt(2), -1 / Sqrt(2)
+      new Fraction(1, Sqrt(2)), Fraction(-1, Sqrt(2))
     elsif state_or_value == ['i']
-      new 1 / Sqrt(2), 1i / Sqrt(2)
+      new Fraction(1, Sqrt(2)), Fraction(1i, Sqrt(2))
     elsif state_or_value == ['-i']
-      new 1 / Sqrt(2), -1i / Sqrt(2)
+      new Fraction(1, Sqrt(2)), Fraction(-1i, Sqrt(2))
     else
       raise
     end

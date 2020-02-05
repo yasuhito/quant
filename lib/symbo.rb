@@ -3,6 +3,7 @@
 require 'symbo/integer'
 require 'symbo/symbol'
 
+require 'symbo/complex'
 require 'symbo/cos'
 require 'symbo/diff'
 require 'symbo/pi'

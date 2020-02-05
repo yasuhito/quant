@@ -5,8 +5,6 @@ require 'test_helper'
 require 'circuit'
 
 class IGateTest < ActiveSupport::TestCase
-  using Symbo
-
   test 'I|0> = |0>' do
     circuit = Circuit.new(1)
 
@@ -19,30 +17,27 @@ class IGateTest < ActiveSupport::TestCase
     assert_equal [Qubit[1]], circuit.i(0).state
   end
 
-  # test 'I|+> = |+>' do
-  #   circuit = Circuit.new(Qubit['+'])
+  test 'I|+> = |+>' do
+    circuit = Circuit.new(Qubit['+'])
 
-  #   assert_equal [Qubit['+']], circuit.i(0).state
-  # end
+    assert_equal [Qubit['+']], circuit.i(0).state
+  end
 
-  # test 'I|-> = |->' do
-  #   circuit = Circuit.new(Qubit['-'])
-  #   result = circuit.i(0)
+  test 'I|-> = |->' do
+    circuit = Circuit.new(Qubit['-'])
 
-  #   assert_equal [Qubit['-']], result.state
-  # end
+    assert_equal [Qubit['-']], circuit.i(0).state
+  end
 
-  # test 'I|i> = |i>' do
-  #   circuit = Circuit.new(Qubit['i'])
-  #   result = circuit.i(0)
+  test 'I|i> = |i>' do
+    circuit = Circuit.new(Qubit['i'])
 
-  #   assert_equal [Qubit['i']], result.state
-  # end
+    assert_equal [Qubit['i']], circuit.i(0).state
+  end
 
-  # test 'I|-i> = |-i>' do
-  #   circuit = Circuit.new(Qubit['-i'])
-  #   result = circuit.i(0)
+  test 'I|-i> = |-i>' do
+    circuit = Circuit.new(Qubit['-i'])
 
-  #   assert_equal [Qubit['-i']], result.state
-  # end
+    assert_equal [Qubit['-i']], circuit.i(0).state
+  end
 end

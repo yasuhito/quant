@@ -7,10 +7,6 @@ module Symbo
   class Fraction < Expression
     attr_reader :operands
 
-    def initialize(*operands)
-      @operands = operands
-    end
-
     def *(other)
       Product self, other
     end
@@ -78,6 +74,10 @@ module Symbo
 
     def constant?
       true
+    end
+
+    def sum?
+      false
     end
 
     def product?

@@ -78,3 +78,21 @@ module Symbo
     end
   end
 end
+
+# Matrix などの中で使われる Integer#+ などをハイジャック
+class Integer
+  alias plus +
+  alias mult *
+
+  def +(other)
+    plus other
+  rescue TypeError
+    Sum self, other
+  end
+
+  def *(other)
+    mult other
+  rescue TypeError
+    Product self, other
+  end
+end
