@@ -86,8 +86,8 @@ module Symbo
         elsif v.fraction? && w.fraction?
           r = v.rational + w.rational
           Fraction r.numerator, r.denominator
-        elsif v.integer? && w.integer?
-          v + w
+        elsif v.integer? && (w.integer? || w.is_a?(Complex))
+          v.plus w
         elsif v.integer? && w.fraction?
           if v.zero?
             w
@@ -100,6 +100,8 @@ module Symbo
           else
             Sum v, w
           end
+        elsif v.is_a?(Complex) && w.is_a?(Integer)
+          v.plus w
         else
           raise NotImplementedError, "evaluate(#{v}, #{w.inspect})"
         end
