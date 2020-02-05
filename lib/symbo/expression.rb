@@ -2,6 +2,7 @@
 
 require 'symbo/integer'
 require 'symbo/symbol'
+require 'symbo/binary_operation'
 
 module Symbo
   UNDEFINED = :undefined
@@ -9,6 +10,8 @@ module Symbo
   # General expression interface
   class Expression
     using Symbo
+
+    include BinaryOperation
 
     attr_reader :operands
 

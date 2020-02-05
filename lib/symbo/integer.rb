@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
+require 'symbo/binary_operation'
+
 # Symbolic computation
 module Symbo
   # Integer refinements
   refine Integer do
-    alias_method :mult, :*
+    extend BinaryOperation
 
-    def *(other)
-      Product self, other
-    end
+    alias_method :mult, :*
 
     def /(other)
       Fraction self, other

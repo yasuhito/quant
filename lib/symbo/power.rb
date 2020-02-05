@@ -7,10 +7,6 @@ module Symbo
   class Power < Expression
     using Symbo
 
-    def /(other)
-      Fraction self, other
-    end
-
     def base
       @operands[0]
     end
