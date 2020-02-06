@@ -6,15 +6,19 @@ require 'symbo'
 
 module Symbo
   class SumTest
+    using Symbo
+
+    class PowerTransformationTest < ActiveSupport::TestCase
+      test 'Sum#base # => Sum' do
+        assert_equal (:x + :y), (:x + :y).base
+      end
+
+      test 'Sum#exponent # => 1' do
+        assert_equal 1, (:x + :y).exponent
+      end
+    end
+
     class OperatorTest < ActiveSupport::TestCase
-      test '(x + y).base = x + y' do
-        assert_equal Sum(:x, :y), Sum(:x, :y).base
-      end
-
-      test '(x + y).exponent = 1' do
-        assert_equal 1, Sum(:x, :y).exponent
-      end
-
       test '(x + y).term = ·(x + y)' do
         assert_equal Product(Sum(:x, :y)), Sum(:x, :y).term
       end

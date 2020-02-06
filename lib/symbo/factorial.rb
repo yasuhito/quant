@@ -15,7 +15,7 @@ module Symbo
     end
 
     def base
-      self
+      dup
     end
 
     def exponent

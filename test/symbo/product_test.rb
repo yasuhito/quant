@@ -6,17 +6,19 @@ require 'symbo'
 
 module Symbo
   class ProductTest
-    class OperatorTest < ActiveSupport::TestCase
-      using Symbo
+    using Symbo
 
-      test '(x·y).base = x·y' do
+    class PowerTransformationTest < ActiveSupport::TestCase
+      test 'Product#base # => Product' do
         assert_equal (:x * :y), (:x * :y).base
       end
 
-      test '(x·y).exponent = 1' do
+      test 'Product#exponent = 1' do
         assert_equal 1, (:x * :y).exponent
       end
+    end
 
+    class OperatorTest < ActiveSupport::TestCase
       test '(2·x·y·z).term = x·y·z' do
         assert_equal Product(:x, :y, :z), Product(2, :x, :y, :z).term
       end

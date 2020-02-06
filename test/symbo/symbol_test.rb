@@ -2,19 +2,20 @@
 
 require 'test_helper'
 
-require 'symbo/product'
-require 'symbo/symbol'
+require 'symbo'
 
 module Symbo
   class SymbolTest < ActiveSupport::TestCase
     using Symbo
 
-    test 'x.base = x' do
-      assert_equal :x, :x.base
-    end
+    class PowerTransformationTest < ActiveSupport::TestCase
+      test 'Symbol#base # => Symbol' do
+        assert_equal :x, :x.base
+      end
 
-    test 'x.exponent = 1' do
-      assert_equal 1, :x.exponent
+      test 'Symbol#exponent # => 1' do
+        assert_equal 1, :x.exponent
+      end
     end
 
     test 'x.term = ·x' do

@@ -6,12 +6,16 @@ require 'symbo/factorial'
 
 module Symbo
   class FactorialTest < ActiveSupport::TestCase
-    test 'x!#base = x!' do
-      assert_equal Factorial(:x), Factorial(:x).base
-    end
+    using Symbo
 
-    test 'x!#exponent = 1' do
-      assert_equal 1, Factorial(:x).exponent
+    class PowerTransformationTest < ActiveSupport::TestCase
+      test 'Factorial#base # => Factorial' do
+        assert_equal Factorial(:x), Factorial(:x).base
+      end
+
+      test 'Factorial#exponent # => 1' do
+        assert_equal 1, Factorial(:x).exponent
+      end
     end
 
     test 'x!#term = ·x!' do

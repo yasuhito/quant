@@ -8,12 +8,14 @@ module Symbo
   class IntegerTest < ActiveSupport::TestCase
     using Symbo
 
-    test '#base = Undefined' do
-      assert_equal UNDEFINED, 1.base
-    end
+    class PowerTransformationTest < ActiveSupport::TestCase
+      test 'Integer#base # => UNDEFINED' do
+        assert_equal UNDEFINED, 1.base
+      end
 
-    test '#exponent = Undefined' do
-      assert_equal UNDEFINED, 1.exponent
+      test 'Integer#exponent # => UNDEFINED' do
+        assert_equal UNDEFINED, 1.exponent
+      end
     end
 
     test '#term = Undefined' do

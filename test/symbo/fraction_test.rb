@@ -2,16 +2,20 @@
 
 require 'test_helper'
 
-require 'symbo/fraction'
+require 'symbo'
 
 module Symbo
   class FractionTest < ActiveSupport::TestCase
-    test '(1/3)#base = Undefined' do
-      assert_equal UNDEFINED, Fraction(1, 3).base
-    end
+    using Symbo
 
-    test '(1/3)#exponent = Undefined' do
-      assert_equal UNDEFINED, Fraction(1, 3).exponent
+    class PowerTransformationTest < ActiveSupport::TestCase
+      test 'Fraction#base # => UNDEFINED' do
+        assert_equal UNDEFINED, (1/3).base
+      end
+
+      test 'Fraction#exponent # => UNDEFINED' do
+        assert_equal UNDEFINED, (1/3).exponent
+      end
     end
 
     test '(1/3)#term = Undefined' do

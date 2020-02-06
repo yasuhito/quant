@@ -11,7 +11,7 @@ module Symbo
     attr_reader :operands
 
     def base
-      self
+      dup
     end
 
     def exponent

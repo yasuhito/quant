@@ -8,15 +8,17 @@ module Symbo
   class PowerTest
     using Symbo
 
-    class OperatorTest < ActiveSupport::TestCase
-      test 'x^2.base = x' do
+    class PowerTransformationTest < ActiveSupport::TestCase
+      test 'Power#base # => Power#operands[0]' do
         assert_equal :x, (:x**2).base
       end
 
-      test 'x^2.exponent = 2' do
+      test 'Power#exponent # => Power#operands[1]' do
         assert_equal 2, (:x**2).exponent
       end
+    end
 
+    class OperatorTest < ActiveSupport::TestCase
       test 'x^2.term = ·x^2' do
         assert_equal Product((:x**2)), (:x**2).term
       end

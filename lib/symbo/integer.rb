@@ -6,13 +6,9 @@ require 'symbo/binary_operation'
 module Symbo
   # Integer refinements
   refine Integer do
-    extend BinaryOperation
-
     alias_method :mult, :*
 
-    def /(other)
-      Fraction self, other
-    end
+    include BinaryOperation
 
     def simplify
       self

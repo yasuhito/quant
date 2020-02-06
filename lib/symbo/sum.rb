@@ -10,12 +10,8 @@ module Symbo
   class Sum < Expression
     using Symbo
 
-    def **(other)
-      Power self, other
-    end
-
     def base
-      self
+      dup
     end
 
     def exponent

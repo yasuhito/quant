@@ -10,12 +10,14 @@ module Symbo
   class FunctionTest < ActiveSupport::TestCase
     using Symbo
 
-    test 'f(x).base = f(x)' do
-      assert_equal Function(:f, :x), Function(:f, :x).base
-    end
+    class PowerTransformationTest < ActiveSupport::TestCase
+      test 'Function#base # => Function' do
+        assert_equal Function(:f, :x), Function(:f, :x).base
+      end
 
-    test 'f(x).exponent = 1' do
-      assert_equal 1, Function(:f, :x).exponent
+      test 'Function#exponent # => 1' do
+        assert_equal 1, Function(:f, :x).exponent
+      end
     end
 
     test 'f(x).term = ·f(x)' do
