@@ -5,7 +5,7 @@ require 'test_helper'
 require 'symbo/factorial'
 
 module Symbo
-  class FactorialTest < ActiveSupport::TestCase
+  class FactorialTest
     using Symbo
 
     class PowerTransformationTest < ActiveSupport::TestCase
@@ -28,8 +28,22 @@ module Symbo
       end
     end
 
-    test '(m!).compare(n) = true' do
-      assert Factorial(:m).compare(:n)
+    class OrderRelationTest < ActiveSupport::TestCase
+      test '(m!).compare(n) → true' do
+        assert Factorial(:m).compare(:n)
+      end
+
+      test '(f(x)!).compare((f(x)) → false' do
+        assert_not Factorial(Function(:f, :x)).compare(Function(:f, :x))
+      end
+
+      test '(:x!).compare(:x) → false' do
+        assert_not Factorial(:x).compare(:x)
+      end
+
+      test '(:x!).compare(f(x)) → false' do
+        assert_not Factorial(:x).compare(Function(:f, :x))
+      end
     end
   end
 end

@@ -5,7 +5,7 @@ require 'test_helper'
 require 'symbo'
 
 module Symbo
-  class SymbolTest < ActiveSupport::TestCase
+  class SymbolTest
     using Symbo
 
     class PowerTransformationTest < ActiveSupport::TestCase
@@ -28,20 +28,34 @@ module Symbo
       end
     end
 
-    test 'a.compare(b) = true' do
-      assert :a.compare(:b)
-    end
+    class OrderRelationTest < ActiveSupport::TestCase
+      test ':a.compare(:b) # => true' do
+        assert :a.compare(:b)
+      end
 
-    test 'vi.compare(v2) = true' do
-      assert :v1.compare(:v2)
-    end
+      test ':A.compare(:a) # => true' do
+        assert :A.compare(:b)
+      end
 
-    test 'x1.compare(xa) = true' do
-      assert :x1.compare(:xa)
-    end
+      test ':v1.compare(:v2) # => true' do
+        assert :v1.compare(:v2)
+      end
 
-    test 'x.compare(x^2) = true' do
-      assert :x.compare(:x**2)
+      test ':x1.compare(:xa) # => true' do
+        assert :x1.compare(:xa)
+      end
+
+      test ':x.compare(:x**2) # => true' do
+        assert :x.compare(:x**2)
+      end
+
+      test 'x.compare(x(t)) = true' do
+        assert :x.compare(Function(:x, :t))
+      end
+
+      test 'x.compare(y(t)) = true' do
+        assert :x.compare(Function(:y, :t))
+      end
     end
   end
 end

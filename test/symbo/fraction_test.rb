@@ -27,5 +27,35 @@ module Symbo
         assert_equal UNDEFINED, (1/3).const
       end
     end
+
+    class OrderRelationTest < ActiveSupport::TestCase
+      test '(1/2).compare(4) # => true' do
+        assert((1/2).compare(4))
+      end
+
+      test '(1/2).compare(5/2) # => true' do
+        assert((1/2).compare(5/2))
+      end
+
+      test '(1/2).compare(:x + :y) # => true' do
+        assert((1/2).compare(:x + :y))
+      end
+
+      test '(1/2).compare(:x * :y) # => true' do
+        assert((1/2).compare(:x * :y))
+      end
+
+      test '(1/2).compare(2**:x) # => true' do
+        assert((1/2).compare(2**:x))
+      end
+
+      test '(1/2).compare(2!) # => true' do
+        assert((1/2).compare(Factorial(2)))
+      end
+
+      test '(1/2).compare(Function(:f, :x)) # => true' do
+        assert((1/2).compare(Function(:f, :x)))
+      end
+    end
   end
 end

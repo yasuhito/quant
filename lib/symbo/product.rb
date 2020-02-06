@@ -42,8 +42,28 @@ module Symbo
       end
     end
 
-    # :section:
+    # :section: Order Relation Methods
 
+    # 交換法則によるオペランド並べ替えに使う順序関係
+    #
+    # == 相手が積の場合
+    # 最右のオペランドから順に compare していき、異なるものがあればそれで順序を決定する。
+    #
+    #   (:a * :b).compare(:a * :c) # => true
+    #   Product(:a, :c, :d).compare(Product(:b, :c, :d)) # => true
+    #
+    # どちらかのオペランドがなくなれば、短いほうが左側。
+    #
+    #   (:c * :d).compare(Product(:b, :c, :d)) # => true
+    #
+    # == べき乗、和、階乗、関数、シンボルの場合
+    # 相手を単項の積にして比較
+    #
+    #   (:a * (:x**2)).compare(:x**3) # => true
+    #
+    # == それ以外の場合
+    #
+    #   u.compare(v) → !v.compare(u)
     def compare(v)
       case v
       when Product
@@ -57,11 +77,15 @@ module Symbo
           end
         end
 
-        m.compare(n)
+        m.compare n
       when Power, Sum, Factorial, Function, Symbol
         compare Product(v)
+      else
+        !v.compare(self)
       end
     end
+
+    # :section:
 
     def ==(other)
       return false unless other.is_a?(Product)

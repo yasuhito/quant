@@ -38,8 +38,22 @@ module Symbo
       1
     end
 
-    # :section:
+    # :section: Order Relation Methods
 
+    # 交換法則によるオペランド並べ替えに使う順序関係
+    #
+    # == 相手がシンボルの場合
+    # 辞書順で順序を決定
+    #
+    #   :a.compare(:b) # => true
+    #   :A.compare(:a) # => true
+    #   :v1.compare(:v2) # => true
+    #   :x1.compare(:xa) # => true
+    #
+    # == それ以外の場合
+    #   :x.compare(:x**2) # => true
+    #   :x.compare(Function(:x, :t)) # => true
+    #   :x.compare(Function(:y, :t)) # => true
     def compare(v)
       if v.is_a?(Symbol)
         if self == :π
@@ -51,6 +65,8 @@ module Symbo
         !v.compare(self)
       end
     end
+
+    # :section:
 
     def product?
       false

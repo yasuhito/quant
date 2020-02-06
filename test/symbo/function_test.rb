@@ -7,7 +7,7 @@ require 'symbo/integer'
 require 'symbo/symbol'
 
 module Symbo
-  class FunctionTest < ActiveSupport::TestCase
+  class FunctionTest
     using Symbo
 
     class PowerTransformationTest < ActiveSupport::TestCase
@@ -30,24 +30,26 @@ module Symbo
       end
     end
 
-    test 'f(x).compare(g(x)) = true' do
-      assert Function(:f, :x).compare(Function(:g, :x))
-    end
+    class OrderRelationTest < ActiveSupport::TestCase
+      test 'f(x).compare(g(x)) = true' do
+        assert Function(:f, :x).compare(Function(:g, :x))
+      end
 
-    test 'f(x).compare(f(y)) = true' do
-      assert Function(:f, :x).compare(Function(:f, :y))
-    end
+      test 'f(x).compare(f(y)) = true' do
+        assert Function(:f, :x).compare(Function(:f, :y))
+      end
 
-    test 'g(x).compare(g(x, y)) = true' do
-      assert Function(:g, :x).compare(Function(:g, :x, :y))
-    end
+      test 'g(x).compare(g(x, y)) = true' do
+        assert Function(:g, :x).compare(Function(:g, :x, :y))
+      end
 
-    test 'x.compare(x(t)) = true' do
-      assert :x.compare(Function(:x, :t))
-    end
+      test 'f(x).compare(f) → false' do
+        assert_not Function(:f, :x).compare(:f)
+      end
 
-    test 'x.compare(y(t)) = true' do
-      assert :x.compare(Function(:y, :t))
+      test 'f(x).compare(g) → false' do
+        assert Function(:f, :x).compare(:g)
+      end
     end
   end
 end

@@ -44,20 +44,20 @@ module Symbo
       end
     end
 
-    class OperatorTest < ActiveSupport::TestCase
-      test '(a·b).compare(a·c) = true' do
+    class OrderRelationTest < ActiveSupport::TestCase
+      test '(a·b).compare(a·c) → true' do
         assert((:a * :b).compare(:a * :c))
       end
 
-      test '(a·c·d).compare(b·c·d) = true' do
+      test '(a·c·d).compare(b·c·d) → true' do
         assert Product(:a, :c, :d).compare(Product(:b, :c, :d))
       end
 
-      test '(c·d).compare(b·c·d) = true' do
+      test '(c·d).compare(b·c·d) → true' do
         assert((:c * :d).compare(Product(:b, :c, :d)))
       end
 
-      test '(a·x^2).compare(x^3) = true' do
+      test '(a·x^2).compare(x^3) → true' do
         assert((:a * (:x**2)).compare(:x**3))
       end
     end

@@ -38,8 +38,28 @@ module Symbo
       1
     end
 
-    # :section:
+    # :section: Order Relation Methods
 
+    # 交換法則によるオペランド並べ替えに使う順序関係
+    #
+    # == 相手が階乗の場合
+    # オペランド同士を比較する
+    #
+    #   Factorial(:m).compare(:n) # => true
+    #
+    # == 関数またはシンボルの場合
+    # 最初のオペランドが相手と同じ場合 false
+    #
+    #   Factorial(Function(:f, :x)).compare(Function(:f, :x)) # => false
+    #   Factorial(:x).compare(:x) # => true
+    #
+    # 異なる場合、相手を階乗と見て比較
+    #
+    #   Factorial(:x).compare(Function(:f, :x)) # => true
+    #
+    # == それ以外の場合
+    #
+    #   u.compare(v) → !v.compare(u)
     def compare(v)
       case v
       when Factorial
@@ -50,8 +70,12 @@ module Symbo
         else
           compare Factorial(v)
         end
+      else
+        !v.compare(self)
       end
     end
+
+    # :section:
 
     def ==(other)
       @operands == other.operands

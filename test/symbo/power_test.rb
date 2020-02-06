@@ -28,7 +28,7 @@ module Symbo
       end
     end
 
-    class OperatorTest < ActiveSupport::TestCase
+    class OrderRelationTest < ActiveSupport::TestCase
       test '((1+x)^2).compare((1+x)^3) = true' do
         assert(((1 + :x)**2).compare((1 + :x)**3))
       end
@@ -38,7 +38,7 @@ module Symbo
       end
 
       test '((1+x)^3).compare(1+y) = true' do
-        assert(((1 + :x)**3).compare((1 + :y)))
+        assert(((1 + :x)**3).compare(1 + :y))
       end
     end
 

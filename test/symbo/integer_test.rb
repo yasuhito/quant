@@ -5,7 +5,7 @@ require 'test_helper'
 require 'symbo'
 
 module Symbo
-  class IntegerTest < ActiveSupport::TestCase
+  class IntegerTest
     using Symbo
 
     class PowerTransformationTest < ActiveSupport::TestCase
@@ -28,8 +28,34 @@ module Symbo
       end
     end
 
-    test '2#compare(5/2) = true' do
-      assert 2.compare(5/2)
+    class OrderRelationTest < ActiveSupport::TestCase
+      test '2.compare(4) # => true' do
+        assert 2.compare(4)
+      end
+
+      test '2.compare(5/2) # => true' do
+        assert 2.compare(5/2)
+      end
+
+      test '2.compare(:x + :y) # => true' do
+        assert 2.compare(:x + :y)
+      end
+
+      test '2.compare(:x * :y) # => true' do
+        assert 2.compare(:x * :y)
+      end
+
+      test '2.compare(2**:x) # => true' do
+        assert 2.compare(2**:x)
+      end
+
+      test '2.compare(2!) # => true' do
+        assert 2.compare(Factorial(2))
+      end
+
+      test '2.compare(Function(:f, :x)) # => true' do
+        assert 2.compare(Function(:f, :x))
+      end
     end
   end
 end

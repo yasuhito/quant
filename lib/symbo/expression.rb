@@ -128,7 +128,7 @@ module Symbo
 
     # :section: Order Relation Methods
 
-    # 交換法則で項の並べ替えに使う順序関係
+    # 交換法則によるオペランド並べ替えに使う順序関係
     def compare(_v)
       raise NotImplementedError
     end

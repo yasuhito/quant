@@ -31,18 +31,36 @@ module Symbo
       UNDEFINED
     end
 
-    # :section:
+    # :section: Order Relation Methods
 
+    # 交換法則によるオペランド並べ替えに使う順序関係
+    #
+    # == 相手が定数の場合
+    # 大小関係で順序を決定
+    #
+    #   (1/2).compare(4) # => true
+    #   (1/2).compare(5/2) # => true
+    #
+    # == それ以外の場合
+    # 常に true
+    #
+    #   (1/2).compare(:x + :y) # => true
+    #   (1/2).compare(:x * :y) # => true
+    #   (1/2).compare(2**:x) # => true
+    #   (1/2).compare(Factorial(2)) # => true
+    #   (1/2).compare(Function(:f, :x)) # => true
     def compare(v)
       case v
       when Integer
-        Rational(@operands[0], @operands[1]) < v
+        rational < v
       when Fraction
-        Rational(@operands[0], @operands[1]) < Rational(v.operands[0], v.operands[1])
+        rational < v.rational
       else
         true
       end
     end
+
+    # :section:
 
     def positive?
       Rational(@operands[0], @operands[1]).positive?

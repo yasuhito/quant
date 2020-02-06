@@ -28,21 +28,21 @@ module Symbo
       end
     end
 
-    class OperatorTest < ActiveSupport::TestCase
-      test '(a + b).compare(a + c) = true' do
-        assert Sum(:a, :b).compare(Sum(:a, :c))
+    class OrderRelationTest < ActiveSupport::TestCase
+      test '(a + b).compare(a + c) → true' do
+        assert((:a + :b).compare(:a + :c))
       end
 
-      test '(a + c + d).compare(b + c + d) = true' do
+      test '(a + c + d).compare(b + c + d) → true' do
         assert Sum(:a, :c, :d).compare(Sum(:b, :c, :d))
       end
 
-      test '(c + d).compare(b + c + d) = true' do
-        assert Sum(:c, :d).compare(Sum(:b, :c, :d))
+      test '(c + d).compare(b + c + d) → true' do
+        assert((:c + :d).compare(Sum(:b, :c, :d)))
       end
 
-      test '(1 + x).compare(y) = true' do
-        assert Sum(1, :x).compare(:y)
+      test '(1 + x).compare(y) → true' do
+        assert((1 + :x).compare(:y))
       end
     end
 

@@ -31,18 +31,39 @@ module Symbo
       1
     end
 
-    # :section:
+    # :section: Order Relation Methods
 
+    # 交換法則によるオペランド並べ替えに使う順序関係
+    #
+    # == 相手がべき乗の場合
+    # 底が異なる場合、底同士で順序を決める。
+    # 底が等しい場合、べき指数同士で順序を決める。
+    #
+    #   ((1 + :x)**3).compare((1 + :y)**2) # => true
+    #   ((1 + :x)**2).compare((1 + :x)**3) # => true
+    #
+    # == 和、階乗、関数、シンボルの場合
+    # 相手を 1 乗のべき乗に変換して比較
+    #
+    #   ((1 + :x)**3).compare(1 + :y) # => true
+    #
+    # == それ以外の場合
+    #
+    #   u.compare(v) → !v.compare(u)
     def compare(v)
       case v
       when Power
         return base.compare(v.base) if base != v.base
 
-        exponent.compare(v.exponent)
+        exponent.compare v.exponent
       when Sum, Factorial, Function, Symbol
         compare Power.new(v, 1)
+      else
+        !v.compare(self)
       end
     end
+
+    # :section:
 
     def ==(other)
       return false unless other.is_a?(Power)

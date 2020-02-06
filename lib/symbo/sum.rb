@@ -34,8 +34,26 @@ module Symbo
       1
     end
 
-    # :section:
+    # :section: Order Relation Methods
 
+    # 交換法則によるオペランド並べ替えに使う順序関係
+    #
+    # == 相手が和の場合
+    # 最右のオペランドから順に compare していき、異なるものがあればそれで順序を決定する。
+    # どちらかのオペランドがなくなれば、短いほうが左側。
+    #
+    #   (:a + :b).compare(:a + :c) # => true
+    #   Sum(:a, :c, :d).compare(Sum(:b, :c, :d)) # => true
+    #   (:c + :d).compare(Sum(:b, :c, :d)) # => true
+    #
+    # == 階乗、関数、シンボルの場合
+    # 相手を単項の和にして比較
+    #
+    #   (1 + :x).compare(:y) # => true
+    #
+    # == それ以外の場合
+    #
+    #   u.compare(v) → !v.compare(u)
     def compare(v)
       case v
       when Sum
@@ -52,8 +70,12 @@ module Symbo
         m.compare(n)
       when Factorial, Function, Symbol
         compare Sum(v)
+      else
+        !v.compare(self)
       end
     end
+
+    # :section:
 
     def sum?
       true
