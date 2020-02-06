@@ -42,7 +42,7 @@ module Symbo
 
     # 交換法則によるオペランド並べ替えに使う順序関係
     #
-    # == 相手がシンボルの場合
+    # - 相手がシンボルの場合
     # 辞書順で順序を決定
     #
     #   :a.compare(:b) # => true
@@ -50,7 +50,7 @@ module Symbo
     #   :v1.compare(:v2) # => true
     #   :x1.compare(:xa) # => true
     #
-    # == それ以外の場合
+    # - それ以外の場合
     #   :x.compare(:x**2) # => true
     #   :x.compare(Function(:x, :t)) # => true
     #   :x.compare(Function(:y, :t)) # => true

@@ -42,12 +42,12 @@ module Symbo
 
     # 交換法則によるオペランド並べ替えに使う順序関係
     #
-    # == 相手が階乗の場合
+    # - 相手が階乗の場合
     # オペランド同士を比較する
     #
     #   Factorial(:m).compare(:n) # => true
     #
-    # == 関数またはシンボルの場合
+    # - 関数またはシンボルの場合
     # 最初のオペランドが相手と同じ場合 false
     #
     #   Factorial(Function(:f, :x)).compare(Function(:f, :x)) # => false
@@ -57,7 +57,7 @@ module Symbo
     #
     #   Factorial(:x).compare(Function(:f, :x)) # => true
     #
-    # == それ以外の場合
+    # - それ以外の場合
     #
     #   u.compare(v) → !v.compare(u)
     def compare(v)

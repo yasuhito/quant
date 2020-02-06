@@ -44,7 +44,7 @@ module Symbo
 
     # 交換法則によるオペランド並べ替えに使う順序関係
     #
-    # == 相手が関数の場合
+    # - 相手が関数の場合
     # 関数名が異なる場合、関数名で順序を決定。
     #
     #   Function(:f, :x).compare(Function(:g, :x)) # => true
@@ -58,7 +58,7 @@ module Symbo
     #
     #   Function(:g, :x).compare(Function(:g, :x, :y)) # => true
     #
-    # == シンボルの場合
+    # - シンボルの場合
     # 関数名とシンボルが等しい場合 false
     #
     #   Function(:f, :x).compare(:f) # => false
@@ -67,7 +67,7 @@ module Symbo
     #
     #   Function(:f, :x).compare(:g) # => true
     #
-    # == それ以外の場合
+    # - それ以外の場合
     #
     #   u.compare(v) → !v.compare(u)
     def compare(v)
