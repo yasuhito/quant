@@ -10,14 +10,21 @@ module Symbo
 
     attr_reader :operands
 
+    # :section: Power Transformation Methods
+
+    # See Symbo::Expression#base
     def base
       dup
     end
 
+    # See Symbo::Expression#exponent
     def exponent
       1
     end
 
+    # :section: Basic Distributive Transformation Methods
+
+    # See Symbo::Expression#term
     def term
       if @operands.first.constant?
         Product.new(*@operands[1..-1])
@@ -26,6 +33,7 @@ module Symbo
       end
     end
 
+    # See Symbo::Expression#const
     def const
       if @operands.first.constant?
         @operands.first
@@ -33,6 +41,8 @@ module Symbo
         1
       end
     end
+
+    # :section:
 
     def compare(v)
       case v

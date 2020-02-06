@@ -14,21 +14,31 @@ module Symbo
       self
     end
 
+    # :section: Power Transformation Methods
+
+    # See Symbo::Expression#base
     def base
       self
     end
 
+    # See Symbo::Expression#exponent
     def exponent
       1
     end
 
+    # :section: Basic Distributive Transformation Methods
+
+    # See Symbo::Expression#term
     def term
       Product(self)
     end
 
+    # See Symbo::Expression#const
     def const
       1
     end
+
+    # :section:
 
     def compare(v)
       if v.is_a?(Symbol)

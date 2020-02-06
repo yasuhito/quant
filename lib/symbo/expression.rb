@@ -126,11 +126,14 @@ module Symbo
       raise NotImplementedError
     end
 
-    # :section:
+    # :section: Order Relation Methods
 
+    # 交換法則で項の並べ替えに使う順序関係
     def compare(_v)
       raise NotImplementedError
     end
+
+    # :section:
 
     def length
       @operands.length

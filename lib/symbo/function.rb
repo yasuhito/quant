@@ -16,21 +16,31 @@ module Symbo
       @operands = operands
     end
 
+    # :section: Power Transformation Methods
+
+    # See Symbo::Expression#base
     def base
       dup
     end
 
+    # See Symbo::Expression#exponent
     def exponent
       1
     end
 
+    # :section: Basic Distributive Transformation Methods
+
+    # See Symbo::Expression#term
     def term
       Product(self)
     end
 
+    # See Symbo::Expression#const
     def const
       1
     end
+
+    # :section:
 
     def compare(v)
       case v

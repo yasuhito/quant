@@ -14,21 +14,31 @@ module Symbo
       self
     end
 
+    # :section: Power Transformation Methods
+
+    # See Symbo::Expression#base
     def base
       UNDEFINED
     end
 
+    # See Symbo::Expression#exponent
     def exponent
       UNDEFINED
     end
 
+    # :section: Basic Distributive Transformation Methods
+
+    # See Symbo::Expression#term
     def term
       UNDEFINED
     end
 
+    # See Symbo::Expression#const
     def const
       UNDEFINED
     end
+
+    # :section:
 
     def compare(v)
       case v
