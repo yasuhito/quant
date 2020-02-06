@@ -5,7 +5,7 @@ require 'test_helper'
 require 'symbo'
 
 module Symbo
-  class FractionTest < ActiveSupport::TestCase
+  class FractionTest
     using Symbo
 
     class PowerTransformationTest < ActiveSupport::TestCase
@@ -18,12 +18,14 @@ module Symbo
       end
     end
 
-    test '(1/3)#term = Undefined' do
-      assert_equal UNDEFINED, Fraction(1, 3).term
-    end
+    class BasicDistributiveTransformationTest < ActiveSupport::TestCase
+      test 'Fraction#term # => UNDEFINED' do
+        assert_equal UNDEFINED, (1/3).term
+      end
 
-    test '(1/3)#const = Undefined' do
-      assert_equal UNDEFINED, Fraction(1, 3).const
+      test 'Fraction#const = UNDEFINED' do
+        assert_equal UNDEFINED, (1/3).const
+      end
     end
   end
 end

@@ -25,7 +25,7 @@ module Symbo
 
     # :section: Power Transformation Methods
     #
-    # 定数でない自動簡約式 u のべき乗変形に使うオペレータ。
+    # 自動簡約式 u のべき乗変形に使うオペレータ。
     #
     #   u^v·u^w = u^{v+w}
     #
@@ -39,10 +39,10 @@ module Symbo
     #   Factorial(:x).base # => Factorial(:x)
     #   Function(:f, :x).base # => Function(:f, :x)
     #
-    #   # べき乗
+    #   # 底を返すもの
     #   (:x**2).base # => :x
     #
-    #   # 定数
+    #   # UNDEFINED
     #   1.base # => UNDEFINED
     #   (1/3).base # => UNDEFINED
     def base
@@ -64,25 +64,69 @@ module Symbo
     #   Factorial(:x).exponent # => 1
     #   Function(:f, :x).exponent # => 1
     #
-    #   # べき乗
+    #   # べき指数を返すもの
     #   (:x**2).exponent # => 2
     #
-    #   # 定数
+    #   # UNDEFINED
     #   1.exponent # => UNDEFINED
     #   (1/3).exponent # => UNDEFINED
     def exponent
       raise NotImplementedError
     end
 
-    # :section:
+    # :section: Basic Distributive Transformation Methods
+    #
+    # 同類項のまとめに使うオペレータ。
+    #
+    #   v·u + w·u = (v+w)u
+    #
 
+    # 同類項の項部分
+    #
+    # 返り値は Product または UNDEFINED になる。返り値に単項の積 ·u があるが、
+    # これは x と 2x の term を取ったときにどちらも同じ ·x を返すようにするための工夫。
+    #
+    #   # ·u を返すもの
+    #   :x.term # => Product(:x)
+    #   (:x + :y).term # => Product(:x + :y)
+    #   (:x**2).term # => Product(:x**2)
+    #   Factorial(:x).term # => Product(Factorial(:x))
+    #   Function(:f, :x).term # => Product(Function(:f, :x))
+    #
+    #   # 積の項部分を返すもの
+    #   Product(2, :x, :y, :z).term # => Product(:x, :y, :z)
+    #   Product(1/3, :x, :y, :z).term # => Product(:x, :y, :z)
+    #   Product(:x, :y, :z).term # => Product(:x, :y, :z) Product(:x, :y, :z).term
+    #
+    #   # UNDEFINED
+    #   1.term # => UNDEFINED
+    #   (1/3).term # => UNDEFINED
     def term
       raise NotImplementedError
     end
 
+    # 同類項の定数部分
+    #
+    #   # 1 を返すもの
+    #   :x.const # => 1
+    #   (:x + :y).const # => 1
+    #   (:x**2).const # => 1
+    #   Factorial(:x).const # => 1
+    #   Function(:f, :x).const # => 1
+    #
+    #   # 積の定数部分を返すもの
+    #   Product(2, :x, :y, :z).const # => 2
+    #   Product(1/3, :x, :y, :z).const # => 1/3
+    #   Product(:x, :y, :z).const # => 1
+    #
+    #   # UNDEFINED
+    #   1.const # => UNDEFINED
+    #   (1/3).const # => UNDEFINED
     def const
       raise NotImplementedError
     end
+
+    # :section:
 
     def compare(_v)
       raise NotImplementedError

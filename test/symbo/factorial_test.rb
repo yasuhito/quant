@@ -18,12 +18,14 @@ module Symbo
       end
     end
 
-    test 'x!#term = ·x!' do
-      assert_equal Product(Factorial(:x)), Factorial(:x).term
-    end
+    class BasicDistributiveTransformationTest < ActiveSupport::TestCase
+      test 'Factorial#term # => Product(Factorial)' do
+        assert_equal Product(Factorial(:x)), Factorial(:x).term
+      end
 
-    test 'x!#const = 1' do
-      assert_equal 1, Factorial(:x).const
+      test 'Factorial#const # => 1' do
+        assert_equal 1, Factorial(:x).const
+      end
     end
 
     test '(m!).compare(n) = true' do

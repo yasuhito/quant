@@ -20,12 +20,14 @@ module Symbo
       end
     end
 
-    test 'f(x).term = ·f(x)' do
-      assert_equal Product(Function(:f, :x)), Function(:f, :x).term
-    end
+    class BasicDistributiveTransformationTest < ActiveSupport::TestCase
+      test 'Function#term = Product(Function)' do
+        assert_equal Product(Function(:f, :x)), Function(:f, :x).term
+      end
 
-    test 'f(x).const = 1' do
-      assert_equal 1, Function(:f, :x).const
+      test 'Function#const = 1' do
+        assert_equal 1, Function(:f, :x).const
+      end
     end
 
     test 'f(x).compare(g(x)) = true' do

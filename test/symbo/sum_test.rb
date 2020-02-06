@@ -18,15 +18,17 @@ module Symbo
       end
     end
 
+    class BasicDistributiveTransformationTest < ActiveSupport::TestCase
+      test 'Sum#term # => Product(Sum)' do
+        assert_equal Product(:x + :y), (:x + :y).term
+      end
+
+      test 'Sum#const # => 1' do
+        assert_equal 1, (:x + :y).const
+      end
+    end
+
     class OperatorTest < ActiveSupport::TestCase
-      test '(x + y).term = ·(x + y)' do
-        assert_equal Product(Sum(:x, :y)), Sum(:x, :y).term
-      end
-
-      test '(x + y).const = 1' do
-        assert_equal 1, Sum(:x, :y).const
-      end
-
       test '(a + b).compare(a + c) = true' do
         assert Sum(:a, :b).compare(Sum(:a, :c))
       end

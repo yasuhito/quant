@@ -18,15 +18,17 @@ module Symbo
       end
     end
 
-    class OperatorTest < ActiveSupport::TestCase
-      test 'x^2.term = ·x^2' do
-        assert_equal Product((:x**2)), (:x**2).term
+    class BasicDistributiveTransformationTest < ActiveSupport::TestCase
+      test 'Power#term # => Product(Power)' do
+        assert_equal Product(:x**2), (:x**2).term
       end
 
-      test 'x^2.const = 1' do
+      test 'Product#const # => 1' do
         assert_equal 1, (:x**2).const
       end
+    end
 
+    class OperatorTest < ActiveSupport::TestCase
       test '((1+x)^2).compare((1+x)^3) = true' do
         assert(((1 + :x)**2).compare((1 + :x)**3))
       end

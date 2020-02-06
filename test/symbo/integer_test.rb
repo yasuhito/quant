@@ -18,12 +18,14 @@ module Symbo
       end
     end
 
-    test '#term = Undefined' do
-      assert_equal UNDEFINED, 1.term
-    end
+    class BasicDistributiveTransformationTest < ActiveSupport::TestCase
+      test 'Integer#term # => UNDEFINED' do
+        assert_equal UNDEFINED, 1.term
+      end
 
-    test '#const = Undefined' do
-      assert_equal UNDEFINED, 1.const
+      test 'Integer#const # => UNDEFINED' do
+        assert_equal UNDEFINED, 1.const
+      end
     end
 
     test '2#compare(5/2) = true' do
