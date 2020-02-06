@@ -16,10 +16,10 @@ module Symbo
         -1
       elsif @x.constant? && @x.negative?
         Cos(Product(-1, @x).simplify)
-      elsif @x.product? && @x[0].integer? && @x[0].negative?
-        Cos(Product(-1, @x[0], *@x.operands[1..-1]).simplify).simplify
-      elsif @x.product? && @x.length == 2 && @x[0].constant? && @x[1] == PI &&
-            [1, 2, 3, 4, 6].include?(@x[0].denominator) && @x[0].numerator.integer?
+      elsif @x.product? && @x.operand(0).integer? && @x.operand(0).negative?
+        Cos(Product(-1, @x.operand(0), *@x.operands[1..-1]).simplify).simplify
+      elsif @x.product? && @x.length == 2 && @x.operand(0).constant? && @x.operand(1) == PI &&
+            [1, 2, 3, 4, 6].include?(@x.operand(0).denominator) && @x.operand(0).numerator.integer?
         simplify_kn_pi
       else
         self
@@ -30,8 +30,8 @@ module Symbo
 
     # Simplification of cos(kπ/n)
     def simplify_kn_pi
-      k = @x[0].numerator
-      n = @x[0].denominator
+      k = @x.operand(0).numerator
+      n = @x.operand(0).denominator
 
       case n
       when 1

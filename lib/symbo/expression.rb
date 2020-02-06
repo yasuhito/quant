@@ -20,6 +20,8 @@ module Symbo
       @operands = operands
     end
 
+    # :section: Simplification Methods
+
     def simplify
       self.class.new(*@operands.map(&:simplify))._simplify
     end
@@ -136,10 +138,12 @@ module Symbo
 
     # :section: Operand Methods
 
-    def [](n)
+    # Returns nth operand
+    def operand(n)
       @operands[n]
     end
 
+    # Returns the number of operands
     def length
       @operands.length
     end
@@ -151,6 +155,8 @@ module Symbo
     end
 
     protected
+
+    # :category: Simplification Methods
 
     def _simplify
       raise NotImplementedError

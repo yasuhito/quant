@@ -73,7 +73,7 @@ module Symbo
         n = v.length
         if [m, n].min >= 2
           0.upto([m, n].min - 2) do |j|
-            return @operands[m - j - 2].compare(v[n - j - 2]) if @operands[m - j - 1] == v[n - j - 1] && @operands[m - j - 2] != v[n - j - 2]
+            return @operands[m - j - 2].compare(v.operand(n - j - 2)) if @operands[m - j - 1] == v.operand(n - j - 1) && @operands[m - j - 2] != v.operand(n - j - 2)
           end
         end
 
