@@ -5,7 +5,7 @@ require 'symbo/symbol'
 
 module Symbo
   # シンボリックな関数
-  class Function
+  class Function < Expression
     using Symbo
 
     attr_reader :name
@@ -78,8 +78,8 @@ module Symbo
         else
           return @operands.first.compare v.operands.first if @operands.first != v.operands.first
 
-          m = @operands.size
-          n = v.operands.size
+          m = length
+          n = v.length
           0.upto([m, n].min - 2) do |j|
             return @operands[j + 1].compare(v.operands[j + 1]) if (@operands[j] == v.operands[j]) && (@operands[j + 1] != v.operands[j + 1])
           end

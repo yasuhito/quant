@@ -12,6 +12,7 @@ module Symbo
     using Symbo
 
     include BinaryOperation
+    include ExpressionType
 
     attr_reader :operands
 
@@ -133,40 +134,20 @@ module Symbo
       raise NotImplementedError
     end
 
-    # :section: Expression Type Methods
+    # :section: Operand Methods
 
-    def integer?
-      false
-    end
-
-    def fraction?
-      false
-    end
-
-    def constant?
-      false
-    end
-
-    def sum?
-      false
-    end
-
-    def product?
-      false
-    end
-
-    # :section:
-
-    def zero?
-      false
+    def [](n)
+      @operands[n]
     end
 
     def length
       @operands.length
     end
 
-    def [](n)
-      @operands[n]
+    # :section:
+
+    def zero?
+      false
     end
 
     protected

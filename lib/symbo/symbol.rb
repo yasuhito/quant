@@ -1,10 +1,13 @@
 # frozen_string_literal: true
 
+require 'symbo/expression_type'
+
 # Symbolic computation
 module Symbo
   # Symbol refinements
   refine Symbol do
     include BinaryOperation
+    include ExpressionType
 
     def -@
       Product(-1, self)
@@ -67,18 +70,6 @@ module Symbo
     end
 
     # :section:
-
-    def product?
-      false
-    end
-
-    def sum?
-      false
-    end
-
-    def constant?
-      false
-    end
 
     def zero?
       false

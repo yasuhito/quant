@@ -99,10 +99,6 @@ module Symbo
       @operands == other.operands
     end
 
-    def zero?
-      false
-    end
-
     # v * w
     def evaluate
       v = @operands[0].evaluate

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'symbo/binary_operation'
+require 'symbo/expression_type'
 
 # Symbolic computation
 module Symbo
@@ -9,6 +10,7 @@ module Symbo
     alias_method :mult, :*
 
     include BinaryOperation
+    include ExpressionType
 
     def simplify
       self
@@ -69,20 +71,12 @@ module Symbo
 
     # :section: Expression Type Methods
 
-    def constant?
+    def integer?
       true
     end
 
-    def product?
-      false
-    end
-
-    def sum?
-      false
-    end
-
-    def fraction?
-      false
+    def constant?
+      true
     end
 
     # :section:

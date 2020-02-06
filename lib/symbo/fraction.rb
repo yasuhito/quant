@@ -102,10 +102,6 @@ module Symbo
       @operands == other.operands
     end
 
-    def zero?
-      @operands[0].zero?
-    end
-
     def evaluate
       if denominator.zero?
         UNDEFINED
