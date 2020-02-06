@@ -60,6 +60,16 @@ module Symbo
       end
     end
 
+    # :section: Expression Type Methods
+
+    def fraction?
+      true
+    end
+
+    def constant?
+      true
+    end
+
     # :section:
 
     def positive?
@@ -90,26 +100,6 @@ module Symbo
       return false unless other.is_a?(Fraction)
 
       @operands == other.operands
-    end
-
-    def constant?
-      true
-    end
-
-    def sum?
-      false
-    end
-
-    def product?
-      false
-    end
-
-    def integer?
-      false
-    end
-
-    def fraction?
-      true
     end
 
     def zero?

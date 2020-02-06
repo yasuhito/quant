@@ -85,6 +85,12 @@ module Symbo
       end
     end
 
+    # :section: Expression Type Methods
+
+    def product?
+      true
+    end
+
     # :section:
 
     def ==(other)
@@ -93,31 +99,7 @@ module Symbo
       @operands == other.operands
     end
 
-    def product?
-      true
-    end
-
-    def sum?
-      false
-    end
-
-    def integer?
-      false
-    end
-
-    def fraction?
-      false
-    end
-
-    def diff?
-      false
-    end
-
     def zero?
-      false
-    end
-
-    def constant?
       false
     end
 

@@ -133,17 +133,21 @@ module Symbo
       raise NotImplementedError
     end
 
-    # :section:
+    # :section: Expression Type Methods
 
-    def length
-      @operands.length
+    def integer?
+      false
     end
 
-    def [](n)
-      @operands[n]
+    def fraction?
+      false
     end
 
     def constant?
+      false
+    end
+
+    def sum?
       false
     end
 
@@ -151,12 +155,18 @@ module Symbo
       false
     end
 
-    def integer?
-      false
-    end
+    # :section:
 
     def zero?
       false
+    end
+
+    def length
+      @operands.length
+    end
+
+    def [](n)
+      @operands[n]
     end
 
     protected

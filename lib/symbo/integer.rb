@@ -67,7 +67,7 @@ module Symbo
       end
     end
 
-    # :section:
+    # :section: Expression Type Methods
 
     def constant?
       true
@@ -84,6 +84,8 @@ module Symbo
     def fraction?
       false
     end
+
+    # :section:
 
     def numerator
       self

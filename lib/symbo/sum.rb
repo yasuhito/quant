@@ -75,19 +75,13 @@ module Symbo
       end
     end
 
-    # :section:
+    # :section: Expression Type Methods
 
     def sum?
       true
     end
 
-    def integer?
-      false
-    end
-
-    def fraction?
-      false
-    end
+    # :section:
 
     def zero?
       false
