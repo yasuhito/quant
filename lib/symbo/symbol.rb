@@ -4,12 +4,10 @@
 module Symbo
   # Symbol refinements
   refine Symbol do
+    include BinaryOperation
+
     def -@
       Product(-1, self)
-    end
-
-    def **(other)
-      Power self, other
     end
 
     def simplify
