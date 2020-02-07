@@ -117,13 +117,13 @@ module Symbo
         n = @operands[0]
         d = @operands[1]
         if (n % d).zero?
-          iquot n, d
+          n / d
         else
           g = n.gcd(d)
           if d.positive?
-            Fraction iquot(n, g), iquot(d, g)
+            Fraction n / g, d / g
           else
-            Fraction iquot(-n, g), iquot(-d, g)
+            Fraction (-n / g), (-d / g)
           end
         end
       else
@@ -137,17 +137,6 @@ module Symbo
       return UNDEFINED if @operands[1].zero?
 
       self
-    end
-
-    private
-
-    def iquot(a, b)
-      r = Rational(a, b)
-      if r.denominator == 1
-        r.numerator
-      else
-        r
-      end
     end
   end
 end
