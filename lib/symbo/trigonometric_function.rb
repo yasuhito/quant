@@ -7,20 +7,18 @@ module Symbo
   class TrigonometricFunction < Function
     using Symbo
 
-    attr_reader :x
-
-    def initialize(x)
-      @x = x
+    def x
+      @operands[0]
     end
 
     def simplify
-      self.class.new(@x.simplify)._simplify
+      self.class.new(x.simplify)._simplify
     end
 
     def ==(other)
       return false unless other.is_a?(self.class)
 
-      @x == other.x
+      x == other.x
     end
   end
 end
