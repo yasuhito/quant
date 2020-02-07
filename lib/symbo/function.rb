@@ -5,17 +5,8 @@ require 'symbo/integer'
 require 'symbo/symbol'
 
 module Symbo
-  # シンボリックな関数
   class Function < Expression
     using Symbo
-
-    attr_reader :name
-    attr_reader :operands
-
-    def initialize(name, *operands)
-      @name = name
-      @operands = operands
-    end
 
     # :section: Power Transformation Methods
 
@@ -74,24 +65,24 @@ module Symbo
     def compare(v)
       case v
       when Function
-        if @name != v.name
-          @name.compare v.name
+        if name != v.name
+          name.compare v.name
         else
-          return @operands.first.compare v.operands.first if @operands.first != v.operands.first
+          return parameters.first.compare v.parameters.first if parameters.first != v.parameters.first
 
-          m = length
-          n = v.length
+          m = parameters.length
+          n = v.parameters.length
           0.upto([m, n].min - 2) do |j|
-            return @operands[j + 1].compare(v.operands[j + 1]) if (@operands[j] == v.operands[j]) && (@operands[j + 1] != v.operands[j + 1])
+            return parameters[j + 1].compare(v.parameters[j + 1]) if (parameters[j] == v.parameters[j]) && (parameters[j + 1] != v.parameters[j + 1])
           end
 
           m.compare(n)
         end
       when Symbol
-        if @name == v
+        if name == v
           false
         else
-          @name.compare v
+          name.compare v
         end
       else
         !v.compare(self)
@@ -100,12 +91,16 @@ module Symbo
 
     # :section:
 
-    def ==(other)
-      @name == other.name && @operands == other.operands
+    def name
+      @operands[0]
+    end
+
+    def parameters
+      @operands[1..-1]
     end
   end
 end
 
 def Function(name, *operands) # rubocop:disable Naming/MethodName
-  Symbo::Function.new(name, *operands)
+  Symbo::Function.new(*([name] + operands))
 end
