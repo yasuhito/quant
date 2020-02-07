@@ -81,26 +81,26 @@ module Symbo
     # :section:
 
     def positive?
-      Rational(@operands[0], @operands[1]).positive?
+      rational.positive?
     end
 
     def rational
-      Rational @operands[0], @operands[1]
+      Rational operand(0), operand(1)
     end
 
     def numerator
-      if @operands.all?(&:integer?)
+      if operands.all?(&:integer?)
         rational.numerator
       else
-        @operands[0]
+        operand(0)
       end
     end
 
     def denominator
-      if @operands.all?(&:integer?)
+      if operands.all?(&:integer?)
         rational.denominator
       else
-        @operands[1]
+        operand(1)
       end
     end
 
@@ -113,30 +113,29 @@ module Symbo
     end
 
     def simplify_rational_number
-      if @operands.all?(&:integer?)
-        n = @operands[0]
-        d = @operands[1]
-        if (n % d).zero?
-          n / d
-        else
-          g = n.gcd(d)
-          if d.positive?
-            Fraction n / g, d / g
-          else
-            Fraction (-n / g), (-d / g)
-          end
-        end
+      return self unless operands.all?(&:integer?)
+
+      n = operand(0)
+      d = operand(1)
+
+      if (n % d).zero?
+        n / d
       else
-        self
+        g = n.gcd(d)
+        if d.positive?
+          Fraction n / g, d / g
+        else
+          Fraction (-n / g), (-d / g)
+        end
       end
     end
 
     protected
 
     def _simplify
-      return UNDEFINED if @operands[1].zero?
+      return UNDEFINED if operand(1).zero?
 
-      self
+      simplify_rational_number
     end
   end
 end
