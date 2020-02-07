@@ -8,6 +8,14 @@ module Symbo
   class Function < Expression
     using Symbo
 
+    def name
+      @operands[0]
+    end
+
+    def parameters
+      @operands[1..-1]
+    end
+
     # :section: Power Transformation Methods
 
     # See Symbo::Expression#base
@@ -87,16 +95,6 @@ module Symbo
       else
         !v.compare(self)
       end
-    end
-
-    # :section:
-
-    def name
-      @operands[0]
-    end
-
-    def parameters
-      @operands[1..-1]
     end
   end
 end
