@@ -12,7 +12,7 @@ module Symbo
     end
 
     # FIXME
-    def compare(_v)
+    def compare(_other)
       false
     end
 

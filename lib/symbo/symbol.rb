@@ -63,15 +63,15 @@ module Symbo
     #   :x.compare(:x**2) # => true
     #   :x.compare(Function(:x, :t)) # => true
     #   :x.compare(Function(:y, :t)) # => true
-    def compare(v)
-      if v.is_a?(Symbol)
+    def compare(other)
+      if other.is_a?(Symbol)
         if self == :π
           -1
         else
-          self < v
+          self < other
         end
       else
-        !v.compare(self)
+        !other.compare(self)
       end
     end
 

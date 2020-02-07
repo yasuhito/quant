@@ -66,12 +66,12 @@ module Symbo
     #   2.compare(2**:x) # => true
     #   2.compare(Factorial(2)) # => true
     #   2.compare(Function(:f, :x)) # => true
-    def compare(v)
-      case v
+    def compare(other)
+      case other
       when Integer
-        self < v
+        self < other
       when Fraction
-        self < v.rational
+        self < other.rational
       else
         true
       end

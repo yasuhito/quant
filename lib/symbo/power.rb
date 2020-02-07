@@ -56,18 +56,19 @@ module Symbo
     #   ((1 + :x)**3).compare(1 + :y) # => true
     #
     # - それ以外の場合
+    # 次のルールで比較
     #
-    #   u.compare(v) → !v.compare(u)
-    def compare(v)
-      case v
+    #   !other.compare(self)
+    def compare(other)
+      case other
       when Power
-        return base.compare(v.base) if base != v.base
+        return base.compare(other.base) if base != other.base
 
-        exponent.compare v.exponent
+        exponent.compare other.exponent
       when Sum, Factorial, Function, Symbol
-        compare Power.new(v, 1)
+        compare Power.new(other, 1)
       else
-        !v.compare(self)
+        !other.compare(self)
       end
     end
 

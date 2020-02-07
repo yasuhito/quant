@@ -76,32 +76,33 @@ module Symbo
     #   Function(:f, :x).compare(:g) # => true
     #
     # - それ以外の場合
+    # 次のルールで比較
     #
-    #   u.compare(v) → !v.compare(u)
-    def compare(v)
-      case v
+    #   !other.compare(self)
+    def compare(other)
+      case other
       when Function
-        if name != v.name
-          name.compare v.name
+        if name != other.name
+          name.compare other.name
         else
-          return parameters.first.compare v.parameters.first if parameters.first != v.parameters.first
+          return parameters.first.compare other.parameters.first if parameters.first != other.parameters.first
 
           m = parameters.length
-          n = v.parameters.length
+          n = other.parameters.length
           0.upto([m, n].min - 2) do |j|
-            return parameters[j + 1].compare(v.parameters[j + 1]) if (parameters[j] == v.parameters[j]) && (parameters[j + 1] != v.parameters[j + 1])
+            return parameters[j + 1].compare(other.parameters[j + 1]) if (parameters[j] == other.parameters[j]) && (parameters[j + 1] != other.parameters[j + 1])
           end
 
           m.compare(n)
         end
       when Symbol
-        if name == v
+        if name == other
           false
         else
-          name.compare v
+          name.compare other
         end
       else
-        !v.compare(self)
+        !other.compare(self)
       end
     end
   end

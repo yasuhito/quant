@@ -66,20 +66,21 @@ module Symbo
     #   Factorial(:x).compare(Function(:f, :x)) # => true
     #
     # - それ以外の場合
+    # 次のルールで比較
     #
-    #   u.compare(v) → !v.compare(u)
-    def compare(v)
-      case v
+    #   !other.compare(self)
+    def compare(other)
+      case other
       when Factorial
-        @operands[0].compare v.operands[0]
+        @operands[0].compare other.operands[0]
       when Function, Symbol
-        if @operands[0] == v
+        if @operands[0] == other
           false
         else
-          compare Factorial(v)
+          compare Factorial(other)
         end
       else
-        !v.compare(self)
+        !other.compare(self)
       end
     end
   end

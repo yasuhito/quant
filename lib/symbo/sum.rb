@@ -60,26 +60,27 @@ module Symbo
     #   (1 + :x).compare(:y) # => true
     #
     # - それ以外の場合
+    # 次のルールで比較
     #
-    #   u.compare(v) → !v.compare(u)
-    def compare(v)
-      case v
+    #   !other.compare(self)
+    def compare(other)
+      case other
       when Sum
-        return @operands.last.compare(v.operands.last) if @operands.last != v.operands.last
+        return @operands.last.compare(other.operands.last) if @operands.last != other.operands.last
 
         m = length
-        n = v.length
+        n = other.length
         if [m, n].min >= 2
           0.upto([m, n].min - 2) do |j|
-            return @operands[m - j - 2].compare(v.operand(n - j - 2)) if @operands[m - j - 1] == v.operand(n - j - 1) && @operands[m - j - 2] != v.operand(n - j - 2)
+            return @operands[m - j - 2].compare(other.operand(n - j - 2)) if @operands[m - j - 1] == other.operand(n - j - 1) && @operands[m - j - 2] != other.operand(n - j - 2)
           end
         end
 
         m.compare(n)
       when Factorial, Function, Symbol
-        compare Sum(v)
+        compare Sum(other)
       else
-        !v.compare(self)
+        !other.compare(self)
       end
     end
 
