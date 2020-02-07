@@ -9,12 +9,16 @@ module Symbo
 
     # :section: Power Transformation Methods
 
-    # See Symbo::Expression#base
+    # べき乗の低
+    #
+    #   (1/3).base # => UNDEFINED
     def base
       UNDEFINED
     end
 
-    # See Symbo::Expression#exponent
+    # べき指数
+    #
+    #   (1/3).exponent # => UNDEFINED
     def exponent
       UNDEFINED
     end

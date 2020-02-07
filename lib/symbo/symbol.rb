@@ -17,12 +17,16 @@ module Symbo
 
     # :section: Power Transformation Methods
 
-    # See Symbo::Expression#base
+    # べき乗の低
+    #
+    #   :x.base # => :x
     def base
       self
     end
 
-    # See Symbo::Expression#exponent
+    # べき指数
+    #
+    #   :x.exponent # => 1
     def exponent
       1
     end

@@ -18,12 +18,16 @@ module Symbo
 
     # :section: Power Transformation Methods
 
-    # See Symbo::Expression#base
+    # べき乗の低
+    #
+    #   Function(:f, :x).base # => Function(:f, :x)
     def base
       dup
     end
 
-    # See Symbo::Expression#exponent
+    # べき指数
+    #
+    #   Function(:f, :x).exponent # => 1
     def exponent
       1
     end

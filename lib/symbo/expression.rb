@@ -36,45 +36,17 @@ module Symbo
     #
 
     # べき乗の低
-    #
-    #   # それ自体を返すもの
-    #   :x.base # => :x
-    #   (:x * :y).base # => :x * :y
-    #   (:x + :y).base # => :x + :y
-    #   Factorial(:x).base # => Factorial(:x)
-    #   Function(:f, :x).base # => Function(:f, :x)
-    #
-    #   # 底を返すもの
-    #   (:x**2).base # => :x
-    #
-    #   # UNDEFINED
-    #   1.base # => UNDEFINED
-    #   (1/3).base # => UNDEFINED
     def base
       raise NotImplementedError
     end
 
-    # べき乗のべき指数
+    # べき指数
     #
-    # 特に、べき指数のない式 b の exponent は 1 を返すことで、
+    # べき指数を書かない b のような式では exponent → 1 を返すことで、
     #
     #   b·b^2 = b^3
     #
     # のような式変形を簡単にする。
-    #
-    #   # 1 を返すもの
-    #   :x.exponent # => 1
-    #   (:x * :y).exponent # => 1
-    #   (:x + :y).exponent # => 1
-    #   Factorial(:x).exponent # => 1
-    #   Function(:f, :x).exponent # => 1
-    #
-    #   # べき指数を返すもの
-    #   (:x**2).exponent # => 2
-    #
-    #   # UNDEFINED
-    #   1.exponent # => UNDEFINED
-    #   (1/3).exponent # => UNDEFINED
     def exponent
       raise NotImplementedError
     end

@@ -9,12 +9,16 @@ module Symbo
 
     # :section: Power Transformation Methods
 
-    # See Symbo::Expression#base
+    # べき乗の低
+    #
+    #   (:x**2).base # => :x
     def base
       @operands[0]
     end
 
-    # See Symbo::Expression#exponent
+    # べき指数
+    #
+    #   (:x**2).exponent # => 2
     def exponent
       @operands[1]
     end
