@@ -1,8 +1,10 @@
 # frozen_string_literal: true
 
+require 'symbo/function'
+
 module Symbo
   # 三角関数のシンボリック演算
-  class TrigonometricFunction
+  class TrigonometricFunction < Function
     using Symbo
 
     attr_reader :x

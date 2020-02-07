@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'symbo/binary_operation'
+require 'symbo/algebraic_operators'
 require 'symbo/expression_type'
 
 # Symbolic computation
@@ -9,7 +9,7 @@ module Symbo
   refine Integer do
     alias_method :mult, :*
 
-    include BinaryOperation
+    include AlgebraicOperators
     include ExpressionType
 
     def simplify

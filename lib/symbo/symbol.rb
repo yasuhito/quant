@@ -6,12 +6,8 @@ require 'symbo/expression_type'
 module Symbo
   # Symbol refinements
   refine Symbol do
-    include BinaryOperation
+    include AlgebraicOperators
     include ExpressionType
-
-    def -@
-      Product(-1, self)
-    end
 
     def simplify
       self

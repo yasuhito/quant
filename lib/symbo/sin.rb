@@ -7,10 +7,6 @@ module Symbo
   class Sin < TrigonometricFunction
     using Symbo
 
-    def -@
-      Product(-1, self)
-    end
-
     # FIXME
     def compare(_v)
       false
@@ -26,7 +22,7 @@ module Symbo
       elsif @x.constant? && @x.negative?
         -Sin(-1.mult(@x))
       elsif @x.product? && @x.operand(0).integer? && @x.operand(0).negative?
-        -Sin(Product(-1, @x.operand(0), *@x.operands[1..-1]).simplify).simplify
+        (-Sin(Product(-1, @x.operand(0), *@x.operands[1..-1]).simplify)).simplify
       elsif @x.product? && @x.length == 2 && @x.operand(0).constant? && @x.operand(1) == PI &&
             [1, 2, 3, 4, 6].include?(@x.operand(0).denominator) && @x.operand(0).numerator.integer?
         simplify_kn_pi

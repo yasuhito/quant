@@ -2,7 +2,7 @@
 
 require 'symbo/integer'
 require 'symbo/symbol'
-require 'symbo/binary_operation'
+require 'symbo/algebraic_operators'
 
 module Symbo
   UNDEFINED = :undefined
@@ -11,7 +11,7 @@ module Symbo
   class Expression
     using Symbo
 
-    include BinaryOperation
+    include AlgebraicOperators
     include ExpressionType
 
     attr_reader :operands

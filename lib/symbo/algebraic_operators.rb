@@ -1,9 +1,13 @@
 # frozen_string_literal: true
 
 module Symbo
-  module BinaryOperation
+  module AlgebraicOperators
     def +(other)
       Sum self, other
+    end
+
+    def -@
+      Product(-1, self)
     end
 
     def *(other)
