@@ -1,13 +1,15 @@
 # frozen_string_literal: true
 
 require 'symbo/expression_type'
+require 'symbo/relational_operators'
 
-# Symbolic computation
 module Symbo
-  # Symbol refinements
   refine Symbol do
     include AlgebraicOperators
     include ExpressionType
+    include RelationalOperators
+
+    # :section: Simplification Methods
 
     def simplify
       self
@@ -65,11 +67,13 @@ module Symbo
       end
     end
 
-    # :section:
+    # :section: Relational Operator Methods
 
-    def zero?
-      false
+    def ==(other)
+      other.is_a?(Symbol) && to_s == other.to_s
     end
+
+    # :category: Simplification Methods
 
     def simplify_rational_number
       raise unless self == UNDEFINED

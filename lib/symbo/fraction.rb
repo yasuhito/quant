@@ -96,12 +96,6 @@ module Symbo
       end
     end
 
-    def ==(other)
-      return false unless other.is_a?(Fraction)
-
-      @operands == other.operands
-    end
-
     def evaluate
       if denominator.zero?
         UNDEFINED

@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
-require 'symbo/integer'
-require 'symbo/symbol'
 require 'symbo/algebraic_operators'
+require 'symbo/integer'
+require 'symbo/relational_operators'
+require 'symbo/symbol'
 
 module Symbo
   UNDEFINED = :undefined
@@ -13,6 +14,7 @@ module Symbo
 
     include AlgebraicOperators
     include ExpressionType
+    include RelationalOperators
 
     attr_reader :operands
 
@@ -146,12 +148,6 @@ module Symbo
     # Returns the number of operands
     def length
       @operands.length
-    end
-
-    # :section:
-
-    def zero?
-      false
     end
 
     protected

@@ -5,7 +5,7 @@ require 'symbo/symbol'
 
 module Symbo
   # シンボリックな階乗
-  class Factorial
+  class Factorial < Expression
     using Symbo
 
     attr_reader :operands
@@ -73,12 +73,6 @@ module Symbo
       else
         !v.compare(self)
       end
-    end
-
-    # :section:
-
-    def ==(other)
-      @operands == other.operands
     end
   end
 end

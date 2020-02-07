@@ -65,12 +65,6 @@ module Symbo
 
     # :section:
 
-    def ==(other)
-      return false unless other.is_a?(Power)
-
-      @operands == other.operands
-    end
-
     def evaluate
       v = base.evaluate
       n = exponent

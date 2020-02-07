@@ -83,10 +83,6 @@ module Symbo
 
     # :section:
 
-    def ==(other)
-      other.is_a?(Sum) && @operands == other.operands
-    end
-
     def evaluate
       v = @operands[0].evaluate
 

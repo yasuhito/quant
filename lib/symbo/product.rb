@@ -93,12 +93,6 @@ module Symbo
 
     # :section:
 
-    def ==(other)
-      return false unless other.is_a?(Product)
-
-      @operands == other.operands
-    end
-
     # v * w
     def evaluate
       v = @operands[0].evaluate
