@@ -25,12 +25,16 @@ module Symbo
 
     # :section: Basic Distributive Transformation Methods
 
-    # See Symbo::Expression#term
+    # 同類項の項部分
+    #
+    #   (:x**2).term # => Product(:x**2)
     def term
       Product(self)
     end
 
-    # See Symbo::Expression#const
+    # 同類項の定数部分
+    #
+    #   (:x**2).const # => 1
     def const
       1
     end

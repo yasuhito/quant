@@ -34,12 +34,16 @@ module Symbo
 
     # :section: Basic Distributive Transformation Methods
 
-    # See Symbo::Expression#term
+    # 同類項の項部分
+    #
+    #   1.term # => UNDEFINED
     def term
       UNDEFINED
     end
 
-    # See Symbo::Expression#const
+    # 同類項の定数部分
+    #
+    #   1.const # => UNDEFINED
     def const
       UNDEFINED
     end

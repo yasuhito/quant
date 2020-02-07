@@ -32,12 +32,16 @@ module Symbo
 
     # :section: Basic Distributive Transformation Methods
 
-    # See Symbo::Expression#term
+    # 同類項の項部分
+    #
+    #   Factorial(:x).term # => Product(Factorial(:x))
     def term
       Product(self)
     end
 
-    # See Symbo::Expression#const
+    # 同類項の定数部分
+    #
+    #   Factorial(:x).const # => 1
     def const
       1
     end

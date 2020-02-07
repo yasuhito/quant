@@ -28,7 +28,11 @@ module Symbo
 
     # :section: Basic Distributive Transformation Methods
 
-    # See Symbo::Expression#term
+    # 同類項の項部分
+    #
+    #   Product(2, :x, :y, :z).term # => Product(:x, :y, :z)
+    #   Product(1/3, :x, :y, :z).term # => Product(:x, :y, :z)
+    #   Product(:x, :y, :z).term # => Product(:x, :y, :z)
     def term
       if @operands.first.constant?
         Product.new(*@operands[1..-1])
@@ -37,7 +41,11 @@ module Symbo
       end
     end
 
-    # See Symbo::Expression#const
+    # 同類項の定数部分
+    #
+    #   Product(2, :x, :y, :z).const # => 2
+    #   Product(1/3, :x, :y, :z).const # => 1/3
+    #   Product(:x, :y, :z).const # => 1
     def const
       if @operands.first.constant?
         @operands.first
