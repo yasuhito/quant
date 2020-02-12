@@ -101,11 +101,11 @@ module Symbo
       self
     end
 
-    def simplify_rne_rec
+    def simplify_rational_number
       self
     end
 
-    def simplify_rational_number
+    def simplify_rne_rec
       self
     end
   end

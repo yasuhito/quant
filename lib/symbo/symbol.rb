@@ -88,5 +88,9 @@ module Symbo
 
       UNDEFINED
     end
+
+    def undefined?
+      self == UNDEFINED
+    end
   end
 end

@@ -112,6 +112,14 @@ module Symbo
       end
     end
 
+    def simplify_rne_rec
+      if denominator.zero?
+        UNDEFINED
+      else
+        self
+      end
+    end
+
     def simplify_rational_number
       return self unless operands.all?(&:integer?)
 

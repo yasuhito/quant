@@ -139,7 +139,7 @@ module Symbo
 
     def _simplify
       return UNDEFINED if @operands.include?(UNDEFINED)
-      return @operands[0] if length == 1
+      return operand(0) if length == 1
 
       v = simplify_rec(@operands)
       if v.size == 1
@@ -156,7 +156,7 @@ module Symbo
     def simplify_rec(l)
       if l.size == 2 && l.none?(&:sum?)
         if l.all?(&:constant?)
-          p = Sum(*l).evaluate.simplify_rational_number
+          p = Sum(*l).simplify_rne
           if p.zero?
             []
           else
@@ -193,6 +193,25 @@ module Symbo
           merge_sums l[0].operands, w
         else
           merge_sums [l[0]], w
+        end
+      end
+    end
+
+    def simplify_rne_rec
+      if length == 1
+        v = operand(0).simplify_rne_rec
+        if v.undefined?
+          UNDEFINED
+        else
+          v
+        end
+      elsif length == 2
+        v = operand(0).simplify_rne_rec
+        w = operand(1).simplify_rne_rec
+        if v.undefined? || w.undefined?
+          UNDEFINED
+        else
+          Sum(v, w).evaluate
         end
       end
     end

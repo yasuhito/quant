@@ -108,8 +108,8 @@ module Symbo
 
     # v * w
     def evaluate
-      v = @operands[0].evaluate
-      w = @operands[1].evaluate
+      v = @operands[0]
+      w = @operands[1]
 
       if v == UNDEFINED || w == UNDEFINED
         UNDEFINED
@@ -132,6 +132,11 @@ module Symbo
         else
           Fraction (v.numerator * w).simplify, v.denominator
         end
+      elsif v.fraction? && w.fraction?
+        Fraction(Product(v.numerator, w.numerator).evaluate,
+                 Product(v.denominator, w.denominator).evaluate).evaluate
+      elsif v.power? && w.power?
+        Product(v, w).simplify.evaluate
       else
         raise NotImplementedError, "evaluate_product(#{v.inspect}, #{w.inspect})"
       end
@@ -140,17 +145,16 @@ module Symbo
     protected
 
     def _simplify
-      return UNDEFINED if @operands.include?(UNDEFINED) # SPRD-1
-      return 0 if @operands.any?(&:zero?) # SPRD-2
-      return @operands[0] if length == 1 # SPRD-3
+      return UNDEFINED if @operands.any?(&:undefined?)
+      return 0 if @operands.any?(&:zero?)
+      return operand(0) if length == 1
 
-      # SPRD-4
       v = simplify_rec(@operands)
-      if v.size == 1 # SPRD4-1
+      if v.size == 1
         v[0]
-      elsif v.size > 1 # SPRD4-2
+      elsif v.size > 1
         Product(*v)
-      else # SPRD4-3
+      else
         1
       end
     end
@@ -163,7 +167,7 @@ module Symbo
     def simplify_rec(l)
       if l.size == 2 && l.none?(&:product?) # SPRDREC-1
         if l.all?(&:constant?) # SPRDREC-1-1
-          p = Product(*l).evaluate.simplify_rational_number
+          p = Product(*l).simplify_rne
           if p == 1
             []
           else
@@ -183,6 +187,8 @@ module Symbo
           end
         elsif l[1].compare(l[0]) # SPRDREC-1-4
           [l[1], l[0]]
+        elsif l[1].is_a?(ColumnVector)
+          [l[1].map { |each| Product(l[0], each).simplify }]
         else # SPRDREC-1-5
           l
         end
@@ -201,6 +207,19 @@ module Symbo
         else # SPRDREC-3-2
           merge_products [l[0]], w
         end
+      end
+    end
+
+    def simplify_rne_rec
+      raise unless length == 2
+
+      v = operand(0).simplify_rne_rec
+      w = operand(1).simplify_rne_rec
+
+      if v.undefined? || w.undefined?
+        UNDEFINED
+      else
+        Product(v, w).evaluate
       end
     end
 

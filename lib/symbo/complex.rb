@@ -1,33 +1,29 @@
 # frozen_string_literal: true
 
+require 'symbo/expression_type'
+
 module Symbo
   refine Complex do
+    include ExpressionType
+
     def simplify
       dup
-    end
-
-    def product?
-      false
     end
 
     def constant?
       true
     end
 
-    def fraction?
-      false
-    end
-
-    def sum?
-      false
-    end
-
     def evaluate
-      self
+      dup
     end
 
     def simplify_rational_number
-      self
+      dup
+    end
+
+    def simplify_rne_rec
+      dup
     end
   end
 end

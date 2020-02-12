@@ -4,6 +4,10 @@ module Symbo
   module ExpressionType
     # :section: Expression Type Methods
 
+    def undefined?
+      false
+    end
+
     def integer?
       false
     end

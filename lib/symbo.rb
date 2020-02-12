@@ -13,3 +13,5 @@ require 'symbo/quot'
 require 'symbo/sin'
 require 'symbo/sqrt'
 require 'symbo/sum'
+
+require 'vector'
