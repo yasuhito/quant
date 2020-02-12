@@ -107,8 +107,8 @@ module Symbo
         if v == UNDEFINED || w == UNDEFINED
           UNDEFINED
         elsif v.fraction? && w.fraction?
-          r = v.rational + w.rational
-          Fraction r.numerator, r.denominator
+          Fraction(Sum(Product(v.numerator, w.denominator).evaluate, Product(w.numerator, v.denominator).evaluate).evaluate,
+                   Product(v.denominator, w.denominator).evaluate).evaluate
         elsif v.integer? && (w.integer? || w.is_a?(Complex))
           v.plus w
         elsif v.integer? && w.fraction?
@@ -125,6 +125,8 @@ module Symbo
           end
         elsif v.is_a?(Complex) && w.is_a?(Integer)
           v.plus w
+        elsif Product(-1, v).simplify == w.simplify || v.simplify == Product(-1, w).simplify
+          0
         else
           raise NotImplementedError, "evaluate(#{v}, #{w.inspect})"
         end

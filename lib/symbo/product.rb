@@ -133,12 +133,12 @@ module Symbo
           Fraction (v.numerator * w).simplify, v.denominator
         end
       elsif v.fraction? && w.fraction?
-        Fraction(Product(v.numerator, w.numerator).evaluate,
+        Fraction(Product(v.numerator, w.numerator).simplify,
                  Product(v.denominator, w.denominator).evaluate).evaluate
       elsif v.power? && w.power?
         Product(v, w).simplify.evaluate
       else
-        raise NotImplementedError, "evaluate_product(#{v.inspect}, #{w.inspect})"
+        Product v.simplify, w.simplify
       end
     end
 
