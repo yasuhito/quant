@@ -78,27 +78,26 @@ module Symbo
       true
     end
 
-    # :section:
+    # :section: Evaluation Methods
 
     def evaluate
-      v = base.evaluate
-      n = exponent
+      raise unless base.constant?
 
-      if v.numerator != 0
-        if n.positive?
-          s = Power(v, n - 1).evaluate
-          Product(s, v).evaluate
-        elsif n.zero?
+      if base.numerator != 0
+        if exponent.positive?
+          s = Power(base, exponent - 1).evaluate
+          Product(s, base).evaluate
+        elsif exponent.zero?
           1
-        elsif n == -1
+        elsif exponent == -1
           raise NotImplementedError
-        elsif n < -1
+        else
           raise NotImplementedError
         end
-      elsif v.numerator.zero?
+      elsif base.numerator.zero?
         if n >= 1
           0
-        elsif n <= 0
+        else
           UNDEFINED
         end
       end
