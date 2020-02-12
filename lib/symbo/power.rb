@@ -104,14 +104,13 @@ module Symbo
       return UNDEFINED if base == UNDEFINED || exponent == UNDEFINED
 
       if base.zero?
-        return 1 if exponent.is_a?(Integer) && exponent.positive?
-        return 1 if exponent.is_a?(Fraction) && exponent.positive?
+        return 1 if exponent.positive? && (exponent.integer? || exponent.fraction?)
 
         return UNDEFINED
       end
 
       return 1 if base == 1
-      return simplify_integer if exponent.is_a?(Integer)
+      return simplify_integer if exponent.integer?
 
       self
     end
