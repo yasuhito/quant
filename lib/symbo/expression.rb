@@ -97,5 +97,14 @@ module Symbo
     def _simplify
       raise NotImplementedError
     end
+
+    def simplify_rne
+      v = simplify_rne_rec
+      if v == UNDEFINED
+        UNDEFINED
+      else
+        v.simplify_rational_number
+      end
+    end
   end
 end

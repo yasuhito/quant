@@ -105,6 +105,8 @@ module Symbo
 
     protected
 
+    # :section: Simplification Methods
+
     def _simplify
       return UNDEFINED if base == UNDEFINED || exponent == UNDEFINED
 
@@ -121,7 +123,7 @@ module Symbo
     end
 
     def simplify_integer_power
-      return Power(base, exponent).evaluate.simplify_rational_number if base.constant?
+      return Power(base, exponent).simplify_rne if base.constant?
       return 1 if exponent.zero?
       return base if exponent == 1
 
@@ -141,6 +143,15 @@ module Symbo
         Product(*r).simplify
       else
         self
+      end
+    end
+
+    def simplify_rne_rec
+      v = base.simplify_rne_rec
+      if v == UNDEFINED
+        UNDEFINED
+      else
+        Power(v, exponent).evaluate
       end
     end
   end
