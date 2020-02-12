@@ -19,6 +19,10 @@ class ColumnVector
     ColumnVector.new(*((@elements.zip other.elements).map { |each| each.inject(:+) }))
   end
 
+  def *(other)
+    (@elements.zip other.elements).map { |each| each.inject(:*) }.inject(:+)
+  end
+
   def simplify
     ColumnVector.new(*@elements.map(&:simplify))
   end
@@ -58,6 +62,9 @@ class ColumnVector
   def map(&block)
     ColumnVector.new(*@elements.map(&block))
   end
+end
+
+class Ket < ColumnVector
 end
 
 class RowVector

@@ -37,4 +37,19 @@ class VectorTest < ActiveSupport::TestCase
     assert_equal [4, 3], (a + b).simplify.to_a
     assert_equal [4, 3], (b + a).simplify.to_a
   end
+
+  test 'multiply a bra by a ket' do
+    a = Ket[3, 1]
+
+    assert_equal 10, (a * a).simplify
+  end
+
+  test 'orthogonal vectors' do
+    a = Ket[3, 1]
+    b = Ket[1, 2]
+    c = Ket[-2, 6]
+
+    assert_equal 5, (a * b).simplify
+    assert_equal 0, (a * c).simplify
+  end
 end
