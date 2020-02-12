@@ -39,13 +39,14 @@ class VectorTest < ActiveSupport::TestCase
   end
 
   test 'multiply a bra by a ket' do
-    a = Ket[3, 1]
+    bra = Bra[3, 1]
+    ket = Ket[3, 1]
 
-    assert_equal 10, (a * a).simplify
+    assert_equal 10, (bra * ket).simplify
   end
 
   test 'orthogonal vectors' do
-    a = Ket[3, 1]
+    a = Bra[3, 1]
     b = Ket[1, 2]
     c = Ket[-2, 6]
 

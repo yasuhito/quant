@@ -2,6 +2,32 @@
 
 require 'matrix'
 
+class RowVector
+  def self.[](*elements)
+    new(*elements)
+  end
+
+  def initialize(*elements)
+    @elements = elements
+  end
+
+  def *(other)
+    product = to_matrix * other.to_matrix
+    product[0, 0]
+  end
+
+  def to_matrix
+    Matrix[@elements]
+  end
+
+  def to_a
+    @elements
+  end
+end
+
+class Bra < RowVector
+end
+
 class ColumnVector
   using Symbo
 
@@ -15,12 +41,12 @@ class ColumnVector
     @elements = elements
   end
 
-  def +(other)
-    ColumnVector.new(*((@elements.zip other.elements).map { |each| each.inject(:+) }))
+  def to_matrix
+    Matrix[*(@elements.map { |each| [each] })]
   end
 
-  def *(other)
-    (@elements.zip other.elements).map { |each| each.inject(:*) }.inject(:+)
+  def +(other)
+    ColumnVector.new(*((@elements.zip other.elements).map { |each| each.inject(:+) }))
   end
 
   def simplify
@@ -65,18 +91,4 @@ class ColumnVector
 end
 
 class Ket < ColumnVector
-end
-
-class RowVector
-  def self.[](*elements)
-    new(*elements)
-  end
-
-  def initialize(*elements)
-    @elements = elements
-  end
-
-  def to_a
-    @elements
-  end
 end
