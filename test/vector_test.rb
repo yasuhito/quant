@@ -29,4 +29,12 @@ class VectorTest < ActiveSupport::TestCase
     assert_equal [Fraction(3, √(10)), Fraction(1, √(10))], u.to_a
     assert_equal 1, u.length
   end
+
+  test 'vector addition' do
+    a = ColumnVector[3, 1]
+    b = ColumnVector[1, 2]
+
+    assert_equal [4, 3], (a + b).simplify.to_a
+    assert_equal [4, 3], (b + a).simplify.to_a
+  end
 end

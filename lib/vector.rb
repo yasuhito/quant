@@ -5,12 +5,18 @@ require 'matrix'
 class ColumnVector
   using Symbo
 
+  attr_reader :elements
+
   def self.[](*elements)
     new(*elements)
   end
 
   def initialize(*elements)
     @elements = elements
+  end
+
+  def +(other)
+    ColumnVector.new(*((@elements.zip other.elements).map { |each| each.inject(:+) }))
   end
 
   def simplify
