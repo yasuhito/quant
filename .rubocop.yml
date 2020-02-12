@@ -2,6 +2,43 @@
 Style/AsciiComments:
   Enabled: false
 
+Style/Documentation:
+  Enabled: false
+
 # 行の文字数を制限しない
-Metrics/LineLength:
+Layout/LineLength:
+  Enabled: false
+
+Layout/SpaceAroundOperators:
+  Enabled: false
+
+# クラスの長さを制限しない
+Metrics/ClassLength:
+  Enabled: false
+
+# モジュールの長さを制限しない
+Metrics/ModuleLength:
+  Enabled: false
+
+# メソッドの長さを制限しない
+Metrics/MethodLength:
+  Enabled: false
+
+# 複雑なメソッド OK
+Metrics/AbcSize:
+  Enabled: false
+
+# 複雑なメソッド OK
+Metrics/CyclomaticComplexity:
+  Enabled: false
+
+# 複雑なメソッド OK
+Metrics/PerceivedComplexity:
+  Enabled: false
+
+# メソッドのパラメータに x のような短い名前を使う
+Naming/MethodParameterName:
+  Enabled: false
+
+Naming/AsciiIdentifiers:
   Enabled: false

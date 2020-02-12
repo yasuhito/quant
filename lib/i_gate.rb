@@ -3,7 +3,9 @@
 require 'gate'
 
 # Identity gate
-class IdGate < Gate
+class IGate < Gate
+  using Symbo
+
   private
 
   def matrix
