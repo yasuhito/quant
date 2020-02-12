@@ -23,5 +23,9 @@ module Symbo
     def product?
       false
     end
+
+    def power?
+      false
+    end
   end
 end

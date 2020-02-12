@@ -66,10 +66,16 @@ module Symbo
 
         exponent.compare other.exponent
       when Sum, Factorial, Function, Symbol
-        compare Power.new(other, 1)
+        compare Power(other, 1)
       else
         !other.compare(self)
       end
+    end
+
+    # :section: Expression Type Methods
+
+    def power?
+      true
     end
 
     # :section:
@@ -104,34 +110,36 @@ module Symbo
       return UNDEFINED if base == UNDEFINED || exponent == UNDEFINED
 
       if base.zero?
-        return 1 if exponent.positive? && (exponent.integer? || exponent.fraction?)
+        return 1 if exponent.positive? && exponent.constant?
 
         return UNDEFINED
       end
 
       return 1 if base == 1
-      return simplify_integer if exponent.integer?
+      return simplify_integer_power if exponent.integer?
 
       self
     end
 
-    def simplify_integer
-      return Power.new(base, exponent).evaluate.simplify_rational_number if base.constant?
+    def simplify_integer_power
+      return Power(base, exponent).evaluate.simplify_rational_number if base.constant?
       return 1 if exponent.zero?
       return base if exponent == 1
 
-      if base.is_a?(Power)
+      case base
+      when Power
         r = base.operands[0]
         s = base.operands[1]
         p = Product.new(s, exponent).simplify
 
-        if p.is_a?(Integer)
-          Power.new(r, p).simplify_integer
+        if p.integer?
+          Power(r, p).simplify_integer_power
         else
-          Power.new(r, p)
+          Power(r, p)
         end
-      elsif base.is_a?(Product)
-        Product(*(base.operands.map { |each| Power.new(each, exponent).simplify_integer })).simplify
+      when Product
+        r = base.operands.map { |each| Power(each, exponent).simplify_integer_power }
+        Product(*r).simplify
       else
         self
       end
