@@ -34,15 +34,15 @@ class VectorTest < ActiveSupport::TestCase
     a = ColumnVector[3, 1]
     b = ColumnVector[1, 2]
 
-    assert_equal [4, 3], (a + b).simplify.to_a
-    assert_equal [4, 3], (b + a).simplify.to_a
+    assert_equal [4, 3], (a + b).to_a
+    assert_equal [4, 3], (b + a).to_a
   end
 
   test 'multiply a bra by a ket' do
     bra = Bra[3, 1]
     ket = Ket[3, 1]
 
-    assert_equal 10, (bra * ket).simplify
+    assert_equal 10, bra * ket
   end
 
   test 'orthogonal vectors' do
@@ -50,7 +50,25 @@ class VectorTest < ActiveSupport::TestCase
     b = Ket[1, 2]
     c = Ket[-2, 6]
 
-    assert_equal 5, (a * b).simplify
-    assert_equal 0, (a * c).simplify
+    assert_equal 5, a * b
+    assert_equal 0, a * c
+  end
+
+  test 'R^2 standard basis' do
+    b1 = ColumnVector[1, 0]
+    b2 = ColumnVector[0, 1]
+
+    assert_equal 1, b1.bra * b1.ket
+    assert_equal 1, b2.bra * b2.ket
+    assert_equal 0, b1.bra * b2.ket
+  end
+
+  test 'orthonormal bases' do
+    b1 = ColumnVector[1/√(2), 1/√(2)]
+    b2 = ColumnVector[-1/√(2), 1/√(2)]
+
+    assert_equal 1, b1.bra * b1.ket
+    assert_equal 1, b2.bra * b2.ket
+    assert_equal 0, b1.bra * b2.ket
   end
 end

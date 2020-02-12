@@ -3,6 +3,8 @@
 require 'matrix'
 
 class RowVector
+  using Symbo
+
   def self.[](*elements)
     new(*elements)
   end
@@ -13,11 +15,11 @@ class RowVector
 
   def *(other)
     product = to_matrix * other.to_matrix
-    product[0, 0]
+    product[0, 0].simplify
   end
 
   def to_matrix
-    Matrix[@elements]
+    Matrix[@elements.map(&:simplify)]
   end
 
   def to_a
@@ -42,11 +44,20 @@ class ColumnVector
   end
 
   def to_matrix
-    Matrix[*(@elements.map { |each| [each] })]
+    Matrix[*(@elements.map { |each| [each.simplify] })]
+  end
+
+  def bra
+    Bra[*@elements]
+  end
+
+  def ket
+    Ket[*@elements]
   end
 
   def +(other)
-    ColumnVector.new(*((@elements.zip other.elements).map { |each| each.inject(:+) }))
+    elements = ((@elements.zip other.elements).map { |each| each.inject(:+) })
+    ColumnVector.new(*elements).simplify
   end
 
   def simplify
