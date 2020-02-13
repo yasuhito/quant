@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'cnot_gate'
-require 'h'
+require 'quant/h_gate'
 require 'quant/i_gate'
 require 'quant/x_gate'
 require 'quant/y_gate'
@@ -46,7 +46,7 @@ module Quant
     end
 
     def h(target)
-      self.class.new H.new.apply(@qubits, target)
+      self.class.new HGate.new.apply(@qubits, target)
     end
 
     def s(target)
