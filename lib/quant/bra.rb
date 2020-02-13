@@ -10,9 +10,11 @@ module Quant
       when Integer, Symbo::Expression
         super(*values)
       when String
+        raise "Unknown values: #{values.inspect}" if values.size > 1
+
         super(*SPINS.fetch(values[0]))
       else
-        raise values[0].inspect
+        raise "Unknown values: #{values.inspect}"
       end
     end
   end
