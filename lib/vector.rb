@@ -28,6 +28,32 @@ class RowVector
 end
 
 class Bra < RowVector
+  using Symbo
+
+  def self.[](*values)
+    case values[0]
+    when Integer, Symbo::Expression
+      super(*values)
+    when String
+      if values == ['↑']
+        super 1, 0
+      elsif values == ['↓']
+        super 0, 1
+      elsif values == ['→']
+        super 1/√(2), -1/√(2)
+      elsif values == ['←']
+        super 1/√(2), 1/√(2)
+      elsif values == ['↗']
+        super 1/2, -√(3)/2
+      elsif values == ['↙']
+        super √(3)/2, 1/2
+      else
+        raise values[0].inspect
+      end
+    else
+      raise values[0].inspect
+    end
+  end
 end
 
 class ColumnVector
@@ -102,4 +128,30 @@ class ColumnVector
 end
 
 class Ket < ColumnVector
+  using Symbo
+
+  def self.[](*values)
+    case values[0]
+    when Integer, Symbo::Expression
+      super(*values)
+    when String
+      if values == ['↑']
+        super 1, 0
+      elsif values == ['↓']
+        super 0, 1
+      elsif values == ['→']
+        super 1/√(2), -1/√(2)
+      elsif values == ['←']
+        super 1/√(2), 1/√(2)
+      elsif values == ['↗']
+        super 1/2, -√(3)/2
+      elsif values == ['↙']
+        super √(3)/2, 1/2
+      else
+        raise values[0].inspect
+      end
+    else
+      raise values[0].inspect
+    end
+  end
 end

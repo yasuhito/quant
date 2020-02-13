@@ -54,78 +54,51 @@ class VectorTest < ActiveSupport::TestCase
     assert_equal 0, a * c
   end
 
-  test 'R^2 standard basis' do
-    b1 = ColumnVector[1, 0]
-    b2 = ColumnVector[0, 1]
-
-    assert_equal 1, b1.bra * b1.ket
-    assert_equal 1, b2.bra * b2.ket
-    assert_equal 0, b1.bra * b2.ket
-  end
-
-  test 'orthonormal base #1' do
-    b1 = ColumnVector[1/√(2), 1/√(2)]
-    b2 = ColumnVector[-1/√(2), 1/√(2)]
-
-    assert_equal 1, b1.bra * b1.ket
-    assert_equal 1, b2.bra * b2.ket
-    assert_equal 0, b1.bra * b2.ket
-  end
-
-  test 'orthonormal base #2' do
-    c1 = ColumnVector[1/2, √(3)/2]
-    c2 = ColumnVector[-√(3)/2, 1/2]
-
-    assert_equal 1, c1.bra * c1.ket
-    assert_equal 1, c2.bra * c2.ket
-    assert_equal 0, c1.bra * c2.ket
-  end
-
   test '<↑|↑> = 1' do
-    assert_equal 1, Bra[1, 0] * Ket[1, 0]
+    assert_equal 1, Bra['↑'] * Ket['↑']
   end
 
   test '<↓|↓> = 1' do
-    assert_equal 1, Bra[0, 1] * Ket[0, 1]
+    assert_equal 1, Bra['↓'] * Ket['↓']
   end
 
   test '<↑|↓> = 0' do
-    assert_equal 0, Bra[1, 0] * Ket[0, 1]
+    assert_equal 0, Bra['↑'] * Ket['↓']
   end
 
   test '<↓|↑> = 0' do
-    assert_equal 0, Bra[0, 1] * Ket[1, 0]
+    assert_equal 0, Bra['↓'] * Ket['↑']
   end
 
   test '<→|→> = 1' do
-    assert_equal 1, Bra[1/√(2), -1/√(2)] * Ket[1/√(2), -1/√(2)]
+    assert_equal 1, Bra['→'] * Ket['→']
   end
 
   test '<←|←> = 1' do
-    assert_equal 1, Bra[1/√(2), 1/√(2)] * Ket[1/√(2), 1/√(2)]
+    assert_equal 1, Bra['←'] * Ket['←']
   end
 
   test '<→|←> = 0' do
-    assert_equal 0, Bra[1/√(2), -1/√(2)] * Ket[1/√(2), 1/√(2)]
+    assert_equal 0, Bra['→'] * Ket['←']
   end
 
   test '<←|→> = 0' do
-    assert_equal 0, Bra[1/√(2), 1/√(2)] * Ket[1/√(2), -1/√(2)]
+    assert_equal 0, Bra['←'] * Ket['→']
   end
 
   test '<↗|↗> = 1' do
-    assert_equal 1, Bra[1/2, -√(3)/2] * Ket[1/2, -√(3)/2]
+    assert_equal 1, Bra['↗'] * Ket['↗']
   end
 
   test '<↙|↙> = 1' do
-    assert_equal 1, Bra[√(3)/2, 1/2] * Ket[√(3)/2, 1/2]
+    assert_equal 1, Bra['↙'] * Ket['↙']
   end
 
   test '<↗|↙> = 0' do
-    assert_equal 0, Bra[1/2, -√(3)/2] * Ket[√(3)/2, 1/2]
+    assert_equal 0, Bra['↗'] * Ket['↙']
   end
 
   test '<↙|↗> = 0' do
-    assert_equal 0, Bra[√(3)/2, 1/2] * Ket[1/2, -√(3)/2]
+    assert_equal 0, Bra['↙'] * Ket['↗']
   end
 end
