@@ -187,7 +187,7 @@ module Symbo
           end
         elsif l[1].compare(l[0]) # SPRDREC-1-4
           [l[1], l[0]]
-        elsif l[1].is_a?(ColumnVector)
+        elsif l[1].is_a?(Quant::ColumnVector)
           [l[1].map { |each| Product(l[0], each).simplify }]
         else # SPRDREC-1-5
           l

@@ -1,64 +1,54 @@
 # frozen_string_literal: true
 
-class ColumnVector
-  using Symbo
+require 'quant/vector'
 
-  attr_reader :elements
+module Quant
+  class ColumnVector < Vector
+    using Symbo
 
-  def self.[](*elements)
-    new(*elements)
-  end
+    def +(other)
+      elements = ((@elements.zip other.to_a).map { |each| each.inject(:+) })
+      ColumnVector.new(*elements).simplify
+    end
 
-  def initialize(*elements)
-    @elements = elements
-  end
+    def to_matrix
+      Matrix[*(@elements.map { |each| [each.simplify] })]
+    end
 
-  def to_matrix
-    Matrix[*(@elements.map { |each| [each.simplify] })]
-  end
+    def simplify
+      ColumnVector.new(*@elements.map(&:simplify))
+    end
 
-  def +(other)
-    elements = ((@elements.zip other.elements).map { |each| each.inject(:+) })
-    ColumnVector.new(*elements).simplify
-  end
+    def length
+      Sqrt(Sum(*(@elements.map { |each| Power(each, 2) }))).simplify
+    end
 
-  def simplify
-    ColumnVector.new(*@elements.map(&:simplify))
-  end
+    def undefined?
+      false
+    end
 
-  def length
-    Sqrt(Sum(*(@elements.map { |each| Power(each, 2) }))).simplify
-  end
+    def zero?
+      false
+    end
 
-  def to_a
-    @elements
-  end
+    def product?
+      false
+    end
 
-  def undefined?
-    false
-  end
+    def constant?
+      false
+    end
 
-  def zero?
-    false
-  end
+    def base
+      self
+    end
 
-  def product?
-    false
-  end
+    def compare(_other)
+      false
+    end
 
-  def constant?
-    false
-  end
-
-  def base
-    self
-  end
-
-  def compare(_other)
-    false
-  end
-
-  def map(&block)
-    ColumnVector.new(*@elements.map(&block))
+    def map(&block)
+      ColumnVector.new(*@elements.map(&block))
+    end
   end
 end
