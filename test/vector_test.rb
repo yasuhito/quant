@@ -80,4 +80,52 @@ class VectorTest < ActiveSupport::TestCase
     assert_equal 1, c2.bra * c2.ket
     assert_equal 0, c1.bra * c2.ket
   end
+
+  test '<↑|↑> = 1' do
+    assert_equal 1, Bra[1, 0] * Ket[1, 0]
+  end
+
+  test '<↓|↓> = 1' do
+    assert_equal 1, Bra[0, 1] * Ket[0, 1]
+  end
+
+  test '<↑|↓> = 0' do
+    assert_equal 0, Bra[1, 0] * Ket[0, 1]
+  end
+
+  test '<↓|↑> = 0' do
+    assert_equal 0, Bra[0, 1] * Ket[1, 0]
+  end
+
+  test '<→|→> = 1' do
+    assert_equal 1, Bra[1/√(2), -1/√(2)] * Ket[1/√(2), -1/√(2)]
+  end
+
+  test '<←|←> = 1' do
+    assert_equal 1, Bra[1/√(2), 1/√(2)] * Ket[1/√(2), 1/√(2)]
+  end
+
+  test '<→|←> = 0' do
+    assert_equal 0, Bra[1/√(2), -1/√(2)] * Ket[1/√(2), 1/√(2)]
+  end
+
+  test '<←|→> = 0' do
+    assert_equal 0, Bra[1/√(2), 1/√(2)] * Ket[1/√(2), -1/√(2)]
+  end
+
+  test '<↗|↗> = 1' do
+    assert_equal 1, Bra[1/2, -√(3)/2] * Ket[1/2, -√(3)/2]
+  end
+
+  test '<↙|↙> = 1' do
+    assert_equal 1, Bra[√(3)/2, 1/2] * Ket[√(3)/2, 1/2]
+  end
+
+  test '<↗|↙> = 0' do
+    assert_equal 0, Bra[1/2, -√(3)/2] * Ket[√(3)/2, 1/2]
+  end
+
+  test '<↙|↗> = 0' do
+    assert_equal 0, Bra[√(3)/2, 1/2] * Ket[1/2, -√(3)/2]
+  end
 end
