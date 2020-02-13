@@ -8,6 +8,7 @@ module Symbo
   # Integer refinements
   refine Integer do
     alias_method :mult, :*
+    alias_method :div, :/
 
     include AlgebraicOperators
     include ExpressionType

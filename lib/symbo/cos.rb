@@ -24,7 +24,11 @@ module Symbo
         Cos(Product(-1, x.operand(0), *x.operands[1..-1]).simplify).simplify
       elsif x.product? && x.length == 2 && x.operand(0).constant? && x.operand(1) == PI &&
             [1, 2, 3, 4, 6].include?(x.operand(0).denominator) && x.operand(0).numerator.integer?
-        simplify_kn_pi
+        # eg (1/2) * PI
+        simplify_kn_pi x.operand(0).numerator, x.operand(0).denominator
+      elsif x.fraction? && x.operand(0) == PI && [1, 2, 3, 4, 6].include?(x.operand(1))
+        # eg PI/2
+        simplify_kn_pi 1, x.operand(1)
       else
         self
       end
@@ -33,10 +37,7 @@ module Symbo
     private
 
     # Simplification of cos(kπ/n)
-    def simplify_kn_pi
-      k = x.operand(0).numerator
-      n = x.operand(0).denominator
-
+    def simplify_kn_pi(k, n)
       case n
       when 1
         case k % 2
