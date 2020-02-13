@@ -2,82 +2,97 @@
 
 require 'test_helper'
 
+require 'quant'
 require 'symbo'
 
-class VectorTest < ActiveSupport::TestCase
-  include Symbo
-  using Symbo
+module Quant
+  class VectorTest < ActiveSupport::TestCase
+    using Symbo
 
-  test 'create a column vector' do
-    assert_equal [2, 0.5, -3], ColumnVector[2, 0.5, -3].to_a
-  end
+    include Symbo
 
-  test 'create a row vector' do
-    assert_equal [1, 0, -PI, 23], RowVector[1, 0, -PI, 23].to_a
-  end
+    test 'create a column vector' do
+      assert_equal [2, 0.5, -3], ColumnVector[2, 0.5, -3].to_a
+    end
 
-  test 'length of vector' do
-    a = ColumnVector[3, 1]
+    test 'create a row vector' do
+      assert_equal [1, 0, -PI, 23], RowVector[1, 0, -PI, 23].to_a
+    end
 
-    assert_equal √(10), a.length
-  end
+    test 'length of vector' do
+      assert_equal √(10), ColumnVector[3, 1].length
+    end
 
-  test 'scalar multiplication' do
-    a = ColumnVector[3, 1]
-    u = (Fraction(1, a.length) * a).simplify
+    test 'scalar multiplication' do
+      a = ColumnVector[3, 1]
+      u = (Fraction(1, a.length) * a).simplify
 
-    assert_equal [Fraction(3, √(10)), Fraction(1, √(10))], u.to_a
-    assert_equal 1, u.length
-  end
+      assert_equal [Fraction(3, √(10)), Fraction(1, √(10))], u.to_a
+      assert_equal 1, u.length
+    end
 
-  test 'vector addition' do
-    a = ColumnVector[3, 1]
-    b = ColumnVector[1, 2]
+    test 'vector addition' do
+      a = ColumnVector[3, 1]
+      b = ColumnVector[1, 2]
 
-    assert_equal [4, 3], (a + b).to_a
-    assert_equal [4, 3], (b + a).to_a
-  end
+      assert_equal [4, 3], (a + b).to_a
+      assert_equal [4, 3], (b + a).to_a
+    end
 
-  test 'multiply a bra by a ket' do
-    bra = Bra[3, 1]
-    ket = Ket[3, 1]
+    test 'multiply a bra by a ket' do
+      assert_equal 10, Bra[3, 1] * Ket[3, 1]
+    end
 
-    assert_equal 10, bra * ket
-  end
+    test 'orthogonal vectors' do
+      assert_equal 0, Bra[3, 1] * Ket[-2, 6]
+    end
 
-  test 'orthogonal vectors' do
-    a = Bra[3, 1]
-    b = Ket[1, 2]
-    c = Ket[-2, 6]
+    test '<↑|↑> = 1' do
+      assert_equal 1, Bra['↑'] * Ket['↑']
+    end
 
-    assert_equal 5, a * b
-    assert_equal 0, a * c
-  end
+    test '<↓|↓> = 1' do
+      assert_equal 1, Bra['↓'] * Ket['↓']
+    end
 
-  test 'R^2 standard basis' do
-    b1 = ColumnVector[1, 0]
-    b2 = ColumnVector[0, 1]
+    test '<↑|↓> = 0' do
+      assert_equal 0, Bra['↑'] * Ket['↓']
+    end
 
-    assert_equal 1, b1.bra * b1.ket
-    assert_equal 1, b2.bra * b2.ket
-    assert_equal 0, b1.bra * b2.ket
-  end
+    test '<↓|↑> = 0' do
+      assert_equal 0, Bra['↓'] * Ket['↑']
+    end
 
-  test 'orthonormal base #1' do
-    b1 = ColumnVector[1/√(2), 1/√(2)]
-    b2 = ColumnVector[-1/√(2), 1/√(2)]
+    test '<→|→> = 1' do
+      assert_equal 1, Bra['→'] * Ket['→']
+    end
 
-    assert_equal 1, b1.bra * b1.ket
-    assert_equal 1, b2.bra * b2.ket
-    assert_equal 0, b1.bra * b2.ket
-  end
+    test '<←|←> = 1' do
+      assert_equal 1, Bra['←'] * Ket['←']
+    end
 
-  test 'orthonormal base #2' do
-    c1 = ColumnVector[1/2, √(3)/2]
-    c2 = ColumnVector[-√(3)/2, 1/2]
+    test '<→|←> = 0' do
+      assert_equal 0, Bra['→'] * Ket['←']
+    end
 
-    assert_equal 1, c1.bra * c1.ket
-    assert_equal 1, c2.bra * c2.ket
-    assert_equal 0, c1.bra * c2.ket
+    test '<←|→> = 0' do
+      assert_equal 0, Bra['←'] * Ket['→']
+    end
+
+    test '<↗|↗> = 1' do
+      assert_equal 1, Bra['↗'] * Ket['↗']
+    end
+
+    test '<↙|↙> = 1' do
+      assert_equal 1, Bra['↙'] * Ket['↙']
+    end
+
+    test '<↗|↙> = 0' do
+      assert_equal 0, Bra['↗'] * Ket['↙']
+    end
+
+    test '<↙|↗> = 0' do
+      assert_equal 0, Bra['↙'] * Ket['↗']
+    end
   end
 end
