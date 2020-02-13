@@ -115,6 +115,8 @@ module Symbo
         UNDEFINED
       elsif v.is_a?(Integer) && (w.is_a?(Integer) || w.is_a?(Complex))
         v.mult w
+      elsif v.is_a?(Complex) && (w.is_a?(Integer) || w.is_a?(Complex))
+        v.mult w
       elsif (v.is_a?(Integer) || v.is_a?(Complex)) && w.fraction?
         if w.denominator == 1
           v.numerator.mult w.numerator
