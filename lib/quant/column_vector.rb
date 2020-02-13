@@ -17,14 +17,6 @@ class ColumnVector
     Matrix[*(@elements.map { |each| [each.simplify] })]
   end
 
-  def bra
-    Bra[*@elements]
-  end
-
-  def ket
-    Ket[*@elements]
-  end
-
   def +(other)
     elements = ((@elements.zip other.elements).map { |each| each.inject(:+) })
     ColumnVector.new(*elements).simplify

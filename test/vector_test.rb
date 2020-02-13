@@ -2,9 +2,8 @@
 
 require 'test_helper'
 
+require 'quant'
 require 'symbo'
-require 'quant/bra'
-require 'quant/ket'
 
 module Quant
   class VectorTest < ActiveSupport::TestCase
