@@ -20,9 +20,7 @@ module Quant
     end
 
     test 'length of vector' do
-      a = ColumnVector[3, 1]
-
-      assert_equal √(10), a.length
+      assert_equal √(10), ColumnVector[3, 1].length
     end
 
     test 'scalar multiplication' do
@@ -42,19 +40,11 @@ module Quant
     end
 
     test 'multiply a bra by a ket' do
-      bra = Bra[3, 1]
-      ket = Ket[3, 1]
-
-      assert_equal 10, bra * ket
+      assert_equal 10, Bra[3, 1] * Ket[3, 1]
     end
 
     test 'orthogonal vectors' do
-      a = Bra[3, 1]
-      b = Ket[1, 2]
-      c = Ket[-2, 6]
-
-      assert_equal 5, a * b
-      assert_equal 0, a * c
+      assert_equal 0, Bra[3, 1] * Ket[-2, 6]
     end
 
     test '<↑|↑> = 1' do
