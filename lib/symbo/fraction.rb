@@ -5,6 +5,8 @@ require 'symbo/expression'
 module Symbo
   # Symbo fraction computation
   class Fraction < Expression
+    using Symbo
+
     attr_reader :operands
 
     # :section: Power Transformation Methods
@@ -127,15 +129,19 @@ module Symbo
       d = operand(1)
 
       if (n % d).zero?
-        n / d
+        n.div d
       else
         g = n.gcd(d)
         if d.positive?
-          Fraction n / g, d / g
+          Fraction n.div(g), d.div(g)
         else
-          Fraction (-n / g), (-d / g)
+          Fraction((-n).div(g), (-d).div(g))
         end
       end
+    end
+
+    def negative?
+      false
     end
 
     protected

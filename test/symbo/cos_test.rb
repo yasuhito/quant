@@ -26,18 +26,22 @@ module Symbo
 
     test 'Cos(π/6) → √3/2' do
       assert_equal √(3)/2, Cos((1/6) * PI).simplify
+      assert_equal √(3)/2, Cos(PI/6).simplify
     end
 
     test 'Cos(π/4) → 1/√2' do
       assert_equal 1/√(2), Cos((1/4) * PI).simplify
+      assert_equal 1/√(2), Cos(PI/4).simplify
     end
 
     test 'Cos(π/3) → 1/2' do
       assert_equal 1/2, Cos((1/3) * PI).simplify
+      assert_equal 1/2, Cos(PI/3).simplify
     end
 
     test 'Cos(π/2) → 0' do
       assert_equal 0, Cos((1/2) * PI).simplify
+      assert_equal 0, Cos(PI/2).simplify
     end
 
     test 'Cos(2π/3) → -1/2' do
