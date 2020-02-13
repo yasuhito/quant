@@ -5,6 +5,7 @@ require 'h'
 require 'quant/i_gate'
 require 'quant/x_gate'
 require 'quant/y_gate'
+require 'quant/z_gate'
 require 'qubit'
 require 'r1'
 require 'rx'
@@ -13,7 +14,6 @@ require 'rz'
 require 's_gate'
 require 'swap_gate'
 require 't_gate'
-require 'z_gate'
 
 module Quant
   class Circuit
