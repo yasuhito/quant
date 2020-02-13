@@ -17,5 +17,9 @@ module Quant
         raise "Unknown values: #{values.inspect}"
       end
     end
+
+    def to_ary
+      to_a
+    end
   end
 end

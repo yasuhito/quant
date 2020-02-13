@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require 'matrix'
+require 'symbo'
+
 module Quant
   class RowVector
     using Symbo
