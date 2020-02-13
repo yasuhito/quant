@@ -44,9 +44,6 @@ module Symbo
     # Simplification of sin(kπ/n)
     # k と n は整数, n = 1, 2, 3, 4, 6
     def simplify_kn_pi(k, n)
-      # k = x.operand(0).numerator
-      # n = x.operand(0).denominator
-
       case n
       when 1
         0
