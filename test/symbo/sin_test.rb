@@ -26,18 +26,22 @@ module Symbo
 
     test 'Sin(π/6) → 1/2' do
       assert_equal 1/2, Sin((1/6)*PI).simplify
+      assert_equal 1/2, Sin(PI/6).simplify
     end
 
     test 'Sin(π/4) → 1/√2' do
       assert_equal 1/√(2), Sin((1/4)*PI).simplify
+      assert_equal 1/√(2), Sin(PI/4).simplify
     end
 
     test 'Sin(π/3) → √3/2' do
       assert_equal √(3)/2, Sin((1/3)*PI).simplify
+      assert_equal √(3)/2, Sin(PI/3).simplify
     end
 
     test 'Sin(π/2) → 1' do
       assert_equal 1, Sin((1/2)*PI).simplify
+      assert_equal 1, Sin(PI/2).simplify
     end
 
     test 'Sin(2π/3) → √3/2' do
@@ -52,11 +56,8 @@ module Symbo
       assert_equal 1/2, Sin((5/6)*PI).simplify
     end
 
-    test 'Sin(1π/1) → 0' do
-      assert_equal 0, Sin((1/1)*PI).simplify
-    end
-
     test 'Sin(π) → 0' do
+      assert_equal 0, Sin((1/1)*PI).simplify
       assert_equal 0, Sin(PI).simplify
     end
 
@@ -88,11 +89,8 @@ module Symbo
       assert_equal (-1/2), Sin((11/6)*PI).simplify
     end
 
-    test 'Sin(2π/1) → 0' do
-      assert_equal 0, Sin((2/1)*PI).simplify
-    end
-
     test 'Sin(2π) → 0' do
+      assert_equal 0, Sin((2/1)*PI).simplify
       assert_equal 0, Sin(Product(2, PI)).simplify
     end
 
