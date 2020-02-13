@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'test_helper'
-require 'circuit'
+require 'quant/circuit'
 
 class SwapGateTest < ActiveSupport::TestCase
   # test 'SWAP|00> = |00>' do

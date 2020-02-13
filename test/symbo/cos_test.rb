@@ -56,11 +56,8 @@ module Symbo
       assert_equal Product(-1, √(3)/2), Cos((5/6) * PI).simplify
     end
 
-    test 'Cos(1π/1) → -1' do
-      assert_equal(-1, Cos(1/1 * PI).simplify)
-    end
-
     test 'Cos(π) → -1' do
+      assert_equal(-1, Cos(1/1 * PI).simplify)
       assert_equal(-1, Cos(PI).simplify)
     end
 
@@ -92,11 +89,8 @@ module Symbo
       assert_equal √(3)/2, Cos((11/6) * PI).simplify
     end
 
-    test 'Cos(2π/1) → 1' do
-      assert_equal 1, Cos((2/1) * PI).simplify
-    end
-
     test 'Cos(2π) → 1' do
+      assert_equal 1, Cos((2/1) * PI).simplify
       assert_equal 1, Cos(Product(2, PI)).simplify
     end
 

@@ -2,7 +2,7 @@
 
 require 'test_helper'
 
-require 'circuit'
+require 'quant/circuit'
 
 class CircuitTest < ActiveSupport::TestCase
   # include Math

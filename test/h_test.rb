@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'test_helper'
-require 'circuit'
+require 'quant/circuit'
 
 class HTest < ActiveSupport::TestCase
   # include Symbo
