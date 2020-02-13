@@ -1,16 +1,12 @@
 # frozen_string_literal: true
 
+require 'matrix'
+require 'quant/vector'
+require 'symbo'
+
 module Quant
-  class RowVector
+  class RowVector < Vector
     using Symbo
-
-    def self.[](*elements)
-      new(*elements)
-    end
-
-    def initialize(*elements)
-      @elements = elements
-    end
 
     def *(other)
       product = to_matrix * other.to_matrix
@@ -19,10 +15,6 @@ module Quant
 
     def to_matrix
       Matrix[@elements.map(&:simplify)]
-    end
-
-    def to_a
-      @elements
     end
   end
 end
