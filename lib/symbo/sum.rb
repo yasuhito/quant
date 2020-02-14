@@ -108,7 +108,7 @@ module Symbo
           UNDEFINED
         elsif v.fraction? && w.fraction?
           if v.denominator == w.denominator
-            Fraction(Sum(v.numerator, w.numerator).simplify, v.denominator).simplify
+            Fraction(Sum(v.numerator, w.numerator).simplify, v.denominator.simplify).simplify
           else
             Fraction(Sum(Product(v.numerator, w.denominator).evaluate, Product(w.numerator, v.denominator).evaluate).evaluate,
                      Product(v.denominator, w.denominator).evaluate).evaluate

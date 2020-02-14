@@ -2,6 +2,8 @@
 
 module Symbo
   module AlgebraicOperators
+    using Symbo
+
     def +(other)
       Sum self, other
     end
@@ -15,7 +17,11 @@ module Symbo
     end
 
     def /(other)
-      Fraction self, other
+      if is_a?(Integer) && other.is_a?(Integer)
+        Fraction self, other
+      else
+        Quot self, other
+      end
     end
 
     def **(other)

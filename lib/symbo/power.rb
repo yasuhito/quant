@@ -82,6 +82,7 @@ module Symbo
 
     def evaluate
       raise unless base.constant?
+      raise unless exponent.integer?
 
       if base.numerator != 0
         if exponent.positive?
@@ -90,7 +91,7 @@ module Symbo
         elsif exponent.zero?
           1
         elsif exponent == -1
-          raise NotImplementedError
+          Fraction 1, base
         else
           raise NotImplementedError
         end
@@ -148,13 +149,13 @@ module Symbo
     end
 
     def simplify_eulers_formula
-      if exponent.fraction? && exponent.operand(0).product? && exponent.operand(0).operand(0) == 1i
-        # eg e^{iπ/4}
-        x = exponent.operand(0).operand(1) / exponent.operand(1)
+      if exponent.product? && exponent.operand(0).fraction? && exponent.operand(0).operand(0) == 1i
+        # eg e^{i/4 * π}
+        x = Quot(exponent.operand(1), exponent.operand(0).operand(1))
         (Cos(x) + 1i * Sin(x)).simplify
-      elsif exponent.fraction? && exponent.operand(0).product? && exponent.operand(0).operand(0) == -1i
+      elsif exponent.product? && exponent.operand(0).fraction? && exponent.operand(0).operand(0) == -1i
         # eg e^{-iπ/4}
-        x = -1 * exponent.operand(0).operand(1) / exponent.operand(1)
+        x = Quot(-exponent.operand(1), exponent.operand(0).operand(1))
         (Cos(x) + 1i * Sin(x)).simplify
       else
         self

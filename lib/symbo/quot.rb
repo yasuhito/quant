@@ -7,6 +7,23 @@ module Symbo
   class Quot < Expression
     using Symbo
 
+    def base
+      UNDEFINED
+    end
+
+    def term
+      UNDEFINED
+    end
+
+    def compare(other)
+      case other
+      when Integer, Fraction
+        false
+      else
+        true
+      end
+    end
+
     def evaluate
       if w.numerator.zero?
         UNDEFINED
@@ -15,6 +32,12 @@ module Symbo
         # v/w = Quot(vn/vd, wn/wd).evaluate = vn·wd / wn·vd
         Fraction v.numerator.mult(w.denominator), w.numerator.mult(v.denominator)
       end
+    end
+
+    protected
+
+    def _simplify
+      Product(operand(0), Power(operand(1), -1)).simplify
     end
 
     private

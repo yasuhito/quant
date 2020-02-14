@@ -28,7 +28,7 @@ module Quant
         a = ColumnVector[3, 1]
         u = (1/a.length * a).simplify
 
-        assert_equal [Fraction(3, √(10)), Fraction(1, √(10))], u.to_a
+        assert_equal [3 * 10**(-1/2), 10**(-1/2)], u.to_a
         assert_equal 1, u.length
       end
 

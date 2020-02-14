@@ -130,7 +130,7 @@ module Symbo
           if p.denominator == 1
             p.numerator
           else
-            p
+            Fraction p.numerator, p.denominator
           end
         else
           Fraction (v.numerator * w).simplify, v.denominator

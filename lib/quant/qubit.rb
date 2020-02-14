@@ -15,13 +15,13 @@ module Quant
       elsif state_or_value == [1]
         new 0, 1
       elsif state_or_value == ['+']
-        new 1/√(2), 1/√(2)
+        new 2**(-1/2), 2**(-1/2)
       elsif state_or_value == ['-']
-        new 1/√(2), -1/√(2)
+        new 2**(-1/2), -2**(-1/2)
       elsif state_or_value == ['i']
-        new 1/√(2), 1i/√(2)
+        new 2**(-1/2), 1i * 2**(-1/2)
       elsif state_or_value == ['-i']
-        new 1/√(2), -1i/√(2)
+        new 2**(-1/2), -1i * 2**(-1/2)
       else
         raise
       end
@@ -71,18 +71,6 @@ module Quant
 
     def ==(other)
       to_a == other.to_a
-    end
-
-    def to_s
-      if @state == [1, 0]
-        '0'
-      elsif @state == [0, 1]
-        '1'
-      elsif @state == [1/√(2), 1/√(2)]
-        '+'
-      elsif @state == [1/√(2), -1/√(2)]
-        '-'
-      end
     end
   end
 end
