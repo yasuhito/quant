@@ -34,6 +34,9 @@ module Symbo
       elsif x.fraction? && x.operand(0) == PI && [1, 2, 3, 4, 6].include?(x.operand(1))
         # eg PI/2
         simplify_kn_pi 1, x.operand(1)
+      elsif x.fraction? && x.operand(0) == -PI && [1, 2, 3, 4, 6].include?(x.operand(1))
+        # eg -PI/2
+        simplify_kn_pi(-1, x.operand(1))
       else
         self
       end

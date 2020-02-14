@@ -118,6 +118,7 @@ module Symbo
 
       return 1 if base == 1
       return simplify_integer_power if exponent.integer?
+      return simplify_eulers_formula if base == E
 
       self
     end
@@ -141,6 +142,20 @@ module Symbo
       when Product
         r = base.operands.map { |each| Power(each, exponent).simplify_integer_power }
         Product(*r).simplify
+      else
+        self
+      end
+    end
+
+    def simplify_eulers_formula
+      if exponent.fraction? && exponent.operand(0).product? && exponent.operand(0).operand(0) == 1i
+        # eg e^{iπ/4}
+        x = exponent.operand(0).operand(1) / exponent.operand(1)
+        (Cos(x) + 1i * Sin(x)).simplify
+      elsif exponent.fraction? && exponent.operand(0).product? && exponent.operand(0).operand(0) == -1i
+        # eg e^{-iπ/4}
+        x = -1 * exponent.operand(0).operand(1) / exponent.operand(1)
+        (Cos(x) + 1i * Sin(x)).simplify
       else
         self
       end

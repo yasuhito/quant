@@ -100,6 +100,7 @@ module Symbo
 
     test 'Sin(-π/4) → -1/√2' do
       assert_equal (-1/√(2)), Sin((-1/4)*PI).simplify
+      assert_equal (-1/√(2)), Sin(-PI/4).simplify
     end
 
     test 'Sin(-π/3) → -√3/2' do

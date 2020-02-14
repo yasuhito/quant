@@ -25,6 +25,19 @@ module Symbo
     def simplify_rne_rec
       dup
     end
+
+    def base
+      UNDEFINED
+    end
+
+    def compare(other)
+      case other
+      when Integer
+        false
+      else
+        true
+      end
+    end
   end
 end
 
