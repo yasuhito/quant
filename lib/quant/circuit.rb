@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'cnot_gate'
+require 'quant/cnot_gate'
 require 'quant/h_gate'
 require 'quant/i_gate'
 require 'quant/s_gate'
