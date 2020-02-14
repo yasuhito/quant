@@ -37,7 +37,7 @@ module Symbo
 
     # べき乗の低
     def base
-      raise NotImplementedError
+      raise NotImplementedError, "#{self.class}#base"
     end
 
     # べき指数
@@ -63,7 +63,7 @@ module Symbo
     # 返り値は Product または UNDEFINED になる。返り値が単項の積 ·u の場合があるが、
     # これは x と 2x の term を取ったときにどちらも同じ ·x を返すようにするための工夫。
     def term
-      raise NotImplementedError
+      raise NotImplementedError, "#{self.class}#term"
     end
 
     # 同類項の定数部分
@@ -75,7 +75,7 @@ module Symbo
 
     # 交換法則によるオペランド並べ替えに使う順序関係
     def compare(_other)
-      raise NotImplementedError
+      raise NotImplementedError, "#{self.class}#compare"
     end
 
     # :section: Operand Methods
