@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-require 'gate'
+require 'quant/gate'
 require 'symbo/e'
 require 'symbo/pi'
 
 # Phase shift gate T
-class TGate < Gate
+class TGate < Quant::Gate
   private
 
   def matrix

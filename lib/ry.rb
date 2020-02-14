@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require 'gate'
+require 'quant/gate'
 
 # Y rotation gate
-class Ry < Gate
+class Ry < Quant::Gate
   def initialize(theta)
     @theta = theta
   end

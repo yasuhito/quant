@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-require 'gate'
+require 'quant/gate'
 require 'symbo/e'
 
 # Z rotation gate
-class Rz < Gate
+class Rz < Quant::Gate
   def initialize(theta)
     @theta = theta
   end

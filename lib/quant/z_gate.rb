@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'gate'
+require 'quant/gate'
 
 module Quant
   class ZGate < Gate

@@ -3,7 +3,7 @@
 require 'symbo/e'
 
 # R1 rotation gate
-class R1 < Gate
+class R1 < Quant::Gate
   def initialize(theta)
     @theta = theta
   end
