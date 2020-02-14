@@ -4,6 +4,7 @@ require 'quant/cnot_gate'
 require 'quant/h_gate'
 require 'quant/i_gate'
 require 'quant/qubit'
+require 'quant/r1_gate'
 require 'quant/rx_gate'
 require 'quant/ry_gate'
 require 'quant/rz_gate'
@@ -12,7 +13,6 @@ require 'quant/swap_gate'
 require 'quant/x_gate'
 require 'quant/y_gate'
 require 'quant/z_gate'
-require 'r1'
 require 't_gate'
 
 module Quant
@@ -66,11 +66,11 @@ module Quant
     end
 
     def rz(target, theta:)
-      self.class.new Rz.new(theta).apply(@qubits, target)
+      self.class.new RzGate.new(theta).apply(@qubits, target)
     end
 
     def r1(target, theta:)
-      self.class.new R1.new(theta).apply(@qubits, target)
+      self.class.new R1Gate.new(theta).apply(@qubits, target)
     end
 
     def cnot(target, control:)

@@ -1,10 +1,9 @@
 # frozen_string_literal: true
 
-require 'quant/gate'
-require 'symbo'
+require 'symbo/e'
 
 module Quant
-  class RzGate < Gate
+  class R1Gate < Quant::Gate
     include Symbo
 
     using Symbo
@@ -14,8 +13,8 @@ module Quant
     end
 
     def matrix
-      Matrix[[Symbo::E**(-1i * @theta / 2), 0],
-             [0, Symbo::E**(-1i * @theta / 2)]]
+      Matrix[[1, 0],
+             [0, E**(1i * @theta)]]
     end
   end
 end
