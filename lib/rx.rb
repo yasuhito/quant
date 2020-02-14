@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-require 'gate'
+require 'quant/gate'
 require 'symbo/division'
 
 # X rotation gate
-class Rx < Gate
+class Rx < Quant::Gate
   def initialize(theta)
     @theta = theta
   end
