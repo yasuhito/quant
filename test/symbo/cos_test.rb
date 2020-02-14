@@ -100,6 +100,7 @@ module Symbo
 
     test 'Cos(-π/4) → 1/√2' do
       assert_equal 1/√(2), Cos((-1/4) * PI).simplify
+      assert_equal 1/√(2), Cos(-PI/4).simplify
     end
 
     test 'Cos(-π/3) → 1/2' do

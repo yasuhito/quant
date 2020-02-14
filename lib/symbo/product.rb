@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'quant/column_vector'
 require 'symbo/expression'
 require 'symbo/power'
 

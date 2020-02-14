@@ -9,8 +9,8 @@ module Quant
     private
 
     def matrix
-      Matrix[[1 / Sqrt(2), 1 / Sqrt(2)],
-             [1 / Sqrt(2), -1 / Sqrt(2)]]
+      Matrix[[1/√(2), 1/√(2)],
+             [1/√(2), -1/√(2)]]
     end
   end
 end
