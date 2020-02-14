@@ -5,18 +5,6 @@ require 'test_helper'
 require 'quant/circuit'
 
 class CircuitTest < ActiveSupport::TestCase
-  # test 'Rz|0>' do
-  #   circuit = Circuit.new(1).rz(0, theta: 2 * PI)
-
-  #   assert_equal [[E**(-1i * PI), 0]], circuit.state
-  # end
-
-  # test 'Rz|1>' do
-  #   circuit = Circuit.new(1).x(0).rz(0, theta: 2 * PI)
-
-  #   assert_equal [[0, E**(-1i * PI)]], circuit.state
-  # end
-
   # test 'R1|0>' do
   #   circuit = Circuit.new(1).r1(0, theta: 2 * PI)
 

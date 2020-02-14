@@ -17,7 +17,7 @@ module Symbo
     end
 
     def /(other)
-      if is_a?(Integer) && other.is_a?(Integer)
+      if (is_a?(Integer) || is_a?(Complex)) && other.is_a?(Integer)
         Fraction self, other
       else
         Quot self, other
