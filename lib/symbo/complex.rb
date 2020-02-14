@@ -4,6 +4,7 @@ require 'symbo/expression_type'
 
 module Symbo
   refine Complex do
+    include AlgebraicOperators
     include ExpressionType
 
     def simplify
