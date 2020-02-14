@@ -14,4 +14,5 @@ end
 
 group :test do
   gem 'simplecov', require: false
+  gem 'simplecov-html', '~> 0.11.0'
 end
