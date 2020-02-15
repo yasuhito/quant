@@ -3,9 +3,12 @@
 require 'symbo/trigonometric_function'
 
 module Symbo
-  # Symbo cos(x)
   class Cos < TrigonometricFunction
     using Symbo
+
+    def self.[](x)
+      new(x)
+    end
 
     def initialize(x)
       super :cos, x
@@ -19,12 +22,11 @@ module Symbo
       elsif x == PI
         -1
       elsif x.constant? && x.negative?
-        Cos(Product(-1, x).simplify)
+        Cos[Product(-1, x).simplify].simplify
       elsif x.product? && x.operand(0).integer? && x.operand(0).negative?
-        Cos(Product(-1, x.operand(0), *x.operands[1..-1]).simplify).simplify
-      elsif x.product? && x.length == 2 && x.operand(0).constant? && x.operand(1) == PI &&
-            [1, 2, 3, 4, 6].include?(x.operand(0).denominator) && x.operand(0).numerator.integer?
-        simplify_kn_pi x.operand(0).numerator, x.operand(0).denominator
+        Cos[Product(-1, x.operand(0), *x.operands[1..-1]).simplify].simplify
+      elsif kn_pi?
+        simplify_kn_pi.simplify
       else
         self
       end
@@ -32,15 +34,21 @@ module Symbo
 
     private
 
+    def kn_pi?
+      x.product? && x.length == 2 && x.operand(0).constant? && x.operand(1) == PI &&
+        [1, 2, 3, 4, 6].include?(x.operand(0).denominator) && x.operand(0).numerator.integer?
+    end
+
     # Simplification of cos(kπ/n)
-    def simplify_kn_pi(k, n)
+    def simplify_kn_pi
+      k = x.operand(0).numerator
+      n = x.operand(0).denominator
+
       case n
       when 1
         case k % 2
         when 0
           1
-        when 1
-          -1
         end
       when 2
         case k % 2
@@ -71,8 +79,4 @@ module Symbo
       end
     end
   end
-end
-
-def Cos(x) # rubocop:disable Naming/MethodName
-  Symbo::Cos.new(x)
 end
