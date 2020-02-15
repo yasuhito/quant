@@ -23,7 +23,7 @@ module Quant
       assert_equal 1, pamp.column_size
       assert_equal 2, pamp.row_size
       assert_equal (1/√(2)).simplify, pamp[0, 0]
-      assert_equal 1/√(2), pamp[1, 0]
+      assert_equal (1/√(2)).simplify, pamp[1, 0]
     end
   end
 end

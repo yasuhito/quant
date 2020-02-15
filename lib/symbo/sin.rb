@@ -3,17 +3,15 @@
 require 'symbo/trigonometric_function'
 
 module Symbo
-  # サインのシンボリック演算
   class Sin < TrigonometricFunction
     using Symbo
 
-    def initialize(x)
-      super :sin, x
+    def self.[](x)
+      new(x)
     end
 
-    # FIXME
-    def compare(_other)
-      false
+    def initialize(x)
+      super :sin, x
     end
 
     protected
@@ -24,12 +22,11 @@ module Symbo
       elsif x == PI
         0
       elsif x.constant? && x.negative?
-        -Sin(-1.mult(x))
+        (-Sin[Product(-1, x).simplify]).simplify
       elsif x.product? && x.operand(0).integer? && x.operand(0).negative?
-        (-Sin(Product(-1, x.operand(0), *x.operands[1..-1]).simplify)).simplify
-      elsif x.product? && x.length == 2 && x.operand(0).constant? && x.operand(1) == PI &&
-            [1, 2, 3, 4, 6].include?(x.operand(0).denominator) && x.operand(0).numerator.integer?
-        simplify_kn_pi x.operand(0).numerator, x.operand(0).denominator
+        (-Sin[Product(-1, x.operand(0), *x.operands[1..-1]).simplify]).simplify
+      elsif kn_pi?
+        simplify_kn_pi.simplify
       else
         self
       end
@@ -37,9 +34,16 @@ module Symbo
 
     private
 
+    def kn_pi?
+      x.product? && x.length == 2 && x.operand(0).constant? && x.operand(1) == PI &&
+        [1, 2, 3, 4, 6].include?(x.operand(0).denominator) && x.operand(0).numerator.integer?
+    end
+
     # Simplification of sin(kπ/n)
-    # k と n は整数, n = 1, 2, 3, 4, 6
-    def simplify_kn_pi(k, n)
+    def simplify_kn_pi
+      k = x.operand(0).numerator
+      n = x.operand(0).denominator
+
       case n
       when 1
         0
@@ -74,8 +78,4 @@ module Symbo
       end
     end
   end
-end
-
-def Sin(x) # rubocop:disable Naming/MethodName
-  Symbo::Sin.new(x)
 end
