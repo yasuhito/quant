@@ -37,7 +37,7 @@ module Symbo
     protected
 
     def _simplify
-      Product[operand(0), Power(operand(1), -1)].simplify
+      Product[operand(0), Power[operand(1), -1]].simplify
     end
 
     private
