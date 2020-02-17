@@ -7,10 +7,6 @@ module Symbo
   class Power < Expression
     using Symbo
 
-    def self.[](*operands)
-      new(*operands)
-    end
-
     # :section: Power Transformation Methods
 
     # べき乗の低

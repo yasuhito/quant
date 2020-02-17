@@ -18,6 +18,10 @@ module Symbo
 
     attr_reader :operands
 
+    def self.[](*operands)
+      new(*operands)
+    end
+
     def initialize(*operands)
       @operands = operands
     end

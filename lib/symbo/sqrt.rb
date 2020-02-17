@@ -3,8 +3,16 @@
 require 'symbo/fraction'
 require 'symbo/power'
 
-def Sqrt(operand) # rubocop:disable Naming/MethodName
-  Symbo::Power[operand, Symbo::Fraction[1, 2]]
-end
+module Symbo
+  class Sqrt
+    def self.[](x)
+      Symbo::Power[x, Symbo::Fraction[1, 2]]
+    end
+  end
 
-alias √ Sqrt
+  # rubocop:disable Naming/MethodName, Naming/BinaryOperatorParameterName
+  def √(x)
+    Sqrt[x]
+  end
+  # rubocop:enable Naming/MethodName, Naming/BinaryOperatorParameterName
+end

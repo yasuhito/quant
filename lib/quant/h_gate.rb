@@ -4,6 +4,8 @@ require 'quant/gate'
 
 module Quant
   class HGate < Gate
+    include Symbo
+
     using Symbo
 
     private
