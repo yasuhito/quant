@@ -14,8 +14,8 @@ module Quant
     end
 
     def matrix
-      Matrix[[Symbo::E**(-1i * @theta / 2), 0],
-             [0, Symbo::E**(-1i * @theta / 2)]]
+      Matrix[[E**(-1i*@theta/2), 0],
+             [0,                 E**(1i*@theta/2)]]
     end
   end
 end
