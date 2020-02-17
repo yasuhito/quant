@@ -10,6 +10,10 @@ module Symbo
   class Sum < Expression
     using Symbo
 
+    def self.[](*operands)
+      new(*operands)
+    end
+
     # :section: Power Transformation Methods
 
     # べき乗の低
@@ -51,8 +55,8 @@ module Symbo
     # どちらかのオペランドがなくなれば、短いほうが左側。
     #
     #   (:a + :b).compare(:a + :c) # => true
-    #   Sum(:a, :c, :d).compare(Sum(:b, :c, :d)) # => true
-    #   (:c + :d).compare(Sum(:b, :c, :d)) # => true
+    #   Sum[:a, :c, :d].compare(Sum[:b, :c, :d]) # => true
+    #   (:c + :d).compare(Sum[:b, :c, :d]) # => true
     #
     # - 階乗、関数、シンボルの場合
     # 相手を単項の和にして比較
@@ -78,7 +82,7 @@ module Symbo
 
         m.compare(n)
       when Factorial, Function, Symbol
-        compare Sum(other)
+        compare Sum[other]
       else
         !other.compare(self)
       end
@@ -108,9 +112,9 @@ module Symbo
           UNDEFINED
         elsif v.fraction? && w.fraction?
           if v.denominator == w.denominator
-            Fraction(Sum(v.numerator, w.numerator).simplify, v.denominator.simplify).simplify
+            Fraction(Sum[v.numerator, w.numerator].simplify, v.denominator.simplify).simplify
           else
-            Fraction(Sum(Product(v.numerator, w.denominator).evaluate, Product(w.numerator, v.denominator).evaluate).evaluate,
+            Fraction(Sum[Product(v.numerator, w.denominator).evaluate, Product(w.numerator, v.denominator).evaluate].evaluate,
                      Product(v.denominator, w.denominator).evaluate).evaluate
           end
         elsif v.integer? && (w.integer? || w.is_a?(Complex))
@@ -119,13 +123,13 @@ module Symbo
           if v.zero?
             w
           else
-            Sum v, w
+            Sum[v, w]
           end
         elsif v.fraction? && w.integer?
           if w.zero?
             v
           else
-            Sum v, w
+            Sum[v, w]
           end
         elsif v.is_a?(Complex) && w.is_a?(Integer)
           v.plus w
@@ -151,7 +155,7 @@ module Symbo
       if v.size == 1
         v[0]
       elsif v.size > 1
-        Sum(*v)
+        Sum[*v]
       else
         0
       end
@@ -162,7 +166,7 @@ module Symbo
     def simplify_rec(l)
       if l.size == 2 && l.none?(&:sum?)
         if l.all?(&:constant?)
-          p = Sum(*l).simplify_rne
+          p = Sum[*l].simplify_rne
           if p.zero?
             []
           else
@@ -173,7 +177,7 @@ module Symbo
         elsif l[1].zero?
           [l[0]]
         elsif l[0].term == l[1].term
-          s = Sum(l[0].const, l[1].const).simplify
+          s = Sum[l[0].const, l[1].const].simplify
           p = Product(l[0].term, s).simplify
           if p.zero?
             []
@@ -217,7 +221,7 @@ module Symbo
         if v.undefined? || w.undefined?
           UNDEFINED
         else
-          Sum(v, w).evaluate
+          Sum[v, w].evaluate
         end
       end
     end
@@ -243,8 +247,4 @@ module Symbo
       end
     end
   end
-end
-
-def Sum(*operands) # rubocop:disable Naming/MethodName
-  Symbo::Sum.new(*operands)
 end
