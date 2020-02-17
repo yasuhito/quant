@@ -181,7 +181,7 @@ module Symbo
         elsif l[1] == 1
           [l[0]]
         elsif l[0].base == l[1].base && l[0].base != UNDEFINED # SPRDREC-1-3
-          s = Sum(l[0].exponent, l[1].exponent).simplify
+          s = Sum[l[0].exponent, l[1].exponent].simplify
           p = Power(l[0].base, s).simplify
           if p == 1
             []

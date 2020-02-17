@@ -5,7 +5,7 @@ module Symbo
     using Symbo
 
     def +(other)
-      Sum self, other
+      Sum[self, other]
     end
 
     def -@

@@ -120,7 +120,7 @@ class Integer
   def +(other)
     plus other
   rescue TypeError
-    Sum self, other
+    Symbo::Sum[self, other]
   end
 
   def *(other)

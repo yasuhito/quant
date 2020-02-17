@@ -9,7 +9,7 @@ module Symbo
     using Symbo
 
     test '2/3 + 3/4 → 17/12' do
-      assert_equal 17/12, Sum(2/3, 3/4).evaluate.simplify_rational_number
+      assert_equal 17/12, Sum[2/3, 3/4].evaluate.simplify_rational_number
     end
 
     test '(4/2)^3 → 8' do

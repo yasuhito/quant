@@ -4,6 +4,8 @@ require 'quant/vector'
 
 module Quant
   class ColumnVector < Vector
+    include Symbo
+
     using Symbo
 
     def +(other)
@@ -20,7 +22,7 @@ module Quant
     end
 
     def length
-      Sqrt(Sum(*(@elements.map { |each| Power(each, 2) }))).simplify
+      Sqrt(Sum[*(@elements.map { |each| Power(each, 2) })]).simplify
     end
 
     def undefined?
