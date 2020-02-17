@@ -34,7 +34,7 @@ module Symbo
       end
 
       test '(f(x)!).compare((f(x)) → false' do
-        assert_not Factorial(Function(:f, :x)).compare(Function(:f, :x))
+        assert_not Factorial(Function[:f, :x]).compare(Function[:f, :x])
       end
 
       test '(:x!).compare(:x) → false' do
@@ -42,7 +42,7 @@ module Symbo
       end
 
       test '(:x!).compare(f(x)) → false' do
-        assert_not Factorial(:x).compare(Function(:f, :x))
+        assert_not Factorial(:x).compare(Function[:f, :x])
       end
     end
   end

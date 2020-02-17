@@ -53,8 +53,8 @@ module Symbo
         assert((1/2).compare(Factorial(2)))
       end
 
-      test '(1/2).compare(Function(:f, :x)) # => true' do
-        assert((1/2).compare(Function(:f, :x)))
+      test '(1/2).compare(Function[:f, :x]) # => true' do
+        assert((1/2).compare(Function[:f, :x]))
       end
     end
   end
