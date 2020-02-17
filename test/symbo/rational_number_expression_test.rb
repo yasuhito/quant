@@ -17,7 +17,7 @@ module Symbo
     end
 
     test '1/(2/4 - 1/2) → Undefined' do
-      assert_equal UNDEFINED, Quot(1, Diff[2/4, 1/2]).evaluate.simplify_rational_number
+      assert_equal UNDEFINED, Quot[1, Diff[2/4, 1/2]].evaluate.simplify_rational_number
     end
   end
 end

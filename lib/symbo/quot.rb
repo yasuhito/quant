@@ -7,6 +7,10 @@ module Symbo
   class Quot < Expression
     using Symbo
 
+    def self.[](*operands)
+      new(*operands)
+    end
+
     def base
       UNDEFINED
     end
@@ -52,8 +56,4 @@ module Symbo
       @w ||= @operands[1].evaluate
     end
   end
-end
-
-def Quot(*operands) # rubocop:disable Naming/MethodName
-  Symbo::Quot.new(*operands)
 end

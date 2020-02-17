@@ -20,7 +20,7 @@ module Symbo
       if (is_a?(Integer) || is_a?(Complex)) && other.is_a?(Integer)
         Fraction self, other
       else
-        Quot self, other
+        Quot[self, other]
       end
     end
 
