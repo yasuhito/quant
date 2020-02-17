@@ -10,6 +10,10 @@ module Symbo
 
     using Symbo
 
+    def self.[](*operands)
+      new(*operands)
+    end
+
     def name
       @operands[0]
     end
@@ -108,8 +112,4 @@ module Symbo
       end
     end
   end
-end
-
-def Function(name, *operands) # rubocop:disable Naming/MethodName
-  Symbo::Function.new(*([name] + operands))
 end

@@ -50,11 +50,11 @@ module Symbo
       end
 
       test 'x.compare(x(t)) = true' do
-        assert :x.compare(Function(:x, :t))
+        assert :x.compare(Function[:x, :t])
       end
 
       test 'x.compare(y(t)) = true' do
-        assert :x.compare(Function(:y, :t))
+        assert :x.compare(Function[:y, :t])
       end
     end
   end
