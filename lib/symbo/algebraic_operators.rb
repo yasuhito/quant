@@ -9,11 +9,11 @@ module Symbo
     end
 
     def -@
-      Product(-1, self)
+      Product[-1, self]
     end
 
     def *(other)
-      Product self, other
+      Product[self, other]
     end
 
     def /(other)

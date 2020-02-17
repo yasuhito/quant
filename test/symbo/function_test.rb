@@ -4,6 +4,7 @@ require 'test_helper'
 
 require 'symbo/function'
 require 'symbo/integer'
+require 'symbo/product'
 require 'symbo/symbol'
 
 module Symbo
@@ -21,8 +22,10 @@ module Symbo
     end
 
     class BasicDistributiveTransformationTest < ActiveSupport::TestCase
-      test 'Function#term = Product(Function)' do
-        assert_equal Product(Function(:f, :x)), Function(:f, :x).term
+      include Symbo
+
+      test 'Function#term = Product[Function]' do
+        assert_equal Product[Function(:f, :x)], Function(:f, :x).term
       end
 
       test 'Function#const = 1' do

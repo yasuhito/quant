@@ -6,6 +6,8 @@ require 'symbo/symbol'
 
 module Symbo
   class Function < Expression
+    include Symbo
+
     using Symbo
 
     def name
@@ -38,7 +40,7 @@ module Symbo
     #
     #   Function(:f, :x).term # => Product(Function(:f, :x))
     def term
-      Product(self)
+      Product[self]
     end
 
     # 同類項の定数部分

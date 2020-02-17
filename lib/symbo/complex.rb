@@ -50,12 +50,12 @@ class Complex
   def +(other)
     plus other
   rescue TypeError
-    Sum self, other
+    Symbo::Sum[self, other]
   end
 
   def *(other)
     mult other
   rescue TypeError
-    Product self, other
+    Symbo::Product[self, other]
   end
 end

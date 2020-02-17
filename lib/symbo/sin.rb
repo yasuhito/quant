@@ -22,9 +22,9 @@ module Symbo
       elsif x == PI
         0
       elsif x.constant? && x.negative?
-        (-Sin[Product(-1, x).simplify]).simplify
+        (-Sin[Product[-1, x].simplify]).simplify
       elsif x.product? && x.operand(0).integer? && x.operand(0).negative?
-        (-Sin[Product(-1, x.operand(0), *x.operands[1..-1]).simplify]).simplify
+        (-Sin[Product[-1, x.operand(0), *x.operands[1..-1]].simplify]).simplify
       elsif kn_pi?
         simplify_kn_pi.simplify
       else
@@ -59,7 +59,7 @@ module Symbo
         when 1, 2
           √(3)/2
         when 4, 5
-          Product(-1, √(3)/2)
+          Product[-1, √(3)/2]
         end
       when 4
         case k % 8

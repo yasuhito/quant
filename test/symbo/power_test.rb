@@ -19,8 +19,8 @@ module Symbo
     end
 
     class BasicDistributiveTransformationTest < ActiveSupport::TestCase
-      test 'Power#term # => Product(Power)' do
-        assert_equal Product(:x**2), (:x**2).term
+      test 'Power#term # => Product[Power]' do
+        assert_equal Product[:x**2], (:x**2).term
       end
 
       test 'Product#const # => 1' do
@@ -84,8 +84,8 @@ module Symbo
       end
 
       test '(((x·y)^(1/2)·z^2)^2).simplify = x·y·z^4' do
-        assert_equal Product(:x, :y, Power(:z, 4)),
-                     Power(Product(Power(Product(:x, :y), 1/2), Power(:z, 2)), 2).simplify
+        assert_equal Product[:x, :y, Power(:z, 4)],
+                     Power(Product[Power(Product[:x, :y], 1/2), Power(:z, 2)], 2).simplify
       end
     end
   end

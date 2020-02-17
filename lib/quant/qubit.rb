@@ -5,6 +5,8 @@ require 'symbo'
 
 module Quant
   class Qubit
+    include Symbo
+
     using Symbo
 
     def self.[](*state_or_value)
@@ -35,7 +37,7 @@ module Quant
       if other.is_a?(Qubit)
         (bra * other.ket.t)[0, 0]
       else
-        @state.map { |each| Product(each, other).simplify }
+        @state.map { |each| Product[each, other].simplify }
       end
     end
 

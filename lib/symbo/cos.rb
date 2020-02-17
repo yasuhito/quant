@@ -22,9 +22,9 @@ module Symbo
       elsif x == PI
         -1
       elsif x.constant? && x.negative?
-        Cos[Product(-1, x).simplify].simplify
+        Cos[Product[-1, x].simplify].simplify
       elsif x.product? && x.operand(0).integer? && x.operand(0).negative?
-        Cos[Product(-1, x.operand(0), *x.operands[1..-1]).simplify].simplify
+        Cos[Product[-1, x.operand(0), *x.operands[1..-1]].simplify].simplify
       elsif kn_pi?
         simplify_kn_pi.simplify
       else
@@ -74,7 +74,7 @@ module Symbo
         when 1, 11
           √(3)/2
         when 5, 7
-          Product(-1, √(3)/2)
+          Product[-1, √(3)/2]
         end
       end
     end

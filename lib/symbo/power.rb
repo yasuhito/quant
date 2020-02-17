@@ -29,7 +29,7 @@ module Symbo
     #
     #   (:x**2).term # => Product(:x**2)
     def term
-      Product(self)
+      Product[self]
     end
 
     # 同類項の定数部分
@@ -87,7 +87,7 @@ module Symbo
       if base.numerator != 0
         if exponent.positive?
           s = Power(base, exponent - 1).evaluate
-          Product(s, base).evaluate
+          Product[s, base].evaluate
         elsif exponent.zero?
           1
         elsif exponent == -1
@@ -142,7 +142,7 @@ module Symbo
         end
       when Product
         r = base.operands.map { |each| Power(each, exponent).simplify_integer_power }
-        Product(*r).simplify
+        Product[*r].simplify
       else
         self
       end

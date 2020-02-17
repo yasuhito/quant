@@ -11,6 +11,10 @@ module Symbo
 
     attr_reader :operands
 
+    def self.[](*operands)
+      new(*operands)
+    end
+
     # :section: Power Transformation Methods
 
     # べき乗の低
@@ -31,9 +35,9 @@ module Symbo
 
     # 同類項の項部分
     #
-    #   Product(2, :x, :y, :z).term # => Product(:x, :y, :z)
-    #   Product(1/3, :x, :y, :z).term # => Product(:x, :y, :z)
-    #   Product(:x, :y, :z).term # => Product(:x, :y, :z)
+    #   Product[2, :x, :y, :z].term # => Product[:x, :y, :z]
+    #   Product[1/3, :x, :y, :z].term # => Product[:x, :y, :z]
+    #   Product[:x, :y, :z].term # => Product[:x, :y, :z]
     def term
       if @operands.first.constant?
         Product.new(*@operands[1..-1])
@@ -44,9 +48,9 @@ module Symbo
 
     # 同類項の定数部分
     #
-    #   Product(2, :x, :y, :z).const # => 2
-    #   Product(1/3, :x, :y, :z).const # => 1/3
-    #   Product(:x, :y, :z).const # => 1
+    #   Product[2, :x, :y, :z].const # => 2
+    #   Product[1/3, :x, :y, :z].const # => 1/3
+    #   Product[:x, :y, :z].const # => 1
     def const
       if @operands.first.constant?
         @operands.first
@@ -63,11 +67,11 @@ module Symbo
     # 最右のオペランドから順に compare していき、異なるものがあればそれで順序を決定する。
     #
     #   (:a * :b).compare(:a * :c) # => true
-    #   Product(:a, :c, :d).compare(Product(:b, :c, :d)) # => true
+    #   Product[:a, :c, :d].compare(Product[:b, :c, :d]) # => true
     #
     # どちらかのオペランドがなくなれば、短いほうが左側。
     #
-    #   (:c * :d).compare(Product(:b, :c, :d)) # => true
+    #   (:c * :d).compare(Product[:b, :c, :d]) # => true
     #
     # - べき乗、和、階乗、関数、シンボルの場合
     # 相手を単項の積にして比較
@@ -93,7 +97,7 @@ module Symbo
 
         m.compare n
       when Power, Sum, Factorial, Function, Symbol
-        compare Product(other)
+        compare Product[other]
       else
         !other.compare(self)
       end
@@ -136,12 +140,12 @@ module Symbo
           Fraction (v.numerator * w).simplify, v.denominator
         end
       elsif v.fraction? && w.fraction?
-        Fraction(Product(v.numerator, w.numerator).simplify,
-                 Product(v.denominator, w.denominator).evaluate).evaluate
+        Fraction(Product[v.numerator, w.numerator].simplify,
+                 Product[v.denominator, w.denominator].evaluate).evaluate
       elsif v.power? && w.power?
-        Product(v, w).simplify.evaluate
+        Product[v, w].simplify.evaluate
       else
-        Product v.simplify, w.simplify
+        Product[v.simplify, w.simplify]
       end
     end
 
@@ -156,7 +160,7 @@ module Symbo
       if v.size == 1
         v[0]
       elsif v.size > 1
-        Product(*v)
+        Product[*v]
       else
         1
       end
@@ -170,7 +174,7 @@ module Symbo
     def simplify_rec(l)
       if l.size == 2 && l.none?(&:product?) # SPRDREC-1
         if l.all?(&:constant?) # SPRDREC-1-1
-          p = Product(*l).simplify_rne
+          p = Product[*l].simplify_rne
           if p == 1
             []
           else
@@ -191,7 +195,7 @@ module Symbo
         elsif l[1].compare(l[0]) # SPRDREC-1-4
           [l[1], l[0]]
         elsif l[1].is_a?(Quant::ColumnVector)
-          [l[1].map { |each| Product(l[0], each).simplify }]
+          [l[1].map { |each| Product[l[0], each].simplify }]
         else # SPRDREC-1-5
           l
         end
@@ -222,7 +226,7 @@ module Symbo
       if v.undefined? || w.undefined?
         UNDEFINED
       else
-        Product(v, w).evaluate
+        Product[v, w].evaluate
       end
     end
 
@@ -247,8 +251,4 @@ module Symbo
       end
     end
   end
-end
-
-def Product(*operands) # rubocop:disable Naming/MethodName
-  Symbo::Product.new(*operands)
 end
