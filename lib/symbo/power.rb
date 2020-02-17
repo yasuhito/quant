@@ -7,6 +7,10 @@ module Symbo
   class Power < Expression
     using Symbo
 
+    def self.[](*operands)
+      new(*operands)
+    end
+
     # :section: Power Transformation Methods
 
     # べき乗の低
@@ -66,7 +70,7 @@ module Symbo
 
         exponent.compare other.exponent
       when Sum, Factorial, Function, Symbol
-        compare Power(other, 1)
+        compare Power[other, 1]
       else
         !other.compare(self)
       end
@@ -86,7 +90,7 @@ module Symbo
 
       if base.numerator != 0
         if exponent.positive?
-          s = Power(base, exponent - 1).evaluate
+          s = Power[base, exponent - 1].evaluate
           Product[s, base].evaluate
         elsif exponent.zero?
           1
@@ -125,7 +129,7 @@ module Symbo
     end
 
     def simplify_integer_power
-      return Power(base, exponent).simplify_rne if base.constant?
+      return Power[base, exponent].simplify_rne if base.constant?
       return 1 if exponent.zero?
       return base if exponent == 1
 
@@ -136,12 +140,12 @@ module Symbo
         p = Product.new(s, exponent).simplify
 
         if p.integer?
-          Power(r, p).simplify_integer_power
+          Power[r, p].simplify_integer_power
         else
-          Power(r, p)
+          Power[r, p]
         end
       when Product
-        r = base.operands.map { |each| Power(each, exponent).simplify_integer_power }
+        r = base.operands.map { |each| Power[each, exponent].simplify_integer_power }
         Product[*r].simplify
       else
         self
@@ -167,12 +171,8 @@ module Symbo
       if v == UNDEFINED
         UNDEFINED
       else
-        Power(v, exponent).evaluate
+        Power[v, exponent].evaluate
       end
     end
   end
-end
-
-def Power(*operands) # rubocop:disable Naming/MethodName
-  Symbo::Power.new(*operands)
 end

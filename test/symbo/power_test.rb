@@ -48,44 +48,44 @@ module Symbo
       end
 
       test '(2^(1/0)).simplify = Undefined' do
-        assert_equal UNDEFINED, Power(2, 1/0).simplify
+        assert_equal UNDEFINED, Power[2, 1/0].simplify
       end
 
       test '(0^2).simplify = 1' do
-        assert_equal 1, Power(0, 2).simplify
+        assert_equal 1, Power[0, 2].simplify
       end
 
       test '(0^(1/2)).simplify = 1' do
-        assert_equal 1, Power(0, 1/2).simplify
+        assert_equal 1, Power[0, 1/2].simplify
       end
 
       test '(0^(-1)).simplify = Undefined' do
-        assert_equal UNDEFINED, Power(0, -1).simplify
+        assert_equal UNDEFINED, Power[0, -1].simplify
       end
 
       test '(1^x).simplify = 1' do
-        assert_equal 1, Power(1, :x).simplify
+        assert_equal 1, Power[1, :x].simplify
       end
 
       test '(2^2).simplify = 4' do
-        assert_equal 4, Power(2, 2).simplify
+        assert_equal 4, Power[2, 2].simplify
       end
 
       test '(2^0).simplify = 1' do
-        assert_equal 1, Power(2, 0).simplify
+        assert_equal 1, Power[2, 0].simplify
       end
 
       test '(2^1).simplify = 2' do
-        assert_equal 2, Power(2, 1).simplify
+        assert_equal 2, Power[2, 1].simplify
       end
 
       test '(((x^(1/2))^(1/2))^8).simplify = x^2' do
-        assert_equal (:x**2), Power(Power(Power(:x, 1/2), 1/2), 8).simplify
+        assert_equal (:x**2), Power[Power[Power[:x, 1/2], 1/2], 8].simplify
       end
 
       test '(((x·y)^(1/2)·z^2)^2).simplify = x·y·z^4' do
-        assert_equal Product[:x, :y, Power(:z, 4)],
-                     Power(Product[Power(Product[:x, :y], 1/2), Power(:z, 2)], 2).simplify
+        assert_equal Product[:x, :y, Power[:z, 4]],
+                     Power[Product[Power[Product[:x, :y], 1/2], Power[:z, 2]], 2].simplify
       end
     end
   end

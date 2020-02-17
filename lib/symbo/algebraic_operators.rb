@@ -25,7 +25,7 @@ module Symbo
     end
 
     def **(other)
-      Power self, other
+      Power[self, other]
     end
   end
 end
