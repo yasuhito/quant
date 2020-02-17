@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'test_helper'
+
 require 'quant/circuit'
 
 module Quant
@@ -32,13 +33,13 @@ module Quant
     test 'X|i> = i|-i>' do
       circuit = Circuit.new(Qubit['i'])
 
-      assert_equal [Qubit['-i'] * 1i], circuit.x(0).state
+      assert_equal [1i * Qubit['-i']], circuit.x(0).state
     end
 
     test 'X|-i> = -i|i>' do
       circuit = Circuit.new(Qubit['-i'])
 
-      assert_equal [Qubit['i'] * -1i], circuit.x(0).state
+      assert_equal [-1i * Qubit['i']], circuit.x(0).state
     end
   end
 end
