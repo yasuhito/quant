@@ -8,24 +8,22 @@ module Symbo
   class Factorial < Expression
     using Symbo
 
-    attr_reader :operands
-
-    def initialize(*operands)
-      @operands = operands
+    def self.[](*operands)
+      new(*operands)
     end
 
     # :section: Power Transformation Methods
 
     # べき乗の低
     #
-    #   Factorial(:x).base # => Factorial(:x)
+    #   Factorial[:x].base # => Factorial[:x]
     def base
       dup
     end
 
     # べき指数
     #
-    #   Factorial(:x).exponent # => 1
+    #   Factorial[:x].exponent # => 1
     def exponent
       1
     end
@@ -34,14 +32,14 @@ module Symbo
 
     # 同類項の項部分
     #
-    #   Factorial(:x).term # => Product[Factorial(:x)]
+    #   Factorial[:x].term # => Product[Factorial[:x]]
     def term
       Product[self]
     end
 
     # 同類項の定数部分
     #
-    #   Factorial(:x).const # => 1
+    #   Factorial[:x].const # => 1
     def const
       1
     end
@@ -53,17 +51,17 @@ module Symbo
     # - 相手が階乗の場合
     # オペランド同士を比較する
     #
-    #   Factorial(:m).compare(:n) # => true
+    #   Factorial[:m].compare(:n) # => true
     #
     # - 関数またはシンボルの場合
     # 最初のオペランドが相手と同じ場合 false
     #
-    #   Factorial(Function(:f, :x)).compare(Function(:f, :x)) # => false
-    #   Factorial(:x).compare(:x) # => true
+    #   Factorial[Function[:f, :x]].compare(Function[:f, :x]) # => false
+    #   Factorial[:x].compare(:x) # => true
     #
     # 異なる場合、相手を階乗と見て比較
     #
-    #   Factorial(:x).compare(Function(:f, :x)) # => true
+    #   Factorial[:x].compare(Function[:f, :x]) # => true
     #
     # - それ以外の場合
     # 次のルールで比較
@@ -77,15 +75,11 @@ module Symbo
         if @operands[0] == other
           false
         else
-          compare Factorial(other)
+          compare Factorial[other]
         end
       else
         !other.compare(self)
       end
     end
   end
-end
-
-def Factorial(*operands) # rubocop:disable Naming/MethodName
-  Symbo::Factorial.new(*operands)
 end

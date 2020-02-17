@@ -5,8 +5,6 @@ module Symbo
   class Fraction < Expression
     using Symbo
 
-    attr_reader :operands
-
     # :section: Power Transformation Methods
 
     # べき乗の低
