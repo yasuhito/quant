@@ -14,7 +14,7 @@ module Quant
     test 'Z|1> = -|1>' do
       circuit = Circuit.new(Qubit[1])
 
-      assert_equal [Qubit[1] * -1], circuit.z(0).state
+      assert_equal [-Qubit[1]], circuit.z(0).state
     end
 
     test 'Z|+> = |->' do

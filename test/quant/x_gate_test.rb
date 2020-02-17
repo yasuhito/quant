@@ -26,7 +26,7 @@ module Quant
     test 'X|-> = -|->' do
       circuit = Circuit.new(Qubit['-'])
 
-      assert_equal [Qubit['-'] * -1], circuit.x(0).state
+      assert_equal [-Qubit['-']], circuit.x(0).state
     end
 
     test 'X|i> = i|-i>' do

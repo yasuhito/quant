@@ -33,6 +33,10 @@ module Quant
       @state = state
     end
 
+    def -@
+      @state.map { |each| Product[-1, each].simplify }
+    end
+
     def *(other)
       if other.is_a?(Qubit)
         (bra * other.ket.t)[0, 0]
