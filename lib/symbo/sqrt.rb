@@ -4,7 +4,7 @@ require 'symbo/fraction'
 require 'symbo/power'
 
 def Sqrt(operand) # rubocop:disable Naming/MethodName
-  Symbo::Power[operand, Fraction(1, 2)]
+  Symbo::Power[operand, Symbo::Fraction[1, 2]]
 end
 
 alias √ Sqrt

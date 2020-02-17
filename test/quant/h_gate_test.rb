@@ -35,13 +35,13 @@ module Quant
     test 'H|i> = e^{iπ/4}|-i>' do
       circuit = Circuit.new(Qubit['i'])
 
-      assert_equal [[Fraction(1+1i, 2), Fraction(1-1i, 2)]], circuit.h(0).state
+      assert_equal [[Fraction[1+1i, 2], Fraction[1-1i, 2]]], circuit.h(0).state
     end
 
     test 'H|-i> = e^{-iπ/4}|i>' do
       circuit = Circuit.new(Qubit['-i'])
 
-      assert_equal [[Fraction(1-1i, 2), Fraction(1+1i, 2)]], circuit.h(0).state
+      assert_equal [[Fraction[1-1i, 2], Fraction[1+1i, 2]]], circuit.h(0).state
     end
   end
 end

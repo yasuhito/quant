@@ -95,7 +95,7 @@ module Symbo
         elsif exponent.zero?
           1
         elsif exponent == -1
-          Fraction 1, base
+          Fraction[1, base]
         else
           raise NotImplementedError
         end
