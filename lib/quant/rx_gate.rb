@@ -6,6 +6,8 @@ module Quant
   class RxGate < Gate
     include Symbo
 
+    using Symbo
+
     def initialize(theta)
       @theta = theta
     end

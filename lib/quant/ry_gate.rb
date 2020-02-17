@@ -7,6 +7,8 @@ module Quant
   class RyGate < Gate
     include Symbo
 
+    using Symbo
+
     def initialize(theta)
       @theta = theta
     end

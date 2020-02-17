@@ -10,16 +10,28 @@ module Quant
 
     using Symbo
 
-    test 'Rz|0>' do
-      circuit = Circuit.new(1).rz(0, theta: 2 * PI)
+    test 'Rz(θ)|0> = e^{-iθ/2}|0>' do
+      circuit = Circuit.new(Qubit[0]).rz(0, theta: :θ)
 
-      assert_equal [[(E**(-1i * PI)).simplify, 0]], circuit.state
+      assert_equal [[(E**(-1i * :θ/2)).simplify, 0]], circuit.state
     end
 
-    test 'Rz|1>' do
-      circuit = Circuit.new(1).x(0).rz(0, theta: 2 * PI)
+    test 'Rz(θ)|1> = e^{iθ/2}|1>' do
+      circuit = Circuit.new(Qubit[1]).rz(0, theta: :θ)
 
-      assert_equal [[0, (E**(-1i * PI)).simplify]], circuit.state
+      assert_equal [[0, (E**(1i * :θ/2)).simplify]], circuit.state
+    end
+
+    test 'Rz(2π)|0> = e^{-iπ}|0> = -|0>' do
+      circuit = Circuit.new(Qubit[0]).rz(0, theta: 2 * PI)
+
+      assert_equal [-Qubit[0]], circuit.state
+    end
+
+    test 'Rz(2π)|1> = e^{iπ}|1> = -|1>' do
+      circuit = Circuit.new(Qubit[1]).rz(0, theta: 2 * PI)
+
+      assert_equal [-Qubit[1]], circuit.state
     end
   end
 end
