@@ -3,26 +3,8 @@
 require 'symbo/expression'
 
 module Symbo
-  # Symbolic quotient
   class Quot < Expression
     using Symbo
-
-    def base
-      UNDEFINED
-    end
-
-    def term
-      UNDEFINED
-    end
-
-    def compare(other)
-      case other
-      when Integer, Fraction
-        false
-      else
-        true
-      end
-    end
 
     def evaluate
       if w.numerator.zero?
@@ -44,12 +26,12 @@ module Symbo
 
     # an integer or a fraction with non-zero denominator
     def v
-      @v ||= @operands[0].evaluate
+      @v ||= operand(0).evaluate
     end
 
     # an integer or a fraction with non-zero denominator
     def w
-      @w ||= @operands[1].evaluate
+      @w ||= operand(1).evaluate
     end
   end
 end
