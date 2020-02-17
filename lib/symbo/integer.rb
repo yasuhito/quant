@@ -126,6 +126,6 @@ class Integer
   def *(other)
     mult other
   rescue TypeError
-    Product self, other
+    Symbo::Product[self, other]
   end
 end

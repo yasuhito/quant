@@ -17,7 +17,7 @@ module Symbo
     end
 
     test 'Cos[-1 * 2 * 3] → Cos[6]' do
-      assert_equal Cos[6], Cos[Product(-1, 2, 3)].simplify
+      assert_equal Cos[6], Cos[Product[-1, 2, 3]].simplify
     end
 
     test 'Cos[0] → 1' do
@@ -53,7 +53,7 @@ module Symbo
     end
 
     test 'Cos[5π/6] → -√3/2' do
-      assert_equal Product(-1, √(3)/2).simplify, Cos[(5/6) * PI].simplify
+      assert_equal Product[-1, √(3)/2].simplify, Cos[(5/6) * PI].simplify
     end
 
     test 'Cos[π] → -1' do
@@ -62,7 +62,7 @@ module Symbo
     end
 
     test 'Cos[7π/6] → -√3/2' do
-      assert_equal Product(-1, √(3)/2).simplify, Cos[(7/6) * PI].simplify
+      assert_equal Product[-1, √(3)/2].simplify, Cos[(7/6) * PI].simplify
     end
 
     test 'Cos[5π/4] → -1/√2' do
@@ -91,7 +91,7 @@ module Symbo
 
     test 'Cos[2π] → 1' do
       assert_equal 1, Cos[(2/1) * PI].simplify
-      assert_equal 1, Cos[Product(2, PI)].simplify
+      assert_equal 1, Cos[Product[2, PI]].simplify
     end
 
     test 'Cos[-π/6] → √3/2' do
@@ -120,7 +120,7 @@ module Symbo
     end
 
     test 'Cos[-5π/6] → -√3/2' do
-      assert_equal Product(-1, √(3)/2).simplify, Cos[(-5/6) * PI].simplify
+      assert_equal Product[-1, √(3)/2].simplify, Cos[(-5/6) * PI].simplify
     end
 
     test 'Cos[-π/1] → -1' do

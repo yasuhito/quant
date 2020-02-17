@@ -34,9 +34,9 @@ module Symbo
 
     # 同類項の項部分
     #
-    #   (:x + :y).term # => Product(:x + :y)
+    #   (:x + :y).term # => Product[:x + :y]
     def term
-      Product(self)
+      Product[self]
     end
 
     # 同類項の定数部分
@@ -114,8 +114,8 @@ module Symbo
           if v.denominator == w.denominator
             Fraction(Sum[v.numerator, w.numerator].simplify, v.denominator.simplify).simplify
           else
-            Fraction(Sum[Product(v.numerator, w.denominator).evaluate, Product(w.numerator, v.denominator).evaluate].evaluate,
-                     Product(v.denominator, w.denominator).evaluate).evaluate
+            Fraction(Sum[Product[v.numerator, w.denominator].evaluate, Product[w.numerator, v.denominator].evaluate].evaluate,
+                     Product[v.denominator, w.denominator].evaluate).evaluate
           end
         elsif v.integer? && (w.integer? || w.is_a?(Complex))
           v.plus w
@@ -133,7 +133,7 @@ module Symbo
           end
         elsif v.is_a?(Complex) && w.is_a?(Integer)
           v.plus w
-        elsif Product(-1, v).simplify == w.simplify || v.simplify == Product(-1, w).simplify
+        elsif Product[-1, v].simplify == w.simplify || v.simplify == Product[-1, w].simplify
           0
         else
           raise NotImplementedError, "evaluate(#{v.inspect}, #{w.inspect})"
@@ -178,7 +178,7 @@ module Symbo
           [l[0]]
         elsif l[0].term == l[1].term
           s = Sum[l[0].const, l[1].const].simplify
-          p = Product(l[0].term, s).simplify
+          p = Product[l[0].term, s].simplify
           if p.zero?
             []
           else

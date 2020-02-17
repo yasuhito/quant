@@ -19,8 +19,8 @@ module Symbo
     end
 
     class BasicDistributiveTransformationTest < ActiveSupport::TestCase
-      test 'Factorial#term # => Product(Factorial)' do
-        assert_equal Product(Factorial(:x)), Factorial(:x).term
+      test 'Factorial#term # => Product[Factorial]' do
+        assert_equal Product[Factorial(:x)], Factorial(:x).term
       end
 
       test 'Factorial#const # => 1' do

@@ -34,9 +34,9 @@ module Symbo
 
     # 同類項の項部分
     #
-    #   Factorial(:x).term # => Product(Factorial(:x))
+    #   Factorial(:x).term # => Product[Factorial(:x)]
     def term
-      Product(self)
+      Product[self]
     end
 
     # 同類項の定数部分

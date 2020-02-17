@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'symbo/expression'
-
 module Symbo
   # Symbo fraction computation
   class Fraction < Expression

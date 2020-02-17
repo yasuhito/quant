@@ -19,8 +19,8 @@ module Symbo
     end
 
     class BasicDistributiveTransformationTest < ActiveSupport::TestCase
-      test 'Symbol#term # => Product(Symbol)' do
-        assert_equal Product(:x), :x.term
+      test 'Symbol#term # => Product[Symbol]' do
+        assert_equal Product[:x], :x.term
       end
 
       test 'Symbol#const # => 1' do

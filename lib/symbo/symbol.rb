@@ -36,9 +36,9 @@ module Symbo
 
     # 同類項の項部分
     #
-    #   :x.term # => Product(:x)
+    #   :x.term # => Product[:x]
     def term
-      Product(self)
+      Product[self]
     end
 
     # 同類項の定数部分
