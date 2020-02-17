@@ -3,44 +3,25 @@
 require 'symbo/expression'
 
 module Symbo
-  # Symbolic difference
   class Diff < Expression
-    def integer?
-      false
-    end
-
-    def fraction?
-      false
-    end
-
-    def sum?
-      false
-    end
-
-    def product?
-      false
-    end
-
-    def diff?
-      true
-    end
+    using Symbo
 
     def evaluate
-      v = @operands[0].evaluate
+      v = operand(0).simplify
 
       if length == 1
         if v == UNDEFINED
           UNDEFINED
         else
-          Product(-1, v).evaluate
+          Product[-1, v].evaluate
         end
       elsif length == 2
-        w = @operands[1].evaluate
+        w = operand(1).simplify
 
         if v == UNDEFINED || w == UNDEFINED
           UNDEFINED
         else
-          v.rational - w.rational
+          Sum[v, -w].evaluate
         end
       end
     end
