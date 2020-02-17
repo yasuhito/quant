@@ -148,15 +148,20 @@ module Symbo
       end
     end
 
+    # e^ix = cos(x) + sin(x)
     def simplify_eulers_formula
-      if exponent.product? && exponent.operand(0).fraction? && exponent.operand(0).operand(0) == 1i
-        # eg e^{i/4 * π}
-        x = Quot(exponent.operand(1), exponent.operand(0).operand(1))
-        (Cos(x) + 1i * Sin(x)).simplify
-      elsif exponent.product? && exponent.operand(0).fraction? && exponent.operand(0).operand(0) == -1i
-        # eg e^{-iπ/4}
-        x = Quot(-exponent.operand(1), exponent.operand(0).operand(1))
-        (Cos(x) + 1i * Sin(x)).simplify
+      if exponent.product? &&
+         exponent.operand(0).is_a?(Complex) && exponent.operand(0).real.zero? &&
+         exponent.operand(1) == PI
+        # eg e^{ki * π}
+        x = Product[exponent.operand(0).imag, exponent.operand(1)]
+        (Cos[x] + 1i * Sin[x]).simplify
+      elsif exponent.product? &&
+            exponent.operand(0).fraction? && exponent.operand(0).operand(0).is_a?(Complex) && exponent.operand(0).operand(0).real.zero? &&
+            exponent.operand(1) == PI
+        # eg e^{(k/n)i * π}
+        x = Product[Fraction[exponent.operand(0).operand(0).imag, exponent.operand(0).operand(1)], exponent.operand(1)]
+        (Cos[x] + 1i * Sin[x]).simplify
       else
         self
       end

@@ -121,16 +121,6 @@ module Symbo
           else
             Sum[v, w]
           end
-        elsif v.fraction? && w.integer?
-          if w.zero?
-            v
-          else
-            Sum[v, w]
-          end
-        elsif v.is_a?(Complex) && w.is_a?(Integer)
-          v.plus w
-        elsif Product[-1, v].simplify == w.simplify || v.simplify == Product[-1, w].simplify
-          0
         else
           raise NotImplementedError, "evaluate(#{v.inspect}, #{w.inspect})"
         end
