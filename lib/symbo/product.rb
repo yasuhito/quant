@@ -9,8 +9,6 @@ module Symbo
   class Product < Expression
     using Symbo
 
-    attr_reader :operands
-
     def self.[](*operands)
       new(*operands)
     end
