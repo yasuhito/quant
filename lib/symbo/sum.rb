@@ -112,10 +112,10 @@ module Symbo
           UNDEFINED
         elsif v.fraction? && w.fraction?
           if v.denominator == w.denominator
-            Fraction(Sum[v.numerator, w.numerator].simplify, v.denominator.simplify).simplify
+            Fraction[Sum[v.numerator, w.numerator].simplify, v.denominator.simplify].simplify
           else
-            Fraction(Sum[Product[v.numerator, w.denominator].evaluate, Product[w.numerator, v.denominator].evaluate].evaluate,
-                     Product[v.denominator, w.denominator].evaluate).evaluate
+            Fraction[Sum[Product[v.numerator, w.denominator].evaluate, Product[w.numerator, v.denominator].evaluate].evaluate,
+                     Product[v.denominator, w.denominator].evaluate].evaluate
           end
         elsif v.integer? && (w.integer? || w.is_a?(Complex))
           v.plus w

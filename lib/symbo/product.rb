@@ -124,7 +124,7 @@ module Symbo
         if w.denominator == 1
           v.numerator.mult w.numerator
         else
-          Fraction v.numerator.mult(w.numerator), w.denominator
+          Fraction[v.numerator.mult(w.numerator), w.denominator]
         end
       elsif v.is_a?(Fraction) && (w.is_a?(Integer) || w.is_a?(Complex))
         if v.numerator.integer? && v.denominator.integer?
@@ -132,14 +132,14 @@ module Symbo
           if p.denominator == 1
             p.numerator
           else
-            Fraction p.numerator, p.denominator
+            Fraction[p.numerator, p.denominator]
           end
         else
-          Fraction (v.numerator * w).simplify, v.denominator
+          Fraction[(v.numerator * w).simplify, v.denominator]
         end
       elsif v.fraction? && w.fraction?
-        Fraction(Product[v.numerator, w.numerator].simplify,
-                 Product[v.denominator, w.denominator].evaluate).evaluate
+        Fraction[Product[v.numerator, w.numerator].simplify,
+                 Product[v.denominator, w.denominator].evaluate].evaluate
       elsif v.power? && w.power?
         Product[v, w].simplify.evaluate
       else

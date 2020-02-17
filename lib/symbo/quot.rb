@@ -34,7 +34,7 @@ module Symbo
       else
         # v = vn/vd, w = wn/wd とすると
         # v/w = Quot(vn/vd, wn/wd).evaluate = vn·wd / wn·vd
-        Fraction v.numerator.mult(w.denominator), w.numerator.mult(v.denominator)
+        Fraction[v.numerator.mult(w.denominator), w.numerator.mult(v.denominator)]
       end
     end
 

@@ -5,6 +5,10 @@ module Symbo
   class Fraction < Expression
     using Symbo
 
+    def self.[](*operands)
+      new(*operands)
+    end
+
     # :section: Power Transformation Methods
 
     # べき乗の低
@@ -129,9 +133,9 @@ module Symbo
       else
         g = n.gcd(d)
         if d.positive?
-          Fraction n.div(g), d.div(g)
+          Fraction[n.div(g), d.div(g)]
         else
-          Fraction((-n).div(g), (-d).div(g))
+          Fraction[(-n).div(g), (-d).div(g)]
         end
       end
     end
@@ -148,8 +152,4 @@ module Symbo
       simplify_rational_number
     end
   end
-end
-
-def Fraction(*operands) # rubocop:disable Naming/MethodName
-  Symbo::Fraction.new(*operands)
 end
