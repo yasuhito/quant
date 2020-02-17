@@ -10,10 +10,6 @@ module Symbo
 
     using Symbo
 
-    def self.[](*operands)
-      new(*operands)
-    end
-
     def name
       @operands[0]
     end

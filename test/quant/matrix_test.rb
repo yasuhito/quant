@@ -2,6 +2,8 @@
 
 module Quant
   class MatrixTest < ActiveSupport::TestCase
+    include Symbo
+
     using Symbo
 
     test 'matrix multiplication' do

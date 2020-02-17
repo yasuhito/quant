@@ -6,6 +6,8 @@ require 'symbo'
 
 module Symbo
   class SinTest < ActiveSupport::TestCase
+    include Symbo
+
     using Symbo
 
     test 'Sin[x] → Sin[x]' do

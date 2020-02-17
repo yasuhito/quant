@@ -5,10 +5,6 @@ require 'symbo/expression'
 module Symbo
   # Symbolic difference
   class Diff < Expression
-    def self.[](*operands)
-      new(*operands)
-    end
-
     def integer?
       false
     end

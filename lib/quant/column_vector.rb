@@ -22,7 +22,7 @@ module Quant
     end
 
     def length
-      Sqrt(Sum[*(@elements.map { |each| Power[each, 2] })]).simplify
+      Sqrt[Sum[*(@elements.map { |each| Power[each, 2] })]].simplify
     end
 
     def undefined?

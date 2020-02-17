@@ -6,6 +6,8 @@ require 'symbo'
 
 module Symbo
   class CosTest < ActiveSupport::TestCase
+    include Symbo
+
     using Symbo
 
     test 'Cos[x] → Cos[x]' do

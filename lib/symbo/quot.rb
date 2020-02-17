@@ -7,10 +7,6 @@ module Symbo
   class Quot < Expression
     using Symbo
 
-    def self.[](*operands)
-      new(*operands)
-    end
-
     def base
       UNDEFINED
     end
