@@ -5,6 +5,10 @@ require 'symbo/expression'
 module Symbo
   # Symbolic difference
   class Diff < Expression
+    def self.[](*operands)
+      new(*operands)
+    end
+
     def integer?
       false
     end
@@ -45,8 +49,4 @@ module Symbo
       end
     end
   end
-end
-
-def Diff(*operands) # rubocop:disable Naming/MethodName
-  Symbo::Diff.new(*operands)
 end
