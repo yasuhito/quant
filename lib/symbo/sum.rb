@@ -165,6 +165,7 @@ module Symbo
         elsif l[0].term == l[1].term
           s = Sum[l[0].const, l[1].const].simplify
           p = Product[l[0].term, s].simplify
+
           if p.zero?
             []
           else

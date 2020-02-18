@@ -16,10 +16,10 @@ module Quant
     end
 
     test 'inner product' do
-      ket1 = Qubit[1 + 2i, 2 - 1i]
+      ket1 = Qubit[1 + 2i, 2 - 1i].bra
       ket2 = Qubit[1 + 2i, 2 + 1i]
 
-      assert_equal 8 + 4i, ket1 * ket2
+      assert_equal 8 + 4i, (ket1 * ket2)[0, 0]
     end
   end
 end

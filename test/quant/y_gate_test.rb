@@ -6,16 +6,18 @@ require 'quant/circuit'
 
 module Quant
   class YGateTest < ActiveSupport::TestCase
-    test 'Y|0> = i|1>' do
-      circuit = Circuit.new(Qubit[0])
+    using Symbo
 
-      assert_equal [1i * Qubit[1]], circuit.y(0).state
+    test 'Y|0> = i|1>' do
+      circuit = Circuit.new(Qubit['0'])
+
+      assert_equal [1i * Qubit['1']], circuit.y(0).state
     end
 
     test 'Y|1> = -i|0>' do
-      circuit = Circuit.new(Qubit[1])
+      circuit = Circuit.new(Qubit['1'])
 
-      assert_equal [-1i * Qubit[0]], circuit.y(0).state
+      assert_equal [-1i * Qubit['0']], circuit.y(0).state
     end
 
     test 'Y|+> = -i|->' do

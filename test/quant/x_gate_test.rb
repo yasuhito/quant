@@ -7,16 +7,18 @@ require 'quant/circuit'
 module Quant
   class XGateTest
     class BasicQubitTransitionTest < ActiveSupport::TestCase
-      test 'X|0> = |1>' do
-        circuit = Circuit.new(Qubit[0])
+      using Symbo
 
-        assert_equal [Qubit[1]], circuit.x(0).state
+      test 'X|0> = |1>' do
+        circuit = Circuit.new(Qubit['0'])
+
+        assert_equal [Qubit['1']], circuit.x(0).state
       end
 
       test 'X|1> = |0>' do
-        circuit = Circuit.new(Qubit[1])
+        circuit = Circuit.new(Qubit['1'])
 
-        assert_equal [Qubit[0]], circuit.x(0).state
+        assert_equal [Qubit['0']], circuit.x(0).state
       end
 
       test 'X|+> = |+>' do

@@ -7,15 +7,15 @@ require 'quant/circuit'
 module Quant
   class ZGateTest < ActiveSupport::TestCase
     test 'Z|0> = |0>' do
-      circuit = Circuit.new(Qubit[0])
+      circuit = Circuit.new(Qubit['0'])
 
-      assert_equal [Qubit[0]], circuit.z(0).state
+      assert_equal [Qubit['0']], circuit.z(0).state
     end
 
     test 'Z|1> = -|1>' do
-      circuit = Circuit.new(Qubit[1])
+      circuit = Circuit.new(Qubit['1'])
 
-      assert_equal [-Qubit[1]], circuit.z(0).state
+      assert_equal [-Qubit['1']], circuit.z(0).state
     end
 
     test 'Z|+> = |->' do

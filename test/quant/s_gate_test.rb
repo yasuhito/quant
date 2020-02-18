@@ -7,15 +7,15 @@ require 'quant/circuit'
 module Quant
   class SGateTest < ActiveSupport::TestCase
     test 'S|0> = |0>' do
-      circuit = Circuit.new(Qubit[0])
+      circuit = Circuit.new(Qubit['0'])
 
-      assert_equal [Qubit[0]], circuit.s(0).state
+      assert_equal [Qubit['0']], circuit.s(0).state
     end
 
     test 'S|1> = i|1>' do
-      circuit = Circuit.new(Qubit[1])
+      circuit = Circuit.new(Qubit['1'])
 
-      assert_equal [Qubit[1] * 1i], circuit.s(0).state
+      assert_equal [Qubit['1'] * 1i], circuit.s(0).state
     end
 
     test 'S|+> = |i>' do

@@ -86,7 +86,7 @@ module Quant
     end
 
     def controlled(gate, target, control:)
-      return dup if @qubits[control] == Qubit[0]
+      return dup if @qubits[control] == Qubit['0']
 
       matrix = Matrix.hstack(Matrix.vstack(Matrix.I(2), Matrix.build(2) { 0 }),
                              Matrix.vstack(Matrix.build(2) { 0 }, gate.matrix))

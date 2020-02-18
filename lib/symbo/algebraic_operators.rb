@@ -13,8 +13,8 @@ module Symbo
     end
 
     def *(other)
-      if other.respond_to?(:to_a)
-        other.class[*other.to_a.map { |each| Product[self, each].simplify }]
+      if other.is_a?(Matrix)
+        other.map { |each| Product[self, each].simplify }
       else
         Product[self, other]
       end

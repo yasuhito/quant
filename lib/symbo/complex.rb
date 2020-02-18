@@ -54,12 +54,7 @@ class Complex
   end
 
   def *(other)
-    case other
-    when Quant::Qubit
-      other * self
-    else
-      mult other
-    end
+    mult other
   rescue TypeError
     Symbo::Product[self, other]
   end

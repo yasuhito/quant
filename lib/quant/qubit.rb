@@ -4,53 +4,60 @@ require 'matrix'
 require 'symbo'
 
 module Quant
-  class Qubit
+  class Qubit < Matrix
     include Symbo
+    extend Symbo
 
     using Symbo
 
     def self.[](*state_or_value)
-      if state_or_value.length == 2
-        new(*state_or_value)
-      elsif state_or_value == [0]
-        new 1, 0
-      elsif state_or_value == [1]
-        new 0, 1
-      elsif state_or_value == ['+']
-        new 2**(-1/2), 2**(-1/2)
-      elsif state_or_value == ['-']
-        new 2**(-1/2), -2**(-1/2)
-      elsif state_or_value == ['i']
-        new 2**(-1/2), 1i * 2**(-1/2)
-      elsif state_or_value == ['-i']
-        new 2**(-1/2), -1i * 2**(-1/2)
-      else
-        raise
-      end
-    end
-
-    def initialize(*state)
-      @state = state
+      rows = if state_or_value.length == 2
+               state_or_value
+             elsif state_or_value == ['0']
+               [1, 0]
+             elsif state_or_value == ['1']
+               [0, 1]
+             elsif state_or_value == ['+']
+               [1/√(2), 1/√(2)]
+             elsif state_or_value == ['-']
+               [1/√(2), -1/√(2)]
+             elsif state_or_value == ['i']
+               [1/√(2), 1i/√(2)]
+             elsif state_or_value == ['-i']
+               [1/√(2), -1i/√(2)]
+             else
+               raise "Invalid qubit state: #{state_or_value}"
+             end
+      super(*rows.map { |each| [each.simplify] })
     end
 
     def -@
-      @state.map { |each| Product[-1, each].simplify }
+      map { |each| Product[-1, each].simplify }
     end
 
-    def *(other)
-      if other.is_a?(Qubit)
-        (bra * other.ket.t)[0, 0]
-      else
-        @state.map { |each| Product[each, other].simplify }
+    def +(other)
+      super(other).map(&:simplify)
+    end
+
+    def -(other)
+      raise unless other.is_a?(Qubit) && row_size == other.row_size
+
+      rows = (0...row_size).map do |each|
+        Sum[self[each, 0], Product[-1, other[each, 0]]].simplify
       end
+      Qubit[*rows]
     end
 
     def bra
-      Matrix[@state.map(&:conj)]
+      map(&:conjugate).t
     end
 
     def ket
-      Matrix[@state]
+      self
+    end
+
+    def state
+      map(&:simplify)
     end
 
     def tensor_product(other)
@@ -61,22 +68,6 @@ module Quant
           self[1] * other[row % 2]
         end
       end
-    end
-
-    def state
-      @state.map(&:simplify)
-    end
-
-    def [](index)
-      @state[index]
-    end
-
-    def to_a
-      @state
-    end
-
-    def ==(other)
-      to_a == other.to_a
     end
   end
 end

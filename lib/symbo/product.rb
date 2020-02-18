@@ -119,8 +119,10 @@ module Symbo
       elsif (v.is_a?(Integer) || v.is_a?(Complex)) && w.fraction?
         if w.denominator == 1
           v.numerator.mult w.numerator
+        elsif w.numerator == 1
+          Fraction[v, w.denominator]
         else
-          Fraction[v.numerator.mult(w.numerator), w.denominator]
+          Fraction[v.mult(w.numerator), w.denominator]
         end
       elsif v.is_a?(Fraction) && (w.is_a?(Integer) || w.is_a?(Complex))
         if v.numerator.integer? && v.denominator.integer?
@@ -134,8 +136,7 @@ module Symbo
           Fraction[(v.numerator * w).simplify, v.denominator]
         end
       elsif v.fraction? && w.fraction?
-        Fraction[Product[v.numerator, w.numerator].simplify,
-                 Product[v.denominator, w.denominator].evaluate].evaluate
+        Fraction[Product[v.numerator, w.numerator].simplify, Product[v.denominator, w.denominator].simplify].evaluate
       elsif v.power? && w.power?
         Product[v, w].simplify.evaluate
       else
