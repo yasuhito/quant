@@ -13,7 +13,11 @@ module Symbo
     end
 
     def *(other)
-      Product[self, other]
+      if other.respond_to?(:to_a)
+        other.class[*other.to_a.map { |each| Product[self, each].simplify }]
+      else
+        Product[self, other]
+      end
     end
 
     def /(other)

@@ -9,7 +9,7 @@ module Quant
     include Symbo
 
     test 'H|0> = |+>' do
-      circuit = Circuit.new(1)
+      circuit = Circuit.new(Qubit[0])
 
       assert_equal [Qubit['+']], circuit.h(0).state
     end

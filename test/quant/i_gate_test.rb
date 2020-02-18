@@ -7,7 +7,7 @@ require 'quant/circuit'
 module Quant
   class IGateTest < ActiveSupport::TestCase
     test 'I|0> = |0>' do
-      circuit = Circuit.new(1)
+      circuit = Circuit.new(Qubit[0])
 
       assert_equal [Qubit[0]], circuit.i(0).state
     end

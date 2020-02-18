@@ -7,7 +7,7 @@ require 'quant/circuit'
 module Quant
   class YGateTest < ActiveSupport::TestCase
     test 'Y|0> = i|1>' do
-      circuit = Circuit.new(1)
+      circuit = Circuit.new(Qubit[0])
 
       assert_equal [1i * Qubit[1]], circuit.y(0).state
     end

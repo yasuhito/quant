@@ -8,7 +8,7 @@ module Quant
   class XGateTest
     class BasicQubitTransitionTest < ActiveSupport::TestCase
       test 'X|0> = |1>' do
-        circuit = Circuit.new(1)
+        circuit = Circuit.new(Qubit[0])
 
         assert_equal [Qubit[1]], circuit.x(0).state
       end
