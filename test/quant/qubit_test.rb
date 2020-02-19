@@ -21,5 +21,13 @@ module Quant
 
       assert_equal 8 + 4i, (ket1 * ket2)[0, 0]
     end
+
+    test "Qubit['0'] in ket string" do
+      assert_equal '|0>', Qubit['0'].to_s
+    end
+
+    test "Qubit['1'] in ket string" do
+      assert_equal '|1>', Qubit['1'].to_s
+    end
   end
 end

@@ -69,5 +69,13 @@ module Quant
         end
       end
     end
+
+    def to_s
+      if self == Matrix[[1], [0]]
+        '|0>'
+      elsif self == Matrix[[0], [1]]
+        '|1>'
+      end
+    end
   end
 end
