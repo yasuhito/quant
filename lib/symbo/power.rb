@@ -104,6 +104,10 @@ module Symbo
       end
     end
 
+    def to_s
+      "#{base}^(#{exponent})"
+    end
+
     protected
 
     # :section: Simplification Methods

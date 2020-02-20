@@ -39,6 +39,20 @@ module Symbo
         true
       end
     end
+
+    def to_s
+      if real.zero?
+        if imag == 1
+          'i'
+        else
+          "#{imag}i"
+        end
+      elsif imag == 1
+        "(#{real} + i)"
+      else
+        "(#{real} + #{imag}i)"
+      end
+    end
   end
 end
 
