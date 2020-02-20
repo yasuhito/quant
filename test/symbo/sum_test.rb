@@ -9,21 +9,21 @@ module Symbo
     using Symbo
 
     class PowerTransformationTest < ActiveSupport::TestCase
-      test 'Sum#base # => Sum' do
+      test 'Sum#base → Sum' do
         assert_equal (:x + :y), (:x + :y).base
       end
 
-      test 'Sum#exponent # => 1' do
+      test 'Sum#exponent → 1' do
         assert_equal 1, (:x + :y).exponent
       end
     end
 
     class BasicDistributiveTransformationTest < ActiveSupport::TestCase
-      test 'Sum#term # => Product[Sum]' do
+      test 'Sum#term → Product[Sum]' do
         assert_equal Product[:x + :y], (:x + :y).term
       end
 
-      test 'Sum#const # => 1' do
+      test 'Sum#const → 1' do
         assert_equal 1, (:x + :y).const
       end
     end
@@ -82,6 +82,32 @@ module Symbo
       test '(a + c + e) + (a - c + d + f) → 2a + d + e + f' do
         assert_equal Sum[Product[2, :a], :d, :e, :f],
                      Sum[Sum[:a, :c, :e], Sum[:a, Product[-1, :c], :d, :f]].simplify
+      end
+    end
+
+    class ToStringTest < ActiveSupport::TestCase
+      test 'Sum[:a, :b, :c, :d].to_s → a + b + c + d' do
+        assert_equal 'a + b + c + d', Sum[:a, :b, :c, :d].to_s
+      end
+
+      test 'Sum[Sum[:a, :b, :c], Sum[:d, :e, :f]].to_s → (a + b + c) + (d + e + f)' do
+        assert_equal '(a + b + c) + (d + e + f)', Sum[Sum[:a, :b, :c], Sum[:d, :e, :f]].to_s
+      end
+
+      test 'Sum[Sum[:a, :b, :c], Product[:d, :e, :f]].to_s → (a + b + c) + (d*e*f)' do
+        assert_equal '(a + b + c) + (d*e*f)', Sum[Sum[:a, :b, :c], Product[:d, :e, :f]].to_s
+      end
+
+      test 'Sum[1/0, 2].to_s → 1/0 + 2' do
+        assert_equal '1/0 + 2', Sum[1/0, 2].to_s
+      end
+
+      test 'Sum[:a, Sum[2]].to_s → a + 2' do
+        assert_equal 'a + 2', Sum[:a, Sum[2]].to_s
+      end
+
+      test 'Sum[:a, :b, Product[-1, :a]].to_s → a + b - a' do
+        assert_equal 'a + b - a', Sum[:a, :b, Product[-1, :a]].to_s
       end
     end
   end

@@ -99,7 +99,7 @@ module Quant
     end
 
     def to_s
-      "|#{@qubits.map(&:to_s).join}>"
+      @qubits.map(&:to_s).join
     end
   end
 end

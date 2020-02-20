@@ -95,3 +95,10 @@ module Symbo
     end
   end
 end
+
+# Matrix などの中で使われる Symbol#+ などをハイジャック
+class Symbol
+  def +(other)
+    Symbo::Sum[self, other]
+  end
+end

@@ -144,6 +144,29 @@ module Symbo
       end
     end
 
+    def to_s
+      if length == 2 && operand(0) == -1
+        "-#{operand(1)}"
+      else
+        @operands.map do |each|
+          case each
+          when Sum
+            "(#{each})"
+          when Product
+            if each.length == 2 && each.operand(0) == -1
+              "(-#{each.operand(1)})"
+            elsif each.length > 1
+              "(#{each})"
+            else
+              each.to_s
+            end
+          else
+            each.to_s
+          end
+        end.join('*')
+      end
+    end
+
     protected
 
     def _simplify

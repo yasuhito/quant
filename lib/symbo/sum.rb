@@ -131,6 +131,28 @@ module Symbo
       self
     end
 
+    def to_s
+      elements = @operands.map do |each|
+        case each
+        when Sum
+          if each.length > 1
+            [' + ', "(#{each})"]
+          else
+            [' + ', each.to_s]
+          end
+        when Product
+          if each.length == 2 && each.operand(0) == -1
+            [' - ', each.operand(1).to_s]
+          else
+            [' + ', "(#{each})"]
+          end
+        else
+          [' + ', each.to_s]
+        end
+      end
+      elements.flatten[1..-1].join
+    end
+
     protected
 
     def _simplify

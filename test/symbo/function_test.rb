@@ -12,11 +12,11 @@ module Symbo
     using Symbo
 
     class PowerTransformationTest < ActiveSupport::TestCase
-      test 'Function#base # => Function' do
+      test 'Function#base → Function' do
         assert_equal Function[:f, :x], Function[:f, :x].base
       end
 
-      test 'Function#exponent # => 1' do
+      test 'Function#exponent → 1' do
         assert_equal 1, Function[:f, :x].exponent
       end
     end

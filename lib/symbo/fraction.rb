@@ -140,6 +140,10 @@ module Symbo
       false
     end
 
+    def to_s
+      "#{operand(0)}/#{operand(1)}"
+    end
+
     protected
 
     def _simplify

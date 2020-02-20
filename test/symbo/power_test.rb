@@ -9,21 +9,21 @@ module Symbo
     using Symbo
 
     class PowerTransformationTest < ActiveSupport::TestCase
-      test 'Power#base # => Power#operands[0]' do
+      test 'Power#base → Power#operands[0]' do
         assert_equal :x, (:x**2).base
       end
 
-      test 'Power#exponent # => Power#operands[1]' do
+      test 'Power#exponent → Power#operands[1]' do
         assert_equal 2, (:x**2).exponent
       end
     end
 
     class BasicDistributiveTransformationTest < ActiveSupport::TestCase
-      test 'Power#term # => Product[Power]' do
+      test 'Power#term → Product[Power]' do
         assert_equal Product[:x**2], (:x**2).term
       end
 
-      test 'Product#const # => 1' do
+      test 'Product#const → 1' do
         assert_equal 1, (:x**2).const
       end
     end

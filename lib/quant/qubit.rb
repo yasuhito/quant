@@ -75,6 +75,10 @@ module Quant
         '|0>'
       elsif self == Matrix[[0], [1]]
         '|1>'
+      elsif self[1, 0].to_s[0] == '-'
+        "#{self[0, 0]}|0> - #{self[1, 0].to_s[1..-1]}|1>"
+      else
+        "#{self[0, 0]}|0> + #{self[1, 0]}|1>"
       end
     end
   end

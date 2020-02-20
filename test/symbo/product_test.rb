@@ -9,37 +9,37 @@ module Symbo
     using Symbo
 
     class PowerTransformationTest < ActiveSupport::TestCase
-      test 'Product#base # => Product' do
+      test 'Product#base → Product' do
         assert_equal (:x * :y), (:x * :y).base
       end
 
-      test 'Product#exponent # => 1' do
+      test 'Product#exponent → 1' do
         assert_equal 1, (:x * :y).exponent
       end
     end
 
     class BasicDistributiveTransformationTest < ActiveSupport::TestCase
-      test '(2·x·y·z).term # => x·y·z' do
+      test '(2·x·y·z).term → x·y·z' do
         assert_equal Product[:x, :y, :z], Product[2, :x, :y, :z].term
       end
 
-      test '(1/3·x·y·z).term # => x·y·z' do
+      test '(1/3·x·y·z).term → x·y·z' do
         assert_equal Product[:x, :y, :z], Product[1/3, :x, :y, :z].term
       end
 
-      test '(x·y·z).term # => x·y·z' do
+      test '(x·y·z).term → x·y·z' do
         assert_equal Product[:x, :y, :z], Product[:x, :y, :z].term
       end
 
-      test '(2·x·y·z).const # => 2' do
+      test '(2·x·y·z).const → 2' do
         assert_equal 2, Product[2, :x, :y, :z].const
       end
 
-      test '(1/3·x·y·z).const # => 1/3' do
+      test '(1/3·x·y·z).const → 1/3' do
         assert_equal 1/3, Product[1/3, :x, :y, :z].const
       end
 
-      test '(x·y·z).const # => 1' do
+      test '(x·y·z).const → 1' do
         assert_equal 1, Product[:x, :y, :z].const
       end
     end
@@ -103,6 +103,32 @@ module Symbo
       test '(a·c·e)·(a·c^(-1)·d·f) → a^2·d·e·f' do
         assert_equal Product[:a**2, :d, :e, :f],
                      Product[Product[:a, :c, :e], Product[:a, :c**-1, :d, :f]].simplify
+      end
+    end
+
+    class ToStringTest < ActiveSupport::TestCase
+      test 'Product[:a, :b, :c].to_s → a*b*c' do
+        assert_equal 'a*b*c', Product[:a, :b, :c].to_s
+      end
+
+      test 'Product[Product[:a, :b, :c], Product[:x, :y, :z]].to_s → (a*b*c)*(x*y*z)' do
+        assert_equal '(a*b*c)*(x*y*z)', Product[Product[:a, :b, :c], Product[:x, :y, :z]].to_s
+      end
+
+      test 'Product[Product[:a, :b, :c], Sum[:x, :y, :z]].to_s → (a*b*c)*(x + y + z)' do
+        assert_equal '(a*b*c)*(x + y + z)', Product[Product[:a, :b, :c], Sum[:x, :y, :z]].to_s
+      end
+
+      test 'Product[1/0, 2].to_s → 1/0*2' do
+        assert_equal '1/0*2', Product[1/0, 2].to_s
+      end
+
+      test 'Product[:a, Product[2]].to_s → a*2' do
+        assert_equal 'a*2', Product[:a, Product[2]].to_s
+      end
+
+      test 'Product[:a, :b, Product[-1, :a]].to_s → a*b*(-a)' do
+        assert_equal 'a*b*(-a)', Product[:a, :b, Product[-1, :a]].to_s
       end
     end
   end
