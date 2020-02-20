@@ -45,13 +45,5 @@ module Quant
         assert_equal [-1i * Qubit['i']], circuit.x(0).state
       end
     end
-
-    class QuantumKatasTest < ActiveSupport::TestCase
-      test 'X gate flips qubit state' do
-        circuit = Circuit.new(Qubit[:α, :β])
-
-        assert_equal [Qubit[:β, :α]], circuit.x(0).state
-      end
-    end
   end
 end
