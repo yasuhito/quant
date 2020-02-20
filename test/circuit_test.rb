@@ -45,6 +45,7 @@ module Quant
       circuit = Circuit.new(:β * Qubit['0'] + :γ * Qubit['1'])
 
       assert_equal [:β * Qubit['0'] + E**(1i * :α) * :γ * Qubit['1']], circuit.r1(0, theta: :α).state
+      assert_equal 'β|0> + E^(α*i)*γ|1>', circuit.r1(0, theta: :α).to_s
     end
 
     test 'Global phase change' do

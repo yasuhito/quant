@@ -35,6 +35,8 @@ module Symbo
       case other
       when Integer
         false
+      when Symbol
+        other == PI
       else
         true
       end
