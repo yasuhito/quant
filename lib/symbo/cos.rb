@@ -6,11 +6,11 @@ module Symbo
   class Cos < TrigonometricFunction
     using Symbo
 
-    def self.[](x)
+    def self.[](x) # rubocop:disable Naming/MethodParameterName
       new(x)
     end
 
-    def initialize(x)
+    def initialize(x) # rubocop:disable Naming/MethodParameterName
       super :cos, x
     end
 

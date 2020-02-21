@@ -5,14 +5,12 @@ require 'symbo/power'
 
 module Symbo
   class Sqrt
-    def self.[](x)
+    def self.[](x) # rubocop:disable Naming/MethodParameterName
       Symbo::Power[x, Symbo::Fraction[1, 2]]
     end
   end
 
-  # rubocop:disable Naming/MethodName, Naming/BinaryOperatorParameterName
-  def √(x)
+  def √(x) # rubocop:disable Naming/MethodName, Naming/BinaryOperatorParameterName, Naming/MethodParameterName
     Sqrt[x]
   end
-  # rubocop:enable Naming/MethodName, Naming/BinaryOperatorParameterName
 end

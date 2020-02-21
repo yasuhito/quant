@@ -171,7 +171,7 @@ module Symbo
 
     private
 
-    def simplify_rec(l)
+    def simplify_rec(l) # rubocop:disable Naming/MethodParameterName
       if l.size == 2 && l.none?(&:sum?)
         if l.all?(&:constant?)
           p = Sum[*l].simplify_rne
@@ -235,7 +235,7 @@ module Symbo
       end
     end
 
-    def merge_sums(p, q)
+    def merge_sums(p, q) # rubocop:disable Naming/MethodParameterName
       if q.empty?
         p
       elsif p.empty?

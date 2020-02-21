@@ -36,9 +36,5 @@ Metrics/CyclomaticComplexity:
 Metrics/PerceivedComplexity:
   Enabled: false
 
-# メソッドのパラメータに x のような短い名前を使う
-Naming/MethodParameterName:
-  Enabled: false
-
 Naming/AsciiIdentifiers:
   Enabled: false

@@ -85,7 +85,7 @@ module Symbo
     # :section: Operand Methods
 
     # Returns nth operand
-    def operand(n)
+    def operand(n) # rubocop:disable Naming/MethodParameterName
       @operands[n]
     end
 

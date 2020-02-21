@@ -189,7 +189,7 @@ module Symbo
     # l = [u1, u2,...,un] be a non-empty list with n ≥ 2 non-zero ASAEs.
     # Returns a list with zero or more operands that satisfy the condition of
     # ASAE-4.
-    def simplify_rec(l)
+    def simplify_rec(l) # rubocop:disable Naming/MethodParameterName
       if l.size == 2 && l.none?(&:product?) # SPRDREC-1
         if l.all?(&:constant?) # SPRDREC-1-1
           p = Product[*l].simplify_rne
@@ -248,7 +248,7 @@ module Symbo
       end
     end
 
-    def merge_products(p, q)
+    def merge_products(p, q) # rubocop:disable Naming/MethodParameterName
       if q.empty? # MPRD-1
         p
       elsif p.empty? # MPRD-2
