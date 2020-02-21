@@ -95,7 +95,7 @@ module Symbo
       end
 
       test 'Sum[Sum[:a, :b, :c], Product[:d, :e, :f]].to_s → (a + b + c) + (d*e*f)' do
-        assert_equal '(a + b + c) + (d*e*f)', Sum[Sum[:a, :b, :c], Product[:d, :e, :f]].to_s
+        assert_equal '(a + b + c) + d*e*f', Sum[Sum[:a, :b, :c], Product[:d, :e, :f]].to_s
       end
 
       test 'Sum[1/0, 2].to_s → 1/0 + 2' do

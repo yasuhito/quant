@@ -71,15 +71,38 @@ module Quant
     end
 
     def to_s
-      if self == Matrix[[1], [0]]
-        '|0>'
-      elsif self == Matrix[[0], [1]]
-        '|1>'
-      elsif self[1, 0].to_s[0] == '-'
-        "#{self[0, 0]}|0> - #{self[1, 0].to_s[1..-1]}|1>"
-      else
-        "#{self[0, 0]}|0> + #{self[1, 0]}|1>"
-      end
+      return '|0>' if self == Matrix[[1], [0]]
+      return '|1>' if self == Matrix[[0], [1]]
+
+      coefficient0 = if self[0, 0].length == 1
+                       self[0, 0].to_s
+                     elsif self[0, 0].length > 1 && !self[0, 0].product?
+                       "(#{self[0, 0]})"
+                     elsif self[0, 0].product? && self[0, 0].operand(0) == -1 && self[0, 0].length > 2
+                       "(#{self[0, 0]})"
+                     elsif self[0, 0].product? && self[0, 0].operand(0) == -1 && self[0, 0].length == 2
+                       (self[0, 0]).to_s
+                     end
+
+      operator = if self[1, 0].product? && self[1, 0].operand(0) == -1
+                   '-'
+                 else
+                   '+'
+                 end
+
+      coefficient1 = if self[1, 0].length == 1
+                       self[1, 0].to_s
+                     elsif self[1, 0].length > 1 && !self[1, 0].product?
+                       "(#{self[1, 0]})"
+                     elsif self[1, 0].product? && self[1, 0].operand(0) != -1 && self[1, 0].length > 1
+                       self[1, 0].to_s
+                     elsif self[1, 0].product? && self[1, 0].operand(0) == -1 && self[1, 0].length > 2
+                       "(#{self[1, 0].to_s[1..-1]})"
+                     elsif self[1, 0].product? && self[1, 0].operand(0) == -1 && self[1, 0].length == 2
+                       self[1, 0].to_s[1..-1].to_s
+                     end
+
+      "#{coefficient0}|0> #{operator} #{coefficient1}|1>"
     end
   end
 end

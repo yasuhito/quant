@@ -14,6 +14,10 @@ module Symbo
       super :cos, x
     end
 
+    def to_s
+      "cos(#{operand(1)})"
+    end
+
     protected
 
     def _simplify

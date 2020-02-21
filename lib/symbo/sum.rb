@@ -141,10 +141,10 @@ module Symbo
             [' + ', each.to_s]
           end
         when Product
-          if each.length == 2 && each.operand(0) == -1
-            [' - ', each.operand(1).to_s]
+          if each.length > 1 && each.operand(0) == -1
+            [' - ', Product[*each.operands[1..-1]].to_s]
           else
-            [' + ', "(#{each})"]
+            [' + ', each.to_s]
           end
         else
           [' + ', each.to_s]
