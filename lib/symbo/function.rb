@@ -81,6 +81,8 @@ module Symbo
     # 次のルールで比較
     #
     #   !other.compare(self)
+    #
+    # rubocop:disable Metrics/PerceivedComplexity
     def compare(other)
       case other
       when Function
@@ -107,5 +109,6 @@ module Symbo
         !other.compare(self)
       end
     end
+    # rubocop:enable Metrics/PerceivedComplexity
   end
 end

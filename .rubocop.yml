@@ -32,9 +32,5 @@ Metrics/AbcSize:
 Metrics/CyclomaticComplexity:
   Enabled: false
 
-# 複雑なメソッド OK
-Metrics/PerceivedComplexity:
-  Enabled: false
-
 Naming/AsciiIdentifiers:
   Enabled: false

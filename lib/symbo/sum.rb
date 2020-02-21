@@ -92,6 +92,7 @@ module Symbo
 
     # :section:
 
+    # rubocop:disable Metrics/PerceivedComplexity
     def evaluate
       v = @operands[0].evaluate
 
@@ -126,6 +127,7 @@ module Symbo
         end
       end
     end
+    # rubocop:enable Metrics/PerceivedComplexity
 
     def simplify_rational_number
       self
@@ -171,6 +173,7 @@ module Symbo
 
     private
 
+    # rubocop:disable Metrics/PerceivedComplexity
     def simplify_rec(l) # rubocop:disable Naming/MethodParameterName
       if l.size == 2 && l.none?(&:sum?)
         if l.all?(&:constant?)
@@ -215,7 +218,9 @@ module Symbo
         end
       end
     end
+    # rubocop:enable Metrics/PerceivedComplexity
 
+    # rubocop:disable Metrics/PerceivedComplexity
     def simplify_rne_rec
       if length == 1
         v = operand(0).simplify_rne_rec
@@ -234,7 +239,9 @@ module Symbo
         end
       end
     end
+    # rubocop:enable Metrics/PerceivedComplexity
 
+    # rubocop:disable Metrics/PerceivedComplexity
     def merge_sums(p, q) # rubocop:disable Naming/MethodParameterName
       if q.empty?
         p
@@ -255,5 +262,6 @@ module Symbo
         end
       end
     end
+    # rubocop:enable Metrics/PerceivedComplexity
   end
 end

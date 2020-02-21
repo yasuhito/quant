@@ -10,6 +10,7 @@ module Quant
 
     using Symbo
 
+    # rubocop:disable Metrics/PerceivedComplexity
     def self.[](*state_or_value)
       rows = if state_or_value.length == 2
                state_or_value
@@ -30,6 +31,7 @@ module Quant
              end
       super(*rows.map { |each| [each.simplify] })
     end
+    # rubocop:enable Metrics/PerceivedComplexity
 
     def -@
       map { |each| Product[-1, each].simplify }
@@ -70,6 +72,7 @@ module Quant
       end
     end
 
+    # rubocop:disable Metrics/PerceivedComplexity
     def to_s
       return '|0>' if self == Matrix[[1], [0]]
       return '|1>' if self == Matrix[[0], [1]]
@@ -104,5 +107,6 @@ module Quant
 
       "#{coefficient0}|0> #{operator} #{coefficient1}|1>"
     end
+    # rubocop:enable Metrics/PerceivedComplexity
   end
 end

@@ -106,6 +106,8 @@ module Symbo
     # :section:
 
     # v * w
+    #
+    # rubocop:disable Metrics/PerceivedComplexity
     def evaluate
       v = @operands[0]
       w = @operands[1]
@@ -143,7 +145,9 @@ module Symbo
         Product[v.simplify, w.simplify]
       end
     end
+    # rubocop:enable Metrics/PerceivedComplexity
 
+    # rubocop:disable Metrics/PerceivedComplexity
     def to_s
       if length == 2 && operand(0) == -1
         "-#{operand(1)}"
@@ -166,6 +170,7 @@ module Symbo
         end.join('*')
       end
     end
+    # rubocop:enable Metrics/PerceivedComplexity
 
     protected
 
@@ -189,51 +194,47 @@ module Symbo
     # l = [u1, u2,...,un] be a non-empty list with n ≥ 2 non-zero ASAEs.
     # Returns a list with zero or more operands that satisfy the condition of
     # ASAE-4.
+    #
+    # rubocop:disable Metrics/PerceivedComplexity
     def simplify_rec(l) # rubocop:disable Naming/MethodParameterName
+      u1 = l[0]
+      u2 = l[1]
+
       if l.size == 2 && l.none?(&:product?) # SPRDREC-1
         if l.all?(&:constant?) # SPRDREC-1-1
           p = Product[*l].simplify_rne
-          if p == 1
-            []
-          else
-            [p]
-          end
-        elsif l[0] == 1 # SPRDREC-1-2
-          [l[1]]
-        elsif l[1] == 1
-          [l[0]]
-        elsif l[0].base == l[1].base && l[0].base != UNDEFINED # SPRDREC-1-3
-          s = Sum[l[0].exponent, l[1].exponent].simplify
-          p = Power[l[0].base, s].simplify
-          if p == 1
-            []
-          else
-            [p]
-          end
-        elsif l[1].compare(l[0]) # SPRDREC-1-4
-          [l[1], l[0]]
-        elsif l[1].is_a?(Quant::ColumnVector)
-          [l[1].map { |each| Product[l[0], each].simplify }]
+          p == 1 ? [] : [p]
+        elsif u1 == 1 # SPRDREC-1-2
+          [u2]
+        elsif u2 == 1
+          [u1]
+        elsif u1.base == u2.base # SPRDREC-1-3
+          s = Sum[u1.exponent, u2.exponent].simplify
+          p = Power[u1.base, s].simplify
+          p == 1 ? [] : [p]
+        elsif u2.compare(u1) # SPRDREC-1-4
+          [u2, u1]
         else # SPRDREC-1-5
           l
         end
       elsif l.size == 2 && l.any?(&:product?) # SPRDREC-2
-        if l[0].product? && l[1].product? # SPRDREC-2-1
-          merge_products l[0].operands, l[1].operands
-        elsif l[0].product? # SPRDREC-2-2
-          merge_products l[0].operands, [l[1]]
+        if u1.product? && u2.product? # SPRDREC-2-1
+          merge_products u1.operands, u2.operands
+        elsif u1.product? # SPRDREC-2-2
+          merge_products u1.operands, [u2]
         else # SPRDREC-2-3
-          merge_products [l[0]], l[1].operands
+          merge_products [u1], u2.operands
         end
       else # SPRDREC-3
         w = simplify_rec(l[1..-1])
-        if l[0].product? # SPRDREC-3-1
-          merge_products l[0].operands, w
+        if u1.product? # SPRDREC-3-1
+          merge_products u1.operands, w
         else # SPRDREC-3-2
-          merge_products [l[0]], w
+          merge_products [u1], w
         end
       end
     end
+    # rubocop:enable Metrics/PerceivedComplexity
 
     def simplify_rne_rec
       raise unless length == 2
@@ -248,6 +249,7 @@ module Symbo
       end
     end
 
+    # rubocop:disable Metrics/PerceivedComplexity
     def merge_products(p, q) # rubocop:disable Naming/MethodParameterName
       if q.empty? # MPRD-1
         p
@@ -268,5 +270,6 @@ module Symbo
         end
       end
     end
+    # rubocop:enable Metrics/PerceivedComplexity
   end
 end

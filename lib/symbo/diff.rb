@@ -6,6 +6,7 @@ module Symbo
   class Diff < Expression
     using Symbo
 
+    # rubocop:disable Metrics/PerceivedComplexity
     def evaluate
       v = operand(0).simplify
 
@@ -25,5 +26,6 @@ module Symbo
         end
       end
     end
+    # rubocop:enable Metrics/PerceivedComplexity
   end
 end

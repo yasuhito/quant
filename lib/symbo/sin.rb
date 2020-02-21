@@ -20,6 +20,7 @@ module Symbo
 
     protected
 
+    # rubocop:disable Metrics/PerceivedComplexity
     def _simplify
       if x.zero?
         0
@@ -35,6 +36,7 @@ module Symbo
         self
       end
     end
+    # rubocop:enable Metrics/PerceivedComplexity
 
     private
 
