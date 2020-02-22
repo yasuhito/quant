@@ -116,38 +116,14 @@ module Symbo
     # rubocop:disable Metrics/PerceivedComplexity
     # rubocop:disable Metrics/CyclomaticComplexity
     def evaluate
-      v = @operands[0]
-      w = @operands[1]
+      v = operand(0)
+      w = operand(1)
 
-      if v == UNDEFINED || w == UNDEFINED
-        UNDEFINED
-      elsif v.is_a?(Integer) && (w.is_a?(Integer) || w.is_a?(Complex))
+      if (v.integer? || v.complex?) && (w.integer? || w.complex?)
         v.mult w
-      elsif v.is_a?(Complex) && (w.is_a?(Integer) || w.is_a?(Complex))
-        v.mult w
-      elsif (v.is_a?(Integer) || v.is_a?(Complex)) && w.fraction?
-        if w.denominator == 1
-          v.numerator.mult w.numerator
-        elsif w.numerator == 1
-          Fraction[v, w.denominator]
-        else
-          Fraction[v.mult(w.numerator), w.denominator]
-        end
-      elsif v.is_a?(Fraction) && (w.is_a?(Integer) || w.is_a?(Complex))
-        if v.numerator.integer? && v.denominator.integer?
-          p = v.rational * w
-          if p.denominator == 1
-            p.numerator
-          else
-            Fraction[p.numerator, p.denominator]
-          end
-        else
-          Fraction[(v.numerator * w).simplify, v.denominator]
-        end
-      elsif v.fraction? && w.fraction?
-        Fraction[Product[v.numerator, w.numerator].simplify, Product[v.denominator, w.denominator].simplify].evaluate
-      elsif v.power? && w.power?
-        Product[v, w].simplify.evaluate
+      elsif v.constant? && w.constant?
+        Fraction[Product[v.numerator, w.numerator].simplify,
+                 Product[v.denominator, w.denominator].simplify].evaluate
       else
         Product[v.simplify, w.simplify]
       end
@@ -240,8 +216,6 @@ module Symbo
     # rubocop:enable Metrics/CyclomaticComplexity
 
     def simplify_rne_rec
-      raise unless length == 2
-
       v = operand(0).simplify_rne_rec
       w = operand(1).simplify_rne_rec
 

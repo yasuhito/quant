@@ -40,6 +40,10 @@ module Symbo
       end
     end
 
+    def complex?
+      true
+    end
+
     def to_s
       if real.zero?
         if imag == 1

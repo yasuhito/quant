@@ -12,6 +12,10 @@ module Symbo
       false
     end
 
+    def complex?
+      false
+    end
+
     def fraction?
       false
     end
