@@ -13,6 +13,6 @@ group :development, :test do
 end
 
 group :test do
-  gem 'simplecov', require: false
-  gem 'simplecov-html', '~> 0.11.0'
+  gem 'simplecov', '~> 0.17.1', require: false
+  gem 'simplecov-html', '~> 0.10.0'
 end
