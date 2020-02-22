@@ -76,12 +76,11 @@ module Symbo
         m = length
         n = other.length
         if [m, n].min >= 2
-          0.upto([m, n].min - 2) do |j|
-            return @operands[m - j - 2].compare(other.operand(n - j - 2)) if @operands[m - j - 1] == other.operand(n - j - 1) && @operands[m - j - 2] != other.operand(n - j - 2)
+          1.upto([m, n].min) do |j|
+            return operand(m - j).compare(other.operand(n - j)) if operand(m - j) != other.operand(n - j)
           end
         end
-
-        m.compare(n)
+        m < n
       when Factorial, Function, Symbol
         compare Sum[other]
       else
@@ -102,36 +101,25 @@ module Symbo
     # rubocop:disable Metrics/CyclomaticComplexity
     def evaluate
       v = @operands[0].evaluate
+      w = @operands[1].evaluate
 
-      if length == 1
-        if v == UNDEFINED
-          UNDEFINED
+      if v.fraction? && w.fraction?
+        if v.denominator == w.denominator
+          Fraction[Sum[v.numerator, w.numerator].simplify, v.denominator.simplify].simplify
         else
-          v
+          Fraction[Sum[Product[v.numerator, w.denominator].evaluate, Product[w.numerator, v.denominator].evaluate].evaluate,
+                   Product[v.denominator, w.denominator].evaluate].evaluate
         end
-      elsif length == 2
-        w = @operands[1].evaluate
-
-        if v == UNDEFINED || w == UNDEFINED
-          UNDEFINED
-        elsif v.fraction? && w.fraction?
-          if v.denominator == w.denominator
-            Fraction[Sum[v.numerator, w.numerator].simplify, v.denominator.simplify].simplify
-          else
-            Fraction[Sum[Product[v.numerator, w.denominator].evaluate, Product[w.numerator, v.denominator].evaluate].evaluate,
-                     Product[v.denominator, w.denominator].evaluate].evaluate
-          end
-        elsif v.integer? && (w.integer? || w.is_a?(Complex))
-          v.plus w
-        elsif v.integer? && w.fraction?
-          if v.zero?
-            w
-          else
-            Sum[v, w]
-          end
+      elsif v.integer? && (w.integer? || w.complex?)
+        v.plus w
+      elsif v.integer? && w.fraction?
+        if v.zero?
+          w
         else
-          raise NotImplementedError, "evaluate(#{v.inspect}, #{w.inspect})"
+          Sum[v, w]
         end
+      else
+        Sum[v.simplify, w.simplify]
       end
     end
     # rubocop:enable Metrics/PerceivedComplexity
