@@ -6,7 +6,6 @@ require 'symbo/mergeable'
 require 'symbo/power'
 
 module Symbo
-  # シンボリックな積
   class Product < Expression
     include Mergeable
 
@@ -89,12 +88,11 @@ module Symbo
         m = length
         n = other.length
         if [m, n].min >= 2
-          0.upto([m, n].min - 2) do |j|
-            return @operands[m - j - 2].compare(other.operand(n - j - 2)) if @operands[m - j - 1] == other.operand(n - j - 1) && @operands[m - j - 2] != other.operand(n - j - 2)
+          1.upto([m, n].min) do |j|
+            return operand(m - j).compare(other.operand(n - j)) if operand(m - j) != other.operand(n - j)
           end
         end
-
-        m.compare n
+        m < n
       when Power, Sum, Factorial, Function, Symbol
         compare Product[other]
       else
@@ -134,26 +132,24 @@ module Symbo
     # rubocop:disable Metrics/PerceivedComplexity
     # rubocop:disable Metrics/CyclomaticComplexity
     def to_s
-      if length == 2 && operand(0) == -1
-        "-#{operand(1)}"
-      else
-        @operands.map do |each|
-          case each
-          when Sum
+      return "-#{operand(1)}" if length == 2 && operand(0) == -1
+
+      @operands.map do |each|
+        case each
+        when Sum
+          "(#{each})"
+        when Product
+          if each.length == 2 && each.operand(0) == -1
+            "(-#{each.operand(1)})"
+          elsif each.length > 1
             "(#{each})"
-          when Product
-            if each.length == 2 && each.operand(0) == -1
-              "(-#{each.operand(1)})"
-            elsif each.length > 1
-              "(#{each})"
-            else
-              each.to_s
-            end
           else
             each.to_s
           end
-        end.join('*')
-      end
+        else
+          each.to_s
+        end
+      end.join('*')
     end
     # rubocop:enable Metrics/PerceivedComplexity
     # rubocop:enable Metrics/CyclomaticComplexity
