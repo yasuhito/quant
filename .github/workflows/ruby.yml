@@ -14,7 +14,11 @@ jobs:
       with:
         ruby-version: 2.7.0
     - name: Build and test with Rake
+      env:
+        CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
       run: |
         gem install bundler
         bundle install --jobs 4 --retry 3
+        ./bin/cc-test-reporter before-build
         bundle exec rake
+        ./bin/cc-test-reporter after-build --coverage-input-type simplecov --exit-code $?
