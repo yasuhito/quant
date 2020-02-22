@@ -3,11 +3,14 @@
 require 'symbo/expression'
 require 'symbo/factorial'
 require 'symbo/function'
+require 'symbo/mergeable'
 require 'symbo/product'
 
 module Symbo
   # シンボリックな和
   class Sum < Expression
+    include Mergeable
+
     using Symbo
 
     # :section: Power Transformation Methods
@@ -198,15 +201,15 @@ module Symbo
       in _, _ if l.none?(&:sum?)
         l
       in Sum => u1, Sum => u2
-        merge_sums u1.operands, u2.operands
+        merge u1.operands, u2.operands
       in Sum => u1, u2
-        merge_sums u1.operands, [u2]
+        merge u1.operands, [u2]
       in u1, Sum => u2
-        merge_sums [u1], u2.operands
+        merge [u1], u2.operands
       in Sum => u1, *rest
-        merge_sums u1.operands, simplify_rec(rest)
+        merge u1.operands, simplify_rec(rest)
       in u1, *rest
-        merge_sums [u1], simplify_rec(rest)
+        merge [u1], simplify_rec(rest)
       end
     end
     # rubocop:enable Metrics/PerceivedComplexity
@@ -232,30 +235,5 @@ module Symbo
       end
     end
     # rubocop:enable Metrics/PerceivedComplexity
-
-    # rubocop:disable Metrics/PerceivedComplexity
-    # rubocop:disable Metrics/CyclomaticComplexity
-    def merge_sums(p, q) # rubocop:disable Naming/MethodParameterName
-      if q.empty?
-        p
-      elsif p.empty?
-        q
-      else
-        p1 = p[0]
-        q1 = q[0]
-        h = simplify_rec([p1, q1])
-        if h.empty?
-          merge_sums p[1..-1], q[1..-1]
-        elsif h.size == 1
-          h + merge_sums(p[1..-1], q[1..-1])
-        elsif h == [p1, q1]
-          [p1] + merge_sums(p[1..-1], q)
-        elsif h == [q1, p1]
-          [q1] + merge_sums(p, q[1..-1])
-        end
-      end
-    end
-    # rubocop:enable Metrics/PerceivedComplexity
-    # rubocop:enable Metrics/CyclomaticComplexity
   end
 end

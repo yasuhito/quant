@@ -2,11 +2,14 @@
 
 require 'quant/column_vector'
 require 'symbo/expression'
+require 'symbo/mergeable'
 require 'symbo/power'
 
 module Symbo
   # シンボリックな積
   class Product < Expression
+    include Mergeable
+
     using Symbo
 
     # :section: Power Transformation Methods
@@ -222,15 +225,15 @@ module Symbo
       in _, _ if l.none?(&:product?) # SPRDREC-1-5
         l
       in Product => u1, Product => u2 # SPRDREC-2-1
-        merge_products u1.operands, u2.operands
+        merge u1.operands, u2.operands
       in Product => u1, u2 # SPRDREC-2-2
-        merge_products u1.operands, [u2]
+        merge u1.operands, [u2]
       in u1, Product => u2 # SPRDREC-2-3
-        merge_products [u1], u2.operands
+        merge [u1], u2.operands
       in Product => u1, *rest # SPRDREC-3-1
-        merge_products u1.operands, simplify_rec(rest)
+        merge u1.operands, simplify_rec(rest)
       in u1, *rest # SPRDREC-3-2
-        merge_products [u1], simplify_rec(rest)
+        merge [u1], simplify_rec(rest)
       end
     end
     # rubocop:enable Metrics/PerceivedComplexity
@@ -248,31 +251,5 @@ module Symbo
         Product[v, w].evaluate
       end
     end
-
-    # rubocop:disable Metrics/PerceivedComplexity
-    # rubocop:disable Metrics/CyclomaticComplexity
-    def merge_products(p, q) # rubocop:disable Naming/MethodParameterName
-      if q.empty? # MPRD-1
-        p
-      elsif p.empty? # MPRD-2
-        q
-      else # MPRD-3
-        p1 = p[0]
-        q1 = q[0]
-        h = simplify_rec([p1, q1])
-        case h
-        in [] # MPRD-3-1
-          merge_products p[1..-1], q[1..-1]
-        in [_] # MPRD-3-2
-          h + merge_products(p[1..-1], q[1..-1])
-        in ^p1, ^q1 # MPRD-3-3
-          [p1] + merge_products(p[1..-1], q)
-        in ^q1, ^p1 # MPRD-3-4
-          [q1] + merge_products(p, q[1..-1])
-        end
-      end
-    end
-    # rubocop:enable Metrics/PerceivedComplexity
-    # rubocop:enable Metrics/CyclomaticComplexity
   end
 end
