@@ -81,6 +81,7 @@ module Symbo
     # :section: Evaluation Methods
 
     # rubocop:disable Metrics/PerceivedComplexity
+    # rubocop:disable Metrics/CyclomaticComplexity
     def evaluate
       raise unless base.constant?
       raise unless exponent.integer?
@@ -105,6 +106,7 @@ module Symbo
       end
     end
     # rubocop:enable Metrics/PerceivedComplexity
+    # rubocop:enable Metrics/CyclomaticComplexity
 
     def to_s
       "#{base}^(#{exponent})"
@@ -115,6 +117,7 @@ module Symbo
     # :section: Simplification Methods
 
     # rubocop:disable Metrics/PerceivedComplexity
+    # rubocop:disable Metrics/CyclomaticComplexity
     def _simplify
       return UNDEFINED if base == UNDEFINED || exponent == UNDEFINED
 
@@ -131,7 +134,9 @@ module Symbo
       self
     end
     # rubocop:enable Metrics/PerceivedComplexity
+    # rubocop:enable Metrics/CyclomaticComplexity
 
+    # rubocop:disable Metrics/CyclomaticComplexity
     def simplify_integer_power
       return Power[base, exponent].simplify_rne if base.constant?
       return 1 if exponent.zero?
@@ -155,10 +160,12 @@ module Symbo
         self
       end
     end
+    # rubocop:enable Metrics/CyclomaticComplexity
 
     # e^ix = cos(x) + sin(x)
     #
     # rubocop:disable Metrics/PerceivedComplexity
+    # rubocop:disable Metrics/CyclomaticComplexity
     def simplify_eulers_formula
       if exponent.product? &&
          exponent.operand(0).is_a?(Complex) && exponent.operand(0).real.zero? &&
@@ -177,6 +184,7 @@ module Symbo
       end
     end
     # rubocop:enable Metrics/PerceivedComplexity
+    # rubocop:enable Metrics/CyclomaticComplexity
 
     def simplify_rne_rec
       v = base.simplify_rne_rec

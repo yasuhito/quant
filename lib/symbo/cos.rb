@@ -21,6 +21,7 @@ module Symbo
     protected
 
     # rubocop:disable Metrics/PerceivedComplexity
+    # rubocop:disable Metrics/CyclomaticComplexity
     def _simplify
       if x.zero?
         1
@@ -37,6 +38,7 @@ module Symbo
       end
     end
     # rubocop:enable Metrics/PerceivedComplexity
+    # rubocop:enable Metrics/CyclomaticComplexity
 
     private
 
@@ -48,6 +50,7 @@ module Symbo
     # Simplification of cos(kπ/n)
     #
     # rubocop:disable Metrics/PerceivedComplexity
+    # rubocop:disable Metrics/CyclomaticComplexity
     def simplify_kn_pi
       k = x.operand(0).numerator
       n = x.operand(0).denominator
@@ -87,5 +90,6 @@ module Symbo
       end
     end
     # rubocop:enable Metrics/PerceivedComplexity
+    # rubocop:enable Metrics/CyclomaticComplexity
   end
 end

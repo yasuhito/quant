@@ -63,6 +63,8 @@ module Symbo
     # 次のルールで比較
     #
     #   !other.compare(self)
+    #
+    # rubocop:disable Metrics/CyclomaticComplexity
     def compare(other)
       case other
       when Sum
@@ -83,6 +85,7 @@ module Symbo
         !other.compare(self)
       end
     end
+    # rubocop:enable Metrics/CyclomaticComplexity
 
     # :section: Expression Type Methods
 
@@ -93,6 +96,7 @@ module Symbo
     # :section:
 
     # rubocop:disable Metrics/PerceivedComplexity
+    # rubocop:disable Metrics/CyclomaticComplexity
     def evaluate
       v = @operands[0].evaluate
 
@@ -128,6 +132,7 @@ module Symbo
       end
     end
     # rubocop:enable Metrics/PerceivedComplexity
+    # rubocop:enable Metrics/CyclomaticComplexity
 
     def simplify_rational_number
       self
@@ -174,6 +179,7 @@ module Symbo
     private
 
     # rubocop:disable Metrics/PerceivedComplexity
+    # rubocop:disable Metrics/CyclomaticComplexity
     def simplify_rec(l) # rubocop:disable Naming/MethodParameterName
       if l.size == 2 && l.none?(&:sum?)
         if l.all?(&:constant?)
@@ -219,6 +225,7 @@ module Symbo
       end
     end
     # rubocop:enable Metrics/PerceivedComplexity
+    # rubocop:enable Metrics/CyclomaticComplexity
 
     # rubocop:disable Metrics/PerceivedComplexity
     def simplify_rne_rec
@@ -242,6 +249,7 @@ module Symbo
     # rubocop:enable Metrics/PerceivedComplexity
 
     # rubocop:disable Metrics/PerceivedComplexity
+    # rubocop:disable Metrics/CyclomaticComplexity
     def merge_sums(p, q) # rubocop:disable Naming/MethodParameterName
       if q.empty?
         p
@@ -263,5 +271,6 @@ module Symbo
       end
     end
     # rubocop:enable Metrics/PerceivedComplexity
+    # rubocop:enable Metrics/CyclomaticComplexity
   end
 end

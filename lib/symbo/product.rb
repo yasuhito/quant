@@ -76,6 +76,8 @@ module Symbo
     # 次のルールで比較
     #
     #   !other.compare(self)
+    #
+    # rubocop:disable Metrics/CyclomaticComplexity
     def compare(other)
       case other
       when Product
@@ -96,6 +98,7 @@ module Symbo
         !other.compare(self)
       end
     end
+    # rubocop:enable Metrics/CyclomaticComplexity
 
     # :section: Expression Type Methods
 
@@ -108,6 +111,7 @@ module Symbo
     # v * w
     #
     # rubocop:disable Metrics/PerceivedComplexity
+    # rubocop:disable Metrics/CyclomaticComplexity
     def evaluate
       v = @operands[0]
       w = @operands[1]
@@ -146,8 +150,10 @@ module Symbo
       end
     end
     # rubocop:enable Metrics/PerceivedComplexity
+    # rubocop:enable Metrics/CyclomaticComplexity
 
     # rubocop:disable Metrics/PerceivedComplexity
+    # rubocop:disable Metrics/CyclomaticComplexity
     def to_s
       if length == 2 && operand(0) == -1
         "-#{operand(1)}"
@@ -171,6 +177,7 @@ module Symbo
       end
     end
     # rubocop:enable Metrics/PerceivedComplexity
+    # rubocop:enable Metrics/CyclomaticComplexity
 
     protected
 
@@ -196,6 +203,7 @@ module Symbo
     # ASAE-4.
     #
     # rubocop:disable Metrics/PerceivedComplexity
+    # rubocop:disable Metrics/CyclomaticComplexity
     def simplify_rec(l) # rubocop:disable Naming/MethodParameterName
       u1 = l[0]
       u2 = l[1]
@@ -235,6 +243,7 @@ module Symbo
       end
     end
     # rubocop:enable Metrics/PerceivedComplexity
+    # rubocop:enable Metrics/CyclomaticComplexity
 
     def simplify_rne_rec
       raise unless length == 2
@@ -250,6 +259,7 @@ module Symbo
     end
 
     # rubocop:disable Metrics/PerceivedComplexity
+    # rubocop:disable Metrics/CyclomaticComplexity
     def merge_products(p, q) # rubocop:disable Naming/MethodParameterName
       if q.empty? # MPRD-1
         p
@@ -271,5 +281,6 @@ module Symbo
       end
     end
     # rubocop:enable Metrics/PerceivedComplexity
+    # rubocop:enable Metrics/CyclomaticComplexity
   end
 end

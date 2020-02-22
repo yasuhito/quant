@@ -11,6 +11,7 @@ module Quant
     using Symbo
 
     # rubocop:disable Metrics/PerceivedComplexity
+    # rubocop:disable Metrics/CyclomaticComplexity
     def self.[](*state_or_value)
       rows = if state_or_value.length == 2
                state_or_value
@@ -32,6 +33,7 @@ module Quant
       super(*rows.map { |each| [each.simplify] })
     end
     # rubocop:enable Metrics/PerceivedComplexity
+    # rubocop:enable Metrics/CyclomaticComplexity
 
     def -@
       map { |each| Product[-1, each].simplify }
@@ -73,6 +75,7 @@ module Quant
     end
 
     # rubocop:disable Metrics/PerceivedComplexity
+    # rubocop:disable Metrics/CyclomaticComplexity
     def to_s
       return '|0>' if self == Matrix[[1], [0]]
       return '|1>' if self == Matrix[[0], [1]]
@@ -108,5 +111,6 @@ module Quant
       "#{coefficient0}|0> #{operator} #{coefficient1}|1>"
     end
     # rubocop:enable Metrics/PerceivedComplexity
+    # rubocop:enable Metrics/CyclomaticComplexity
   end
 end
