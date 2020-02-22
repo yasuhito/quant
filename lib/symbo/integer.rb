@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'symbo/algebraic_operators'
+require 'symbo/constant'
 require 'symbo/expression_type'
 
 # Symbolic computation
@@ -12,6 +13,7 @@ module Symbo
 
     include AlgebraicOperators
     include ExpressionType
+    include Constant
 
     def simplify
       self
@@ -84,10 +86,6 @@ module Symbo
       true
     end
 
-    def constant?
-      true
-    end
-
     # :section:
 
     def numerator
@@ -114,6 +112,8 @@ end
 
 # Matrix などの中で使われる Integer#+ などをハイジャック
 class Integer
+  include Symbo::Constant
+
   alias plus +
   alias mult *
 

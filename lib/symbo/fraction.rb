@@ -1,8 +1,12 @@
 # frozen_string_literal: true
 
+require 'symbo/constant'
+
 module Symbo
   # Symbo fraction computation
   class Fraction < Expression
+    include Constant
+
     using Symbo
 
     # :section: Power Transformation Methods
@@ -69,10 +73,6 @@ module Symbo
     # :section: Expression Type Methods
 
     def fraction?
-      true
-    end
-
-    def constant?
       true
     end
 

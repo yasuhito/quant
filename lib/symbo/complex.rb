@@ -1,18 +1,16 @@
 # frozen_string_literal: true
 
+require 'symbo/constant'
 require 'symbo/expression_type'
 
 module Symbo
   refine Complex do
     include AlgebraicOperators
     include ExpressionType
+    include Constant
 
     def simplify
       dup
-    end
-
-    def constant?
-      true
     end
 
     def evaluate
@@ -60,6 +58,8 @@ end
 
 # Matrix などの中で使われる Complex#+ などをハイジャック
 class Complex
+  include Symbo::Constant
+
   alias plus +
   alias mult *
 

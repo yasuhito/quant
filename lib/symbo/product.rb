@@ -198,48 +198,39 @@ module Symbo
 
     private
 
-    # l = [u1, u2,...,un] be a non-empty list with n ≥ 2 non-zero ASAEs.
+    # l = [u1, u2,...,un] is a non-empty list with n ≥ 2 non-zero ASAEs.
     # Returns a list with zero or more operands that satisfy the condition of
     # ASAE-4.
     #
     # rubocop:disable Metrics/PerceivedComplexity
     # rubocop:disable Metrics/CyclomaticComplexity
     def simplify_rec(l) # rubocop:disable Naming/MethodParameterName
-      u1 = l[0]
-      u2 = l[1]
-
-      if l.size == 2 && l.none?(&:product?) # SPRDREC-1
-        if l.all?(&:constant?) # SPRDREC-1-1
-          p = Product[*l].simplify_rne
-          p == 1 ? [] : [p]
-        elsif u1 == 1 # SPRDREC-1-2
-          [u2]
-        elsif u2 == 1
-          [u1]
-        elsif u1.base == u2.base # SPRDREC-1-3
-          s = Sum[u1.exponent, u2.exponent].simplify
-          p = Power[u1.base, s].simplify
-          p == 1 ? [] : [p]
-        elsif u2.compare(u1) # SPRDREC-1-4
-          [u2, u1]
-        else # SPRDREC-1-5
-          l
-        end
-      elsif l.size == 2 && l.any?(&:product?) # SPRDREC-2
-        if u1.product? && u2.product? # SPRDREC-2-1
-          merge_products u1.operands, u2.operands
-        elsif u1.product? # SPRDREC-2-2
-          merge_products u1.operands, [u2]
-        else # SPRDREC-2-3
-          merge_products [u1], u2.operands
-        end
-      else # SPRDREC-3
-        w = simplify_rec(l[1..-1])
-        if u1.product? # SPRDREC-3-1
-          merge_products u1.operands, w
-        else # SPRDREC-3-2
-          merge_products [u1], w
-        end
+      case l
+      in Constant, Constant # SPRDREC-1-1
+        p = Product[*l].simplify_rne
+        p == 1 ? [] : [p]
+      in 1, u2 unless u2.product? # SPRDREC-1-2
+        [u2]
+      in u1, 1 unless u1.product?
+        [u1]
+      in u1, u2 if l.none?(:product?) && u1.base == u2.base # SPRDREC-1-3
+        s = Sum[u1.exponent, u2.exponent].simplify
+        p = Power[u1.base, s].simplify
+        p == 1 ? [] : [p]
+      in u1, u2 if l.none?(&:product?) && u2.compare(u1) # SPRDREC-1-4
+        [u2, u1]
+      in _, _ if l.none?(&:product?) # SPRDREC-1-5
+        l
+      in Product => u1, Product => u2 # SPRDREC-2-1
+        merge_products u1.operands, u2.operands
+      in Product => u1, u2 # SPRDREC-2-2
+        merge_products u1.operands, [u2]
+      in u1, Product => u2 # SPRDREC-2-3
+        merge_products [u1], u2.operands
+      in Product => u1, *rest # SPRDREC-3-1
+        merge_products u1.operands, simplify_rec(rest)
+      in u1, *rest # SPRDREC-3-2
+        merge_products [u1], simplify_rec(rest)
       end
     end
     # rubocop:enable Metrics/PerceivedComplexity
