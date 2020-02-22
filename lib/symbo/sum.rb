@@ -181,47 +181,32 @@ module Symbo
     # rubocop:disable Metrics/PerceivedComplexity
     # rubocop:disable Metrics/CyclomaticComplexity
     def simplify_rec(l) # rubocop:disable Naming/MethodParameterName
-      if l.size == 2 && l.none?(&:sum?)
-        if l.all?(&:constant?)
-          p = Sum[*l].simplify_rne
-          if p.zero?
-            []
-          else
-            [p]
-          end
-        elsif l[0].zero?
-          [l[1]]
-        elsif l[1].zero?
-          [l[0]]
-        elsif l[0].term == l[1].term
-          s = Sum[l[0].const, l[1].const].simplify
-          p = Product[l[0].term, s].simplify
-
-          if p.zero?
-            []
-          else
-            [p]
-          end
-        elsif l[1].compare(l[0])
-          [l[1], l[0]]
-        else
-          l
-        end
-      elsif l.size == 2 && l.any?(&:sum?)
-        if l[0].sum? && l[1].sum?
-          merge_sums l[0].operands, l[1].operands
-        elsif l[0].sum?
-          merge_sums l[0].operands, [l[1]]
-        else
-          merge_sums [l[0]], l[1].operands
-        end
-      else
-        w = simplify_rec(l[1..-1])
-        if l[0].sum?
-          merge_sums l[0].operands, w
-        else
-          merge_sums [l[0]], w
-        end
+      case l
+      in Constant, Constant
+        p = Sum[*l].simplify_rne
+        p.zero? ? [] : [p]
+      in u1, u2 if u1.zero? && !u2.sum?
+        [u2]
+      in u1, u2 if u2.zero? && !u1.sum?
+        [u1]
+      in u1, u2 if l.none?(:sum?) && u1.term == u2.term
+        s = Sum[u1.const, u2.const].simplify
+        p = Product[u1.term, s].simplify
+        p.zero? ? [] : [p]
+      in u1, u2 if l.none?(&:sum?) && u2.compare(u1)
+        [u2, u1]
+      in _, _ if l.none?(&:sum?)
+        l
+      in Sum => u1, Sum => u2
+        merge_sums u1.operands, u2.operands
+      in Sum => u1, u2
+        merge_sums u1.operands, [u2]
+      in u1, Sum => u2
+        merge_sums [u1], u2.operands
+      in Sum => u1, *rest
+        merge_sums u1.operands, simplify_rec(rest)
+      in u1, *rest
+        merge_sums [u1], simplify_rec(rest)
       end
     end
     # rubocop:enable Metrics/PerceivedComplexity
