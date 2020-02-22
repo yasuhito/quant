@@ -260,13 +260,14 @@ module Symbo
         p1 = p[0]
         q1 = q[0]
         h = simplify_rec([p1, q1])
-        if h.empty? # MPRD-3-1
+        case h
+        in [] # MPRD-3-1
           merge_products p[1..-1], q[1..-1]
-        elsif h.size == 1 # MPRD-3-2
+        in [_] # MPRD-3-2
           h + merge_products(p[1..-1], q[1..-1])
-        elsif h == [p1, q1] # MPRD-3-3
+        in ^p1, ^q1 # MPRD-3-3
           [p1] + merge_products(p[1..-1], q)
-        elsif h == [q1, p1] # MPRD-3-4
+        in ^q1, ^p1 # MPRD-3-4
           [q1] + merge_products(p, q[1..-1])
         end
       end
