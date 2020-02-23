@@ -14,12 +14,14 @@ jobs:
       with:
         ruby-version: 2.7.0
     - name: Build and test with Rake
-      env:
-        CODACY_PROJECT_TOKEN: ${{ secrets.CODACY_PROJECT_TOKEN }}
       run: |
         gem install bundler
         bundle install --jobs 4 --retry 3
         bundle exec rake
+    - name: Upload coverage data to Codacy
+      env:
+        CODACY_PROJECT_TOKEN: ${{ secrets.CODACY_PROJECT_TOKEN }}
+      run: |
         curl -Ls -o codacy-coverage-reporter "$(curl -Ls https://api.github.com/repos/codacy/codacy-coverage-reporter/releases/latest | jq -r '.assets | map({name, browser_download_url} | select(.name | contains("codacy-coverage-reporter-linux"))) | .[0].browser_download_url')"
         chmod +x codacy-coverage-reporter
         ./codacy-coverage-reporter report -l Java -r coverage/coverage.xml
