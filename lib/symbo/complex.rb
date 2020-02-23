@@ -40,10 +40,6 @@ module Symbo
       end
     end
 
-    def complex?
-      true
-    end
-
     def to_s
       if real.zero?
         if imag == 1
@@ -63,6 +59,7 @@ end
 # Matrix などの中で使われる Complex#+ などをハイジャック
 class Complex
   include Symbo::Constant
+  include Symbo::ExpressionType
 
   alias plus +
   alias mult *

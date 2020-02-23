@@ -89,15 +89,13 @@ module Symbo
 
       UNDEFINED
     end
-
-    def undefined?
-      self == UNDEFINED
-    end
   end
 end
 
 # Matrix などの中で使われる Symbol#+ などをハイジャック
 class Symbol
+  include Symbo::ExpressionType
+
   def +(other)
     Symbo::Sum[self, other]
   end

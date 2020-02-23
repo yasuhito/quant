@@ -25,19 +25,7 @@ module Quant
       Sqrt[Sum[*(@elements.map { |each| Power[each, 2] })]].simplify
     end
 
-    def undefined?
-      false
-    end
-
     def zero?
-      false
-    end
-
-    def product?
-      false
-    end
-
-    def constant?
       false
     end
 

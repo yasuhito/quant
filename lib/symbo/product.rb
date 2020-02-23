@@ -101,12 +101,6 @@ module Symbo
     end
     # rubocop:enable Metrics/CyclomaticComplexity
 
-    # :section: Expression Type Methods
-
-    def product?
-      true
-    end
-
     # :section:
 
     # v * w

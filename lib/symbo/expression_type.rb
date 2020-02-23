@@ -5,35 +5,35 @@ module Symbo
     # :section: Expression Type Methods
 
     def undefined?
-      false
+      self == UNDEFINED
     end
 
     def integer?
-      false
+      is_a?(Integer)
     end
 
     def complex?
-      false
+      is_a?(Complex)
     end
 
     def fraction?
-      false
+      is_a?(Fraction)
     end
 
     def constant?
-      false
+      is_a?(Constant)
     end
 
     def sum?
-      false
+      is_a?(Sum)
     end
 
     def product?
-      false
+      is_a?(Product)
     end
 
     def power?
-      false
+      is_a?(Power)
     end
   end
 end
