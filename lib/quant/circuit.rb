@@ -85,6 +85,7 @@ module Quant
       @qubits.map(&:state)
     end
 
+    # rubocop:disable Metrics/AbcSize
     def controlled(gate, target, control:)
       return dup if @qubits[control] == Qubit['0']
 
@@ -97,6 +98,7 @@ module Quant
       end
       self.class.new qubits
     end
+    # rubocop:enable Metrics/AbcSize
 
     def to_s
       @qubits.map(&:to_s).join

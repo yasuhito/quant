@@ -7,6 +7,7 @@ module Symbo
     using Symbo
 
     # rubocop:disable Metrics/PerceivedComplexity
+    # rubocop:disable Metrics/AbcSize
     def evaluate
       v = operand(0).simplify
 
@@ -27,5 +28,6 @@ module Symbo
       end
     end
     # rubocop:enable Metrics/PerceivedComplexity
+    # rubocop:enable Metrics/AbcSize
   end
 end

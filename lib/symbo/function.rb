@@ -83,8 +83,8 @@ module Symbo
     #   !other.compare(self)
     #
     # rubocop:disable Metrics/PerceivedComplexity
-    #
     # rubocop:disable Metrics/CyclomaticComplexity
+    # rubocop:disable Metrics/AbcSize
     def compare(other)
       case other
       when Function
@@ -113,5 +113,6 @@ module Symbo
     end
     # rubocop:enable Metrics/PerceivedComplexity
     # rubocop:enable Metrics/CyclomaticComplexity
+    # rubocop:enable Metrics/AbcSize
   end
 end

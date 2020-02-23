@@ -12,6 +12,7 @@ module Quant
 
     # rubocop:disable Metrics/PerceivedComplexity
     # rubocop:disable Metrics/CyclomaticComplexity
+    # rubocop:disable Metrics/AbcSize
     def self.[](*state_or_value)
       rows = if state_or_value.length == 2
                state_or_value
@@ -34,6 +35,7 @@ module Quant
     end
     # rubocop:enable Metrics/PerceivedComplexity
     # rubocop:enable Metrics/CyclomaticComplexity
+    # rubocop:enable Metrics/AbcSize
 
     def -@
       map { |each| Product[-1, each].simplify }
@@ -76,6 +78,7 @@ module Quant
 
     # rubocop:disable Metrics/PerceivedComplexity
     # rubocop:disable Metrics/CyclomaticComplexity
+    # rubocop:disable Metrics/AbcSize
     def to_s
       return '|0>' if self == Matrix[[1], [0]]
       return '|1>' if self == Matrix[[0], [1]]
@@ -112,5 +115,6 @@ module Quant
     end
     # rubocop:enable Metrics/PerceivedComplexity
     # rubocop:enable Metrics/CyclomaticComplexity
+    # rubocop:enable Metrics/AbcSize
   end
 end

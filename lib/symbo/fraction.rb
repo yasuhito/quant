@@ -118,6 +118,7 @@ module Symbo
       end
     end
 
+    # rubocop:disable Metrics/AbcSize
     def simplify_rational_number
       return self unless operands.all?(&:integer?)
 
@@ -135,6 +136,7 @@ module Symbo
         end
       end
     end
+    # rubocop:enable Metrics/AbcSize
 
     def negative?
       false

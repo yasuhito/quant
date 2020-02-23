@@ -6,6 +6,7 @@ module Quant
   class CnotGate
     using Symbo
 
+    # rubocop:disable Metrics/AbcSize
     def apply(qubits, target, control)
       qs = qubits[control].tensor_product(qubits[target])
       result = (matrix * qs).simplify
@@ -22,6 +23,7 @@ module Quant
                       end
       end
     end
+    # rubocop:enable Metrics/AbcSize
 
     private
 

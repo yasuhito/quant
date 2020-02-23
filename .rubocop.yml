@@ -27,9 +27,5 @@ Metrics/ModuleLength:
 Metrics/MethodLength:
   Enabled: false
 
-# 複雑なメソッド OK
-Metrics/AbcSize:
-  Enabled: false
-
 Naming/AsciiIdentifiers:
   Enabled: false
