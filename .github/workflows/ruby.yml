@@ -15,7 +15,7 @@ jobs:
         ruby-version: 2.7.0
     - name: Build and test with Rake
       env:
-        CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
+        CODACY_PROJECT_TOKEN: ${{ secrets.CODACY_PROJECT_TOKEN }}
       run: |
         gem install bundler
         bundle install --jobs 4 --retry 3
