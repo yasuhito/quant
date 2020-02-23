@@ -103,21 +103,11 @@ module Symbo
       v = @operands[0].evaluate
       w = @operands[1].evaluate
 
-      if v.fraction? && w.fraction?
-        if v.denominator == w.denominator
-          Fraction[Sum[v.numerator, w.numerator].simplify, v.denominator.simplify].simplify
-        else
-          Fraction[Sum[Product[v.numerator, w.denominator].evaluate, Product[w.numerator, v.denominator].evaluate].evaluate,
-                   Product[v.denominator, w.denominator].evaluate].evaluate
-        end
-      elsif v.integer? && (w.integer? || w.complex?)
+      if (v.integer? || v.complex?) && (w.integer? || w.complex?)
         v.plus w
-      elsif v.integer? && w.fraction?
-        if v.zero?
-          w
-        else
-          Sum[v, w]
-        end
+      elsif v.constant? && w.constant?
+        Fraction[Sum[Product[v.numerator, w.denominator].evaluate, Product[w.numerator, v.denominator].evaluate].evaluate,
+                 Product[v.denominator, w.denominator].evaluate].evaluate
       else
         Sum[v.simplify, w.simplify]
       end

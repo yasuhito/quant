@@ -120,20 +120,45 @@ module Symbo
 
     # rubocop:disable Metrics/AbcSize
     def simplify_rational_number
-      return self unless operands.all?(&:integer?)
-
       n = operand(0)
       d = operand(1)
 
-      if (n % d).zero?
-        n.div d
-      else
-        g = n.gcd(d)
-        if d.positive?
-          Fraction[n.div(g), d.div(g)]
+      case [n, d]
+      in Integer, Integer
+        if (n % d).zero?
+          n.div d
         else
-          Fraction[(-n).div(g), (-d).div(g)]
+          g = n.gcd(d)
+          if d.positive?
+            Fraction[n.div(g), d.div(g)]
+          else
+            Fraction[(-n).div(g), (-d).div(g)]
+          end
         end
+      in Complex, Integer
+        real_mod = n.real % d
+        imag_mod = n.imag % d
+        if real_mod.zero? && imag_mod.zero?
+          if n.imag.div(d).zero?
+            n.real.div d
+          else
+            Complex(n.real.div(d), n.imag.div(d))
+          end
+        else
+          gr = n.real.gcd(d)
+          gi = n.imag.gcd(d)
+          if gr == gi
+            if d.positive?
+              Fraction[Complex(n.real.div(gr), n.imag.div(gr)), d.div(gr)]
+            else
+              Fraction[Complex(-n.real.div(gr), -n.imag.div(gr)), -d.div(gr)]
+            end
+          else
+            self
+          end
+        end
+      else
+        raise NotImplementedError, "Fraction#simplify_rational_number(#{n.inspect}/#{d.inspect})"
       end
     end
     # rubocop:enable Metrics/AbcSize
