@@ -72,12 +72,6 @@ module Symbo
       end
     end
 
-    # :section: Expression Type Methods
-
-    def power?
-      true
-    end
-
     # :section: Evaluation Methods
 
     # rubocop:disable Metrics/PerceivedComplexity

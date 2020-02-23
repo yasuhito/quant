@@ -70,12 +70,6 @@ module Symbo
       end
     end
 
-    # :section: Expression Type Methods
-
-    def fraction?
-      true
-    end
-
     # :section:
 
     def positive?

@@ -80,12 +80,6 @@ module Symbo
       end
     end
 
-    # :section: Expression Type Methods
-
-    def integer?
-      true
-    end
-
     # :section:
 
     def numerator
@@ -113,6 +107,7 @@ end
 # Matrix などの中で使われる Integer#+ などをハイジャック
 class Integer
   include Symbo::Constant
+  include Symbo::ExpressionType
 
   alias plus +
   alias mult *

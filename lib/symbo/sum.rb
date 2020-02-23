@@ -89,12 +89,6 @@ module Symbo
     end
     # rubocop:enable Metrics/CyclomaticComplexity
 
-    # :section: Expression Type Methods
-
-    def sum?
-      true
-    end
-
     # :section:
 
     # rubocop:disable Metrics/PerceivedComplexity
