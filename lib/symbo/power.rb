@@ -82,19 +82,19 @@ module Symbo
 
     # rubocop:disable Metrics/PerceivedComplexity
     # rubocop:disable Metrics/CyclomaticComplexity
+    # rubocop:disable Metrics/AbcSize
     def evaluate
       raise unless base.constant?
       raise unless exponent.integer?
 
       if base.numerator != 0
         if exponent.positive?
-          s = Power[base, exponent - 1].evaluate
-          Product[s, base].evaluate
+          Product[Power[base, exponent - 1].evaluate, base].evaluate
         elsif exponent.zero?
           1
         elsif exponent == -1
           Fraction[1, base]
-        else
+        elsif exponent < -1
           raise NotImplementedError
         end
       elsif base.numerator.zero?
@@ -107,6 +107,7 @@ module Symbo
     end
     # rubocop:enable Metrics/PerceivedComplexity
     # rubocop:enable Metrics/CyclomaticComplexity
+    # rubocop:enable Metrics/AbcSize
 
     def to_s
       "#{base}^(#{exponent})"
@@ -118,6 +119,7 @@ module Symbo
 
     # rubocop:disable Metrics/PerceivedComplexity
     # rubocop:disable Metrics/CyclomaticComplexity
+    # rubocop:disable Metrics/AbcSize
     def _simplify
       return UNDEFINED if base == UNDEFINED || exponent == UNDEFINED
 
@@ -135,6 +137,7 @@ module Symbo
     end
     # rubocop:enable Metrics/PerceivedComplexity
     # rubocop:enable Metrics/CyclomaticComplexity
+    # rubocop:enable Metrics/AbcSize
 
     # rubocop:disable Metrics/CyclomaticComplexity
     def simplify_integer_power
