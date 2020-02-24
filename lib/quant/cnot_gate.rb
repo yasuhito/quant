@@ -4,11 +4,13 @@ require 'symbo'
 
 module Quant
   class CnotGate
+    include Symbo
+
     using Symbo
 
     # rubocop:disable Metrics/AbcSize
     def apply(qubits, target, control)
-      qs = qubits[control].tensor_product(qubits[target])
+      qs = TensorProduct[qubits[control], qubits[target]]
       result = (matrix * qs).simplify
 
       qubits.dup.tap do |obj|
