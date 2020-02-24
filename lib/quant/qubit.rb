@@ -14,24 +14,42 @@ module Quant
     # rubocop:disable Metrics/CyclomaticComplexity
     # rubocop:disable Metrics/AbcSize
     def self.[](*state_or_value)
-      rows = if state_or_value.length == 2
-               state_or_value
-             elsif state_or_value == ['0']
-               [1, 0]
-             elsif state_or_value == ['1']
-               [0, 1]
-             elsif state_or_value == ['+']
-               [1/√(2), 1/√(2)]
-             elsif state_or_value == ['-']
-               [1/√(2), -1/√(2)]
-             elsif state_or_value == ['i']
-               [1/√(2), 1i/√(2)]
-             elsif state_or_value == ['-i']
-               [1/√(2), -1i/√(2)]
-             else
-               raise "Invalid qubit state: #{state_or_value}"
-             end
-      super(*rows.map { |each| [each.simplify] })
+      rows =
+        case state_or_value
+        in [String => bits] if /\A[0|1]+\Z/=~ bits
+          m = bits.split(//).inject(Matrix[[1]]) do |result, string|
+            each = case string
+                   when '0'
+                     Matrix[[1], [0]]
+                   when '1'
+                     Matrix[[0], [1]]
+                   end
+            TensorProduct[result, each]
+          end
+          m.map(&:simplify).to_a
+        in [String => bit]
+          elms = case bit
+                 when '0'
+                   [1, 0]
+                 when '1'
+                   [0, 1]
+                 when '+'
+                   [1/√(2), 1/√(2)]
+                 when '-'
+                   [1/√(2), -1/√(2)]
+                 when 'i'
+                   [1/√(2), 1i/√(2)]
+                 when '-i'
+                   [1/√(2), -1i/√(2)]
+                 else
+                   raise "Invalid qubit state: #{bit}"
+                 end
+          elms.map { |each| [each.simplify] }
+        else
+          state_or_value.map { |each| [each.simplify] }
+        end
+
+      super(*rows)
     end
     # rubocop:enable Metrics/PerceivedComplexity
     # rubocop:enable Metrics/CyclomaticComplexity
