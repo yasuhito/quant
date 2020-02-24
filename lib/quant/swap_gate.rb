@@ -1,12 +1,16 @@
 # frozen_string_literal: true
 
+require 'symbo'
+
 module Quant
   class SwapGate
+    include Symbo
+
     using Symbo
 
     # rubocop:disable Metrics/AbcSize
     def apply(qubits, qubit1, qubit2)
-      qs = qubits[qubit1].tensor_product(qubits[qubit2])
+      qs = TensorProduct[qubits[qubit1], qubits[qubit2]]
       result = (matrix * qs).simplify
 
       qubits.dup.tap do |obj|
