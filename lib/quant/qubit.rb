@@ -98,38 +98,35 @@ module Quant
     # rubocop:disable Metrics/CyclomaticComplexity
     # rubocop:disable Metrics/AbcSize
     def to_s
-      return '|0>' if self == Matrix[[1], [0]]
-      return '|1>' if self == Matrix[[0], [1]]
+      kets = []
+      ket_length = Math.log2(row_size).to_i
 
-      coefficient0 = if self[0, 0].length == 1
-                       self[0, 0].to_s
-                     elsif self[0, 0].length > 1 && !self[0, 0].product?
-                       "(#{self[0, 0]})"
-                     elsif self[0, 0].product? && self[0, 0].operand(0) == -1 && self[0, 0].length > 2
-                       "(#{self[0, 0]})"
-                     elsif self[0, 0].product? && self[0, 0].operand(0) == -1 && self[0, 0].length == 2
-                       (self[0, 0]).to_s
-                     end
+      (0...row_size).each do |each|
+        x = self[each, 0]
+        kets << [x, "|%0*b>" % [ket_length, each]] unless x.zero?
+      end
 
-      operator = if self[1, 0].product? && self[1, 0].operand(0) == -1
-                   '-'
-                 else
-                   '+'
-                 end
+      kets.inject('') do |result, each|
+        coefficient = if each[0] == 1
+                        ''
+                      elsif each[0].constant? || each[0].symbol?
+                        each[0].to_s
+                      elsif !each[0].product? && each[0].length > 1
+                        "(#{each[0]})"
+                      elsif each[0].product? && each[0].operand(0) != -1
+                        each[0].to_s
+                      elsif each[0].product? && each[0].operand(0) == -1
+                        each[0].to_s
+                      end
 
-      coefficient1 = if self[1, 0].length == 1
-                       self[1, 0].to_s
-                     elsif self[1, 0].length > 1 && !self[1, 0].product?
-                       "(#{self[1, 0]})"
-                     elsif self[1, 0].product? && self[1, 0].operand(0) != -1 && self[1, 0].length > 1
-                       self[1, 0].to_s
-                     elsif self[1, 0].product? && self[1, 0].operand(0) == -1 && self[1, 0].length > 2
-                       "(#{self[1, 0].to_s[1..-1]})"
-                     elsif self[1, 0].product? && self[1, 0].operand(0) == -1 && self[1, 0].length == 2
-                       self[1, 0].to_s[1..-1].to_s
-                     end
-
-      "#{coefficient0}|0> #{operator} #{coefficient1}|1>"
+        result += if result.empty?
+                    "#{coefficient}#{each[1]}"
+                  elsif coefficient.to_s[0] != '-'
+                    " + #{coefficient}#{each[1]}"
+                  else
+                    " - #{coefficient.to_s[1..-1]}#{each[1]}"
+                  end
+      end
     end
     # rubocop:enable Metrics/PerceivedComplexity
     # rubocop:enable Metrics/CyclomaticComplexity

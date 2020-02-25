@@ -35,5 +35,9 @@ module Symbo
     def power?
       is_a?(Power)
     end
+
+    def symbol?
+      is_a?(Symbol)
+    end
   end
 end
