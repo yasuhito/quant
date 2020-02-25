@@ -59,5 +59,57 @@ module Quant
       assert_equal(-:β * Qubit['0'] + (-:γ * Qubit['1']), circuit.x(0).z(0).x(0).z(0).state)
       assert_equal '-β|0> - γ|1>', circuit.x(0).z(0).x(0).z(0).state.to_s
     end
+
+    test 'Bell state change - 1' do
+      circuit = Circuit.new(1/√(2) * Qubit['00'] + 1/√(2) * Qubit['11'])
+
+      assert_equal (1/√(2))*Qubit['00'] - (1/√(2)) * Qubit['11'], circuit.x(0).z(0).x(1).state
+      assert_equal '(2^(-1/2))|00> - 2^(-1/2)|11>', circuit.x(0).z(0).x(1).state.to_s
+    end
+
+    test 'Bell state change - 2' do
+      circuit = Circuit.new(1/√(2) * Qubit['00'] + 1/√(2) * Qubit['11'])
+
+      assert_equal (1/√(2))*Qubit['01'] + (1/√(2)) * Qubit['10'], circuit.x(0).state
+      assert_equal '(2^(-1/2))|01> + (2^(-1/2))|10>', circuit.x(0).state.to_s
+    end
+
+    test 'Bell state change - 3' do
+      circuit = Circuit.new(1/√(2) * Qubit['00'] + 1/√(2) * Qubit['11'])
+
+      assert_equal (1/√(2))*Qubit['01'] - (1/√(2)) * Qubit['10'], circuit.x(0).x(0).z(0).x(1).state
+      assert_equal '(2^(-1/2))|01> - 2^(-1/2)|10>', circuit.x(0).x(0).z(0).x(1).state.to_s
+    end
+
+    test 'Two-qubit gate - 1' do
+      circuit = Circuit.new(:α * Qubit['00'] + :β * Qubit['10'])
+
+      assert_equal :α * Qubit['00'] + :β * Qubit['11'], circuit.cnot(1, control: 0).state
+      assert_equal 'α|00> + β|11>', circuit.cnot(1, control: 0).state.to_s
+    end
+
+    test 'Two-qubit gate - 2' do
+      circuit = Circuit.new(1/2 * Qubit['00'] + 1/2 * Qubit['01'] + 1/2 * Qubit['10'] + 1/2 * Qubit['11'])
+
+      assert_equal 1/2 * Qubit['00'] + 1/2 * Qubit['01'] + 1/2 * Qubit['10'] - 1/2 * Qubit['11'], circuit.controlled(ZGate.new, 1, control: 0).state
+      assert_equal '1/2|00> + 1/2|01> + 1/2|10> - 1/2|11>', circuit.controlled(ZGate.new, 1, control: 0).state.to_s
+    end
+
+    test 'Two-qubit gate - 3' do
+      circuit = Circuit.new(:α * Qubit['00'] + :β * Qubit['01'] + :γ * Qubit['10'] + :δ * Qubit['11'])
+
+      assert_equal :α * Qubit['00'] + :γ * Qubit['01'] + :β * Qubit['10'] + :δ * Qubit['11'], circuit.cnot(1, control: 0).cnot(0, control: 1).cnot(1, control: 0).state
+      assert_equal 'α|00> + γ|01> + β|10> + δ|11>', circuit.cnot(1, control: 0).cnot(0, control: 1).cnot(1, control: 0).state.to_s
+    end
+
+    test 'Toffoli gate' do
+      skip 'Cnot クラスを復活させてから'
+      circuit = Circuit.new(:α * Qubit['000'] + :β * Qubit['001'] + :γ * Qubit['010'] + :δ * Qubit['011'] + :ϵ * Qubit['100'] + :ζ * Qubit['101'] + :η * Qubit['110'] + :θ * Qubit['111'])
+    end
+
+    test 'Fredkin gate' do
+      skip 'SWAP ゲートを new(qubit1, qubit2) できるようにしてから'
+      circuit = Circuit.new(:α * Qubit['000'] + :β * Qubit['001'] + :γ * Qubit['010'] + :δ * Qubit['011'] + :ϵ * Qubit['100'] + :ζ * Qubit['101'] + :η * Qubit['110'] + :θ * Qubit['111'])
+    end
   end
 end
