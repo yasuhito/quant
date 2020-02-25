@@ -3,10 +3,14 @@
 require 'quant/gate'
 
 module Quant
-  class CnotGate < Gate
+  class ControlledGate < Gate
     include Symbo
 
     using Symbo
+
+    def initialize(gate)
+      @gate = gate
+    end
 
     # http://www.sakkaris.com/tutorials/quantum_control_gates.html
     def apply(state, target, control)
@@ -32,18 +36,18 @@ module Quant
           end
         elsif each == target
           if zero_matrix
-            zero_matrix = TensorProduct[zero_matrix, Matrix.I(2)]
-            one_matrix = TensorProduct[one_matrix, Matrix[[0, 1], [1, 0]]]
+            zero_matrix = TensorProduct[zero_matrix, IGate.new.matrix]
+            one_matrix = TensorProduct[one_matrix, @gate.matrix]
           else
-            zero_matrix = Matrix.I(2)
-            one_matrix = Matrix[[0, 1], [1, 0]]
+            zero_matrix = IGate.new.matrix
+            one_matrix = @gate.matrix
           end
         elsif zero_matrix
-          zero_matrix = TensorProduct[zero_matrix, Matrix.I(2)]
-          one_matrix = TensorProduct[one_matrix, Matrix.I(2)]
+          zero_matrix = TensorProduct[zero_matrix, IGate.new.matrix]
+          one_matrix = TensorProduct[one_matrix, IGate.new.matrix]
         else
-          zero_matrix = Matrix.I(2)
-          one_matrix = Matrix.I(2)
+          zero_matrix = IGate.new.matrix
+          one_matrix = IGate.new.matrix
         end
       end
 

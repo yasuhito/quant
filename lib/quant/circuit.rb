@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'quant/cnot_gate'
+require 'quant/controlled_gate'
 require 'quant/h_gate'
 require 'quant/i_gate'
 require 'quant/qubit'
@@ -68,11 +68,15 @@ module Quant
     end
 
     def cnot(target, control:)
-      self.class.new(CnotGate.new.apply(@state, target, control))
+      controlled XGate.new, target, control: control
     end
 
     def swap(qubit1, qubit2)
       self.class.new(SwapGate.new.apply(@state, qubit1, qubit2))
+    end
+
+    def controlled(gate, target, control:)
+      self.class.new(ControlledGate.new(gate).apply(@state, target, control))
     end
 
     def state
