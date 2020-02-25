@@ -19,7 +19,7 @@ module Quant
       state_length = Math.log2(state.row_size).to_i
 
       (0...state.row_size).map do |each|
-        qstr = format('%0*b', state_length, each)
+        qstr = format('%0*b', state_length, each) # rubocop:disable Style/FormatStringToken
         t = qstr[qubit1]
         qstr_swap = qstr.dup
         qstr_swap[qubit1] = qstr_swap[qubit2]
