@@ -37,6 +37,22 @@ module Quant
       assert_equal '|00>', Qubit['00'].to_s
     end
 
+    test "Qubit['01'] in a ket string" do
+      assert_equal '|01>', Qubit['01'].to_s
+    end
+
+    test "Qubit['10'] in a ket string" do
+      assert_equal '|10>', Qubit['10'].to_s
+    end
+
+    test "Qubit['11'] in a ket string" do
+      assert_equal '|11>', Qubit['11'].to_s
+    end
+
+    test "Qubit['101'] in a ket string" do
+      assert_equal '|101>', Qubit['101'].to_s
+    end
+
     test "Qubits' state in a String" do
       assert_equal 'α|0> + β|1>', (:α * Qubit['0'] + :β * Qubit['1']).to_s
     end

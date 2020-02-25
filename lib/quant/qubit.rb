@@ -84,16 +84,6 @@ module Quant
       map(&:simplify)
     end
 
-    def tensor_product(other)
-      Matrix.build(4, 1) do |row, _col|
-        if row < 2
-          self[0] * other[row % 2]
-        else
-          self[1] * other[row % 2]
-        end
-      end
-    end
-
     # rubocop:disable Metrics/PerceivedComplexity
     # rubocop:disable Metrics/CyclomaticComplexity
     # rubocop:disable Metrics/AbcSize

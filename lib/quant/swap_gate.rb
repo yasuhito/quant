@@ -8,36 +8,25 @@ module Quant
 
     using Symbo
 
-    # rubocop:disable Metrics/AbcSize
-    def apply(qubits, qubit1, qubit2)
-      qs = TensorProduct[qubits[qubit1], qubits[qubit2]]
-      result = (matrix * qs).simplify
-
-      qubits.dup.tap do |obj|
-        if result == Matrix[[1], [0], [0], [0]]
-          obj[qubit1] = Qubit['0']
-          obj[qubit2] = Qubit['0']
-        elsif result == Matrix[[0], [1], [0], [0]]
-          obj[qubit1] = Qubit['0']
-          obj[qubit2] = Qubit['1']
-        elsif result == Matrix[[0], [0], [1], [0]]
-          obj[qubit1] = Qubit['1']
-          obj[qubit2] = Qubit['0']
-        elsif result == Matrix[[0], [0], [0], [1]]
-          obj[qubit1] = Qubit['1']
-          obj[qubit2] = Qubit['1']
-        end
-      end
+    def apply(state, qubit1, qubit2)
+      Qubit.rows((matrix(state, qubit1, qubit2) * state).to_a)
     end
-    # rubocop:enable Metrics/AbcSize
 
     private
 
-    def matrix
-      Matrix[[1, 0, 0, 0],
-             [0, 0, 1, 0],
-             [0, 1, 0, 0],
-             [0, 0, 0, 1]]
+    # rubocop:disable Metrics/AbcSize
+    def matrix(state, qubit1, qubit2)
+      state_length = Math.log2(state.row_size).to_i
+
+      (0...state.row_size).map do |each|
+        qstr = format('%0*b', state_length, each)
+        t = qstr[qubit1]
+        qstr_swap = qstr.dup
+        qstr_swap[qubit1] = qstr_swap[qubit2]
+        qstr_swap[qubit2] = t
+        Qubit[qstr] * Qubit[qstr_swap].bra
+      end.inject(:+)
     end
+    # rubocop:enable Metrics/AbcSize
   end
 end
