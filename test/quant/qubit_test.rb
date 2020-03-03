@@ -3,10 +3,11 @@
 require 'test_helper'
 
 require 'symbo'
-require 'quant/qubit'
 
 module Quant
   class QubitTest < ActiveSupport::TestCase
+    include Symbo
+
     using Symbo
 
     test 'convert to bra vector' do

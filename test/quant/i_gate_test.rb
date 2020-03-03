@@ -6,6 +6,8 @@ require 'quant/circuit'
 
 module Quant
   class IGateTest < ActiveSupport::TestCase
+    include Symbo
+
     test 'I|0> = |0>' do
       circuit = Circuit.new(Qubit['0'])
 

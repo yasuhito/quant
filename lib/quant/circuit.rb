@@ -3,7 +3,6 @@
 require 'quant/controlled_gate'
 require 'quant/h_gate'
 require 'quant/i_gate'
-require 'quant/qubit'
 require 'quant/r1_gate'
 require 'quant/rx_gate'
 require 'quant/ry_gate'

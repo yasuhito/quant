@@ -6,6 +6,8 @@ require 'quant/circuit'
 
 module Quant
   class CnotGateTest < ActiveSupport::TestCase
+    include Symbo
+
     test 'CNOT(1, 0)|00> = |00>' do
       circuit = Circuit.new(Qubit['00'])
 

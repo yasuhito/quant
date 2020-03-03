@@ -6,6 +6,8 @@ require 'quant/circuit'
 
 module Quant
   class SwapGateTest < ActiveSupport::TestCase
+    include Symbo
+
     test 'SWAP(0, 1)|00> = |00>' do
       circuit = Circuit.new(Qubit['00'])
 

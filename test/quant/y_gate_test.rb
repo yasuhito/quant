@@ -6,6 +6,8 @@ require 'quant/circuit'
 
 module Quant
   class YGateTest < ActiveSupport::TestCase
+    include Symbo
+
     using Symbo
 
     test 'Y|0> = i|1>' do
