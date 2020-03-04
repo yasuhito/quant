@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/yasuhito/symbo.git
-  revision: 930e87219865a58c9828a3dabbb58b38e327eebd
+  revision: 8b3a1d7eecdc33eccc3bd92c373066680e119d9b
   branch: develop
   specs:
     symbo (0.1.0pre)
