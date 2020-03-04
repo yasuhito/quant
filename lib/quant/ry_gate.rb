@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'symbo/cos'
+require 'symbo/expressions/cos'
 require 'quant/gate'
 
 module Quant

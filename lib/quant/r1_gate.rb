@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'symbo/e'
+require 'symbo/expressions/e'
 
 module Quant
   class R1Gate < Quant::Gate

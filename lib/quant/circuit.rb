@@ -2,7 +2,6 @@
 
 require 'quant/controlled_gate'
 require 'quant/h_gate'
-require 'quant/i_gate'
 require 'quant/r1_gate'
 require 'quant/rx_gate'
 require 'quant/ry_gate'
@@ -13,9 +12,12 @@ require 'quant/t_gate'
 require 'quant/x_gate'
 require 'quant/y_gate'
 require 'quant/z_gate'
+require 'symbo/expressions/i_gate'
 
 module Quant
   class Circuit
+    include Symbo
+
     using Symbo
 
     def initialize(state)

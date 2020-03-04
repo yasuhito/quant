@@ -1,3 +1,10 @@
+GIT
+  remote: https://github.com/yasuhito/symbo.git
+  revision: fe91ea0ee513fc07571cc21f41d642f92e30a2c7
+  branch: develop
+  specs:
+    symbo (0.1.0pre)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -50,6 +57,7 @@ DEPENDENCIES
   rubocop
   simplecov (~> 0.17.1)
   simplecov-html (~> 0.10.0)
+  symbo!
 
 RUBY VERSION
    ruby 2.7.0p0
