@@ -2,12 +2,12 @@
 
 require 'quant/controlled_gate'
 require 'quant/r1_gate'
-require 'quant/rz_gate'
 require 'quant/swap_gate'
 require 'symbo/expressions/h_gate'
 require 'symbo/expressions/i_gate'
 require 'symbo/expressions/rx_gate'
 require 'symbo/expressions/ry_gate'
+require 'symbo/expressions/rz_gate'
 require 'symbo/expressions/s_gate'
 require 'symbo/expressions/t_gate'
 require 'symbo/expressions/x_gate'
