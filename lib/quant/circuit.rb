@@ -9,10 +9,10 @@ require 'quant/rz_gate'
 require 'quant/s_gate'
 require 'quant/swap_gate'
 require 'quant/t_gate'
-require 'quant/y_gate'
 require 'quant/z_gate'
 require 'symbo/expressions/i_gate'
 require 'symbo/expressions/x_gate'
+require 'symbo/expressions/y_gate'
 
 module Quant
   class Circuit
