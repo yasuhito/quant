@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'quant/controlled_gate'
-require 'quant/h_gate'
 require 'quant/r1_gate'
 require 'quant/rx_gate'
 require 'quant/ry_gate'
@@ -9,6 +8,7 @@ require 'quant/rz_gate'
 require 'quant/s_gate'
 require 'quant/swap_gate'
 require 'quant/t_gate'
+require 'symbo/expressions/h_gate'
 require 'symbo/expressions/i_gate'
 require 'symbo/expressions/x_gate'
 require 'symbo/expressions/y_gate'
