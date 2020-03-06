@@ -1,22 +1,11 @@
 # frozen_string_literal: true
 
-require 'quant/controlled_gate'
-require 'quant/h_gate'
-require 'quant/i_gate'
-require 'quant/qubit'
-require 'quant/r1_gate'
-require 'quant/rx_gate'
-require 'quant/ry_gate'
-require 'quant/rz_gate'
-require 'quant/s_gate'
-require 'quant/swap_gate'
-require 'quant/t_gate'
-require 'quant/x_gate'
-require 'quant/y_gate'
-require 'quant/z_gate'
+require 'symbo'
 
 module Quant
   class Circuit
+    include Symbo
+
     using Symbo
 
     def initialize(state)
@@ -76,7 +65,7 @@ module Quant
     end
 
     def controlled(gate, target, control:)
-      self.class.new(ControlledGate.new(gate).apply(@state, target, control))
+      self.class.new(ControlledGate.new(gate.matrix).apply(@state, target, control))
     end
 
     def state

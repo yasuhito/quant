@@ -7,6 +7,8 @@ require 'quant/circuit'
 module Quant
   class XGateTest
     class BasicQubitTransitionTest < ActiveSupport::TestCase
+      include Symbo
+
       using Symbo
 
       test 'X|0> = |1>' do

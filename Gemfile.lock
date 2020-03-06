@@ -1,3 +1,10 @@
+GIT
+  remote: https://github.com/yasuhito/symbo.git
+  revision: 19ee5ae355dc1556d83403f6a01f1a48b32b3b91
+  branch: develop
+  specs:
+    symbo (0.1.0pre)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -16,12 +23,12 @@ GEM
     json (2.3.0)
     minitest (5.14.0)
     parallel (1.19.1)
-    parser (2.7.0.2)
+    parser (2.7.0.4)
       ast (~> 2.4.0)
     rainbow (3.0.0)
     rake (13.0.1)
     rexml (3.2.4)
-    rubocop (0.80.0)
+    rubocop (0.80.1)
       jaro_winkler (~> 1.5.1)
       parallel (~> 1.10)
       parser (>= 2.7.0.1)
@@ -39,7 +46,7 @@ GEM
     tzinfo (1.2.6)
       thread_safe (~> 0.1)
     unicode-display_width (1.6.1)
-    zeitwerk (2.2.2)
+    zeitwerk (2.3.0)
 
 PLATFORMS
   ruby
@@ -50,6 +57,7 @@ DEPENDENCIES
   rubocop
   simplecov (~> 0.17.1)
   simplecov-html (~> 0.10.0)
+  symbo!
 
 RUBY VERSION
    ruby 2.7.0p0
