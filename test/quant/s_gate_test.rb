@@ -44,7 +44,7 @@ module Quant
       assert_equal Qubit['+'], circuit.s(0).state
     end
 
-    test 'S(1)|01> = i|1>' do
+    test 'S1|01> = i|1>' do
       circuit = Circuit.new(Qubit['01'])
 
       assert_equal 1i * Qubit['01'], circuit.s(1).state

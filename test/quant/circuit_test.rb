@@ -92,7 +92,7 @@ module Quant
 
     test 'Two-qubit gate - 1: α|00> + β|10> → α|00> + iβ|11>' do
       circuit = Circuit.new(:α * Qubit['00'] + :β * Qubit['10'])
-      state = circuit.cnot(1, control: 0).state
+      state = circuit.cnot(0 => 1).state
 
       assert_equal :α * Qubit['00'] + :β * Qubit['11'], state
       assert_equal 'α|00> + β|11>', state.to_s
@@ -100,7 +100,7 @@ module Quant
 
     test 'Two-qubit gate - 2: 1/2|00> + 1/2|01> + 1/2|10> + 1/2|11> → 1/2|00> + 1/2|01> + 1/2|10> - 1/2|11>' do
       circuit = Circuit.new(1/2 * Qubit['00'] + 1/2 * Qubit['01'] + 1/2 * Qubit['10'] + 1/2 * Qubit['11'])
-      state = circuit.controlled(ZGate.new, 1, control: 0).state
+      state = circuit.controlled(ZGate.new, 0 => 1).state
 
       assert_equal 1/2 * Qubit['00'] + 1/2 * Qubit['01'] + 1/2 * Qubit['10'] - 1/2 * Qubit['11'], state
       assert_equal '1/2|00> + 1/2|01> + 1/2|10> - 1/2|11>', state.to_s
@@ -108,7 +108,7 @@ module Quant
 
     test 'Two-qubit gate - 3: α|00> + β|01> + γ|10> + δ|11> → α|00> + γ|01> + β|10> + δ|11>' do
       circuit = Circuit.new(:α * Qubit['00'] + :β * Qubit['01'] + :γ * Qubit['10'] + :δ * Qubit['11'])
-      state = circuit.cnot(1, control: 0).cnot(0, control: 1).cnot(1, control: 0).state
+      state = circuit.cnot(0 => 1).cnot(1 => 0).cnot(0 => 1).state
 
       assert_equal :α * Qubit['00'] + :γ * Qubit['01'] + :β * Qubit['10'] + :δ * Qubit['11'], state
       assert_equal 'α|00> + γ|01> + β|10> + δ|11>', state.to_s
