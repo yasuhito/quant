@@ -65,7 +65,7 @@ module Quant
     end
 
     def ccnot(control_target)
-      self.class.new(CcnotGate.new.matrix(qubit_length, control_target) * @state)
+      self.class.new(Ccnot(qubit_length, control_target) * @state)
     end
 
     def controlled(gate, control_target)

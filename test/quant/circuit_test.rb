@@ -122,8 +122,10 @@ module Quant
     end
 
     test 'Fredkin gate' do
-      skip 'SWAP ゲートを new(qubit1, qubit2) できるようにしてから'
       circuit = Circuit.new(:α * Qubit['000'] + :β * Qubit['001'] + :γ * Qubit['010'] + :δ * Qubit['011'] + :ϵ * Qubit['100'] + :ζ * Qubit['101'] + :η * Qubit['110'] + :θ * Qubit['111'])
+
+      assert_equal :α * Qubit['000'] + :β * Qubit['001'] + :γ * Qubit['010'] + :δ * Qubit['011'] + :ϵ * Qubit['100'] + :ζ * Qubit['110'] + :η * Qubit['101'] + :θ * Qubit['111'],
+                   circuit.cnot(1 => 2).ccnot([0, 2] => 1).cnot(1 => 2).state
     end
   end
 end
