@@ -64,6 +64,10 @@ module Quant
       self.class.new(SwapGate.new.apply(@state, qubit1, qubit2))
     end
 
+    def ccnot(control_target)
+      self.class.new(CcnotGate.new.matrix(qubit_length, control_target) * @state)
+    end
+
     def controlled(gate, control_target)
       control = control_target.keys.first
       target = control_target.values.first
@@ -77,6 +81,12 @@ module Quant
 
     def to_s
       @state.map(&:to_s).join
+    end
+
+    private
+
+    def qubit_length
+      Math.log2(@state.row_size).to_i
     end
   end
 end

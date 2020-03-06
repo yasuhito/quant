@@ -115,8 +115,10 @@ module Quant
     end
 
     test 'Toffoli gate' do
-      skip 'Cnot クラスを復活させてから'
       circuit = Circuit.new(:α * Qubit['000'] + :β * Qubit['001'] + :γ * Qubit['010'] + :δ * Qubit['011'] + :ϵ * Qubit['100'] + :ζ * Qubit['101'] + :η * Qubit['110'] + :θ * Qubit['111'])
+
+      assert_equal :α * Qubit['000'] + :β * Qubit['001'] + :γ * Qubit['010'] + :δ * Qubit['011'] + :ϵ * Qubit['100'] + :ζ * Qubit['101'] + :θ * Qubit['110'] + :η * Qubit['111'],
+                   circuit.ccnot([0, 1] => 2).state
     end
 
     test 'Fredkin gate' do
