@@ -56,15 +56,18 @@ module Quant
       self.class.new(R1Gate.new(theta).apply(@state, target))
     end
 
-    def cnot(target, control:)
-      controlled XGate.new, target, control: control
+    def cnot(control_target)
+      controlled XGate.new, control_target
     end
 
     def swap(qubit1, qubit2)
       self.class.new(SwapGate.new.apply(@state, qubit1, qubit2))
     end
 
-    def controlled(gate, target, control:)
+    def controlled(gate, control_target)
+      control = control_target.keys.first
+      target = control_target.values.first
+
       self.class.new(ControlledGate.new(gate.matrix).apply(@state, target, control))
     end
 
