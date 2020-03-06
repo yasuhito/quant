@@ -1,7 +1,7 @@
 GIT
   remote: https://github.com/yasuhito/symbo.git
-  revision: fbb709f62dafa7376465cf3b6d48746168fb072a
-  branch: develop
+  revision: 0b5798d0c4b36b4b37324d7dd007d29f75f77c0a
+  branch: feature/mathematical-right-angle-bracket
   specs:
     symbo (0.1.0pre)
 

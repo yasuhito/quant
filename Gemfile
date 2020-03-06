@@ -3,7 +3,7 @@
 source 'https://rubygems.org'
 ruby '2.7.0'
 
-gem 'symbo', github: 'yasuhito/symbo', branch: 'develop'
+gem 'symbo', github: 'yasuhito/symbo', branch: 'feature/mathematical-right-angle-bracket'
 
 group :development do
   gem 'rake'
