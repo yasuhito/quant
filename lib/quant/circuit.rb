@@ -65,7 +65,7 @@ module Quant
     end
 
     def controlled(gate, target, control:)
-      self.class.new(ControlledGate.new(gate).apply(@state, target, control))
+      self.class.new(ControlledGate.new(gate.matrix).apply(@state, target, control))
     end
 
     def state
