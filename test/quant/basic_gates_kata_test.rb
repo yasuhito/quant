@@ -38,7 +38,7 @@ module Quant
       state = circuit.ry(0, theta: 2 * :α).state
 
       assert_equal (:β * Cos[:α] + (-:γ * Sin[:α])) * Qubit['0'] + (:β * Sin[:α] + :γ * Cos[:α]) * Qubit['1'], state
-      assert_equal '(cos(α)*β - cos(α)*γ)|0⟩ + (cos(α)*β + cos(α)*γ)|1⟩', state.to_s
+      assert_equal '(cos(α)*β - sin(α)*γ)|0⟩ + (sin(α)*β + cos(α)*γ)|1⟩', state.to_s
     end
 
     test 'Phase flip: α|0⟩ + β|1⟩ → α|0⟩ + iβ|1⟩' do
@@ -69,7 +69,7 @@ module Quant
       circuit = Circuit.new(1/√(2) * Qubit['00'] + 1/√(2) * Qubit['11'])
       state = circuit.z(0).state
 
-      assert_equal (1/√(2))*Qubit['00'] - (1/√(2)) * Qubit['11'], state
+      assert_equal (1/√(2)) * Qubit['00'] - (1/√(2)) * Qubit['11'], state
       assert_equal '2^(-1/2)|00⟩ - 2^(-1/2)|11⟩', state.to_s
     end
 
@@ -77,7 +77,7 @@ module Quant
       circuit = Circuit.new(1/√(2) * Qubit['00'] + 1/√(2) * Qubit['11'])
       state = circuit.x(0).state
 
-      assert_equal (1/√(2))*Qubit['01'] + (1/√(2)) * Qubit['10'], state
+      assert_equal (1/√(2)) * Qubit['01'] + (1/√(2)) * Qubit['10'], state
       assert_equal '2^(-1/2)|01⟩ + 2^(-1/2)|10⟩', state.to_s
     end
 
