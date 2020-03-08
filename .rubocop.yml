@@ -8,6 +8,9 @@ Style/AsciiComments:
 Style/Documentation:
   Enabled: false
 
+Style/FormatStringToken:
+  Enabled: false
+
 # 行の文字数を制限しない
 Layout/LineLength:
   Enabled: false
